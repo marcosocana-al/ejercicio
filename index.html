@@ -16,9 +16,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Align to top for better mobile scrolling */
             align-items: center;
             padding: 1rem;
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
         .container {
             max-width: 960px;
@@ -29,6 +30,7 @@
             border-radius: 1.5rem; /* More rounded corners */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             border: 1px solid #bfdbfe; /* Subtle pastel blue border */
+            box-sizing: border-box;
         }
         h1 {
             font-size: 2.5rem; /* Larger heading */
@@ -170,6 +172,7 @@
             font-weight: 600;
             color: #4a5568;
             padding: 0.5rem;
+            font-size: 0.9rem; /* Slightly smaller for better fit */
         }
         .calendar-day {
             padding: 0.75rem;
@@ -269,7 +272,11 @@
             color: #1f2937;
         }
 
-        /* LLM Feature styles */
+        /* Inspiration Feature styles */
+        .inspiration-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
         .llm-feature-button {
             background-color: #fca5a5; /* Pastel red */
             color: white;
@@ -279,11 +286,7 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            margin-top: 2rem;
-            display: block;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
+            display: inline-block; /* Changed to inline-block */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         .llm-feature-button:hover {
@@ -301,6 +304,7 @@
             font-size: 1rem;
             line-height: 1.5;
             display: none; /* Hidden by default */
+            text-align: left; /* Align text left within the box */
         }
         #inspirationOutput p {
             margin-bottom: 0.5rem;
@@ -318,7 +322,7 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            margin: 0 auto;
+            margin: 1rem auto; /* Center spinner */
             display: none;
         }
         @keyframes spin {
@@ -332,7 +336,7 @@
                 padding: 0.5rem; /* Reduce overall body padding */
             }
             .container {
-                margin: 1rem auto; /* Smaller margins on mobile */
+                margin: 0.5rem auto; /* Smaller margins on mobile */
                 padding: 1rem; /* Smaller padding inside container */
                 border-radius: 1rem;
             }
@@ -350,69 +354,69 @@
                 margin-bottom: 0.75rem;
             }
             th, td {
-                padding: 0.75rem; /* Reduced padding for table cells */
-                font-size: 0.85rem;
+                padding: 0.6rem; /* Reduced padding for table cells */
+                font-size: 0.8rem; /* Smaller font for tables */
             }
             .callout {
-                padding: 1rem;
-                font-size: 1rem;
-                margin-bottom: 1.5rem;
+                padding: 0.8rem;
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
             }
             .image-placeholder {
-                height: 120px; /* Smaller image placeholders */
-                font-size: 0.8rem;
+                height: 100px; /* Smaller image placeholders */
+                font-size: 0.7rem;
             }
             .calendar-nav {
                 flex-direction: column; /* Stack buttons and month/year vertically */
-                gap: 0.75rem;
+                gap: 0.5rem;
             }
             .calendar-nav button {
                 width: 100%; /* Full width buttons */
-                padding: 0.6rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.5rem 0.75rem;
+                font-size: 0.85rem;
             }
             .calendar-header {
-                font-size: 1.25rem;
+                font-size: 1.1rem;
             }
             .calendar-grid {
-                gap: 0.25rem; /* Smaller gap between calendar days */
+                gap: 0.2rem; /* Smaller gap between calendar days */
             }
             .calendar-day {
-                padding: 0.5rem; /* Reduced padding for calendar days */
-                min-height: 55px; /* Slightly smaller height */
+                padding: 0.4rem; /* Reduced padding for calendar days */
+                min-height: 50px; /* Slightly smaller height */
             }
             .day-number {
-                font-size: 1rem; /* Smaller day number */
+                font-size: 0.9rem; /* Smaller day number */
             }
             .day-routine {
-                font-size: 0.65rem; /* Smaller routine text */
+                font-size: 0.6rem; /* Smaller routine text */
             }
             .modal-content {
-                padding: 1.5rem; /* Reduced padding for modal content */
+                padding: 1rem; /* Reduced padding for modal content */
                 width: 95%; /* Wider modal on small screens */
                 max-height: 95vh; /* Max height for modal */
             }
             .exercise-section {
-                padding: 0.75rem;
-                margin-bottom: 1rem;
+                padding: 0.6rem;
+                margin-bottom: 0.8rem;
             }
             .exercise-item {
-                margin-bottom: 0.75rem;
-                padding-bottom: 0.75rem;
+                margin-bottom: 0.6rem;
+                padding-bottom: 0.6rem;
             }
             .exercise-title {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
             .exercise-description {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
             .llm-feature-button {
-                padding: 0.6rem 1.2rem;
-                font-size: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.95rem;
             }
             #inspirationOutput {
                 padding: 1rem;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
         }
     </style>
@@ -441,9 +445,11 @@
             <div class="calendar-day-name">Dom</div>
             </div>
 
-        <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
-        <div id="loadingSpinner" class="loading-spinner"></div>
-        <div id="inspirationOutput"></div>
+        <div class="inspiration-container">
+            <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
+            <div id="loadingSpinner" class="loading-spinner"></div>
+            <div id="inspirationOutput"></div>
+        </div>
     </div>
 
     <div id="routineModal" class="modal-overlay">
@@ -751,33 +757,69 @@
          * Loads inspirations from the JSON file.
          */
         async function loadInspirationsData() {
+            const inspirationOutput = document.getElementById('inspirationOutput');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            loadingSpinner.style.display = 'block'; // Show spinner while loading
+
             try {
                 const response = await fetch('inspirations.json');
                 if (!response.ok) {
-                    throw new Error(`Error al cargar las inspiraciones: ${response.statusText}`);
+                    throw new Error(`Estado HTTP: ${response.status}`);
                 }
                 inspirations = await response.json();
                 if (!Array.isArray(inspirations) || inspirations.length === 0) {
-                    throw new Error('El archivo JSON no contiene un array válido de inspiraciones.');
+                    throw new Error('El archivo JSON no contiene un array válido o está vacío.');
                 }
                 console.log('Inspiraciones cargadas:', inspirations.length);
+                // Display today's inspiration immediately after loading
+                displayTodaysInspiration();
             } catch (error) {
                 console.error('Error al cargar o parsear las inspiraciones:', error);
-                const inspirationOutput = document.getElementById('inspirationOutput');
-                inspirationOutput.innerHTML = `<p>Error: No se pudieron cargar las inspiraciones. Asegúrate de que 'inspirations.json' esté en la misma carpeta. (${error.message})</p>`;
+                inspirationOutput.innerHTML = `<p style="color:red;">Error: No se pudieron cargar las inspiraciones. Asegúrate de que el archivo <strong>'inspirations.json'</strong> esté en la misma carpeta y su contenido sea válido. (${error.message})</p>`;
                 inspirationOutput.style.display = 'block';
+            } finally {
+                loadingSpinner.style.display = 'none'; // Hide spinner
             }
         }
 
-        // Modified LLM Integration for Inspiration (now loads from JSON)
+        /**
+         * Displays today's inspiration based on the day of the year.
+         */
+        function displayTodaysInspiration() {
+            const inspirationOutput = document.getElementById('inspirationOutput');
+            if (inspirations.length === 0) {
+                inspirationOutput.innerHTML = '<p>No hay inspiraciones disponibles para mostrar.</p>';
+                inspirationOutput.style.display = 'block';
+                return;
+            }
+
+            const today = new Date();
+            const startOfYear = new Date(today.getFullYear(), 0, 0);
+            const diff = today - startOfYear;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+
+            // Use modulo to loop through inspirations if there are less than 365
+            const index = dayOfYear % inspirations.length;
+            const dailyInspiration = inspirations[index];
+
+            inspirationOutput.innerHTML = `
+                <p><strong>Cita Motivacional:</strong> "${dailyInspiration.quote}"</p>
+                <p><strong>Micro-actividad:</strong> ${dailyInspiration.microActivity}</p>
+                <p><strong>Pregunta para Reflexionar:</strong> ${dailyInspiration.reflectionQuestion}</p>
+            `;
+            inspirationOutput.style.display = 'block';
+        }
+
+        // Modified Inspiration button click handler (now displays a random one from loaded data)
         document.getElementById('getInspirationBtn').addEventListener('click', () => {
             const inspirationOutput = document.getElementById('inspirationOutput');
             const loadingSpinner = document.getElementById('loadingSpinner');
             inspirationOutput.style.display = 'none'; // Hide previous output
-            loadingSpinner.style.display = 'block'; // Show spinner
+            loadingSpinner.style.display = 'block'; // Show spinner briefly
 
             if (inspirations.length === 0) {
-                inspirationOutput.innerHTML = '<p>No hay inspiraciones cargadas. Por favor, recarga la página o verifica el archivo inspirations.json.</p>';
+                inspirationOutput.innerHTML = '<p style="color:red;">No hay inspiraciones cargadas. Por favor, asegúrate de que el archivo inspirations.json esté disponible y recarga la página.</p>';
                 inspirationOutput.style.display = 'block';
                 loadingSpinner.style.display = 'none';
                 return;
