@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Ejercicios para Lara</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e0f2fe; /* Very light blue pastel */
+            color: #4a5568; /* Darker text */
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 960px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #bfdbfe; /* Subtle pastel blue border */
+        }
+        h1 {
+            font-size: 2.5rem; /* Larger heading */
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #1e3a8a; /* Darker pastel blue heading */
+            font-weight: 800; /* Extra bold */
+            letter-spacing: -0.025em; /* Tighten spacing */
+        }
+        h2 {
+            font-size: 2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: #2563eb; /* Deeper pastel blue */
+            font-weight: 700;
+            border-bottom: 2px solid #dbeafe; /* Light pastel blue underline */
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3b82f6; /* Medium pastel blue */
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate; /* For rounded corners on cells */
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        th, td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #e0f2fe; /* Lighter pastel blue border */
+        }
+        th {
+            background-color: #bfdbfe; /* Lighter pastel blue */
+            font-weight: 700;
+            color: #1e40af; /* Darker pastel blue */
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+        tr:nth-child(even) {
+            background-color: #eff6ff; /* Very light pastel blue */
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #f0f9ff; /* Even lighter pastel blue */
+            border-radius: 0.5rem;
+            border: 1px solid #e0f2fe;
+        }
+        .exercise-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #bfdbfe;
+        }
+        .exercise-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .exercise-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+        .exercise-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        .icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .callout {
+            background-color: #d1fae5; /* Lighter green pastel */
+            border-left: 5px solid #34d399; /* Green pastel border */
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            color: #065f46; /* Darker green text */
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 180px; /* Slightly smaller */
+            background-color: #bfdbfe; /* Pastel blue placeholder */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa; /* Medium pastel blue text */
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Calendar styles */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-nav button {
+            background-color: #60a5fa; /* Pastel blue button */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-nav button:hover {
+            background-color: #3b82f6; /* Darker pastel blue on hover */
+        }
+        .calendar-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2563eb; /* Deeper pastel blue */
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .calendar-day-name {
+            font-weight: 600;
+            color: #4a5568;
+            padding: 0.5rem;
+        }
+        .calendar-day {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #e0f2fe; /* Light pastel blue */
+            border: 1px solid #bfdbfe;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 70px; /* Ensure consistent height */
+        }
+        .calendar-day:hover {
+            background-color: #dbeafe; /* Lighter pastel blue on hover */
+            transform: translateY(-2px);
+        }
+        .calendar-day.current-day {
+            background-color: #60a5fa; /* Highlight current day with pastel blue */
+            color: white;
+            font-weight: 700;
+            border-color: #3b82f6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .calendar-day.current-day .day-number,
+        .calendar-day.current-day .day-routine {
+            color: white;
+        }
+        .calendar-day.empty {
+            background-color: transparent;
+            border: none;
+            cursor: default;
+        }
+        .day-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .day-routine {
+            font-size: 0.75rem;
+            color: #4a5568;
+            margin-top: 0.25rem;
+            line-height: 1.2;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh; /* Limit height to enable scrolling */
+            overflow-y: auto; /* Enable vertical scrolling */
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .modal-close-button:hover {
+            color: #1f2937;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem auto;
+                padding: 1rem;
+                border-radius: 1rem;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
+            th, td {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+            .modal-content {
+                padding: 1.5rem;
+                width: 95%;
+            }
+            .exercise-title {
+                font-size: 1rem;
+            }
+            .exercise-description {
+                font-size: 0.85rem;
+            }
+            .image-placeholder {
+                height: 150px;
+            }
+            .calendar-grid {
+                gap: 0.25rem;
+            }
+            .calendar-day {
+                padding: 0.5rem;
+                min-height: 60px;
+            }
+            .day-number {
+                font-size: 1rem;
+            }
+            .day-routine {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-blue-50 text-gray-700">
+    <div class="container">
+        <h1>🗓️ Calendario de Ejercicio</h1>
+
+        <div class="callout">
+            <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
+        </div>
+
+        <h2 class="text-blue-700">Calendario Mensual</h2>
+        <div class="calendar-nav">
+            <button id="prevMonth">&lt; Anterior</button>
+            <div id="monthYear" class="calendar-header"></div>
+            <button id="nextMonth">Siguiente &gt;</button>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day-name">Lun</div>
+            <div class="calendar-day-name">Mar</div>
+            <div class="calendar-day-name">Mié</div>
+            <div class="calendar-day-name">Jue</div>
+            <div class="calendar-day-name">Vie</div>
+            <div class="calendar-day-name">Sáb</div>
+            <div class="calendar-day-name">Dom</div>
+            </div>
+    </div>
+
+    <div id="routineModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeModal">&times;</button>
+            <h2 id="modalRoutineTitle" class="text-blue-700"></h2>
+            <div id="modalRoutineContent">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for routines
+        const routines = {
+            "Lunes": {
+                name: "Rutina 1 (¡A darle caña!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas clásicas", series: 3, reps: 15, desc: "Ponte de pie con los pies a la altura de tus caderas. Baja el culete como si te fueras a sentar en una silla, manteniendo la espalda recta y el pecho erguido. Asegúrate de que tus rodillas no sobrepasen los dedos de los pies. Sube apretando los glúteos a tope. ¡Este es un básico que trabaja todo el tren inferior!", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Sentadillas+clásicas" },
+                    { name: "Puente de glúteos", series: 3, reps: 15, desc: "Túmbate boca arriba con las rodillas dobladas y los pies apoyados cerca de tu culete. Levanta la cadera del suelo apretando los glúteos con todas tus fuerzas, formando una línea recta desde tus hombros hasta tus rodillas. Mantén un segundo arriba y baja despacio. ¡Siente cómo trabaja el culete y la parte de atrás de tus muslos!", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Puente+de+glúteos" },
+                    { name: "Zancadas adelante", series: 3, reps: "10 por pierna", desc: "Da un paso largo hacia adelante con una pierna, bajando la cadera hasta que la rodilla de atrás casi toque el suelo (¡pero sin golpearte!). La rodilla de adelante debe estar alineada con el tobillo. Empuja para volver a la posición inicial y repite con la otra pierna.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Zancadas+adelante" },
+                    { name: "Abducción lateral tumbada", series: 3, reps: "15 por pierna", desc: "Túmbate de lado, apoyando tu cabeza en tu brazo. Mantén las piernas estiradas y levanta la de arriba hacia el techo, sintiendo cómo trabaja el lateral del glúteo y la cadera (el glúteo medio y mínimo). Baja despacio y cambia de lado.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Abducción+lateral+tumbada" },
+                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Patada+de+glúteo" },
+                    { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Túmbate de lado con las rodillas flexionadas y los pies juntos. Manteniendo los pies juntos, levanta la rodilla de arriba separándola de la de abajo, como si abrieras una almeja. ¡Ojo! No dejes que tu cadera rote hacia atrás. Baja lentamente. Repite del otro lado.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Almejas" }
+                ]
+            },
+            "Martes": {
+                name: "Core y Flexibilidad (o descanso activo)",
+                type: "active_rest",
+                description: "Si tienes bici, elije rutas por zonas tranquilas, parques o carriles bici donde se sienta segura. Intenta mantener un ritmo constante, no competitivo. Un pedaleo suave y continuado de 30 a 45 minutos es ideal para un día de descanso activo. Si quieres intensificar un poco sin correr, puedes añadir pequeños tramos de subida si encuentras alguna cuesta."
+            },
+            "Miércoles": {
+                name: "Rutina 2 (¡Más!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas sumo", series: 3, reps: 15, desc: "Abre las piernas más que el ancho de tus hombros, con las puntas de los pies un poco hacia fuera (como una bailarina de sumo, ¡de ahí el nombre!). Baja el culete como en una sentadilla normal, apretando bien los glúteos al subir.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Sentadillas+sumo" },
+                    { name: "Hip Thrust (espalda en silla/cama)", series: 3, reps: 15, desc: "Siéntate en el suelo con la parte alta de tu espalda (justo debajo de los omóplatos) apoyada en el borde de una silla o cama (¡que sea súper estable, por favor!). Pies apoyados en el suelo, rodillas flexionadas. Levanta la cadera apretando los glúteos a tope, hasta formar una línea recta con tu cuerpo desde los hombros hasta las rodillas. Baja despacio.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Hip+Thrust" },
+                    { name: "Zancadas laterales", series: 3, reps: "10 por pierna", desc: "Da un paso grande hacia un lado, doblando esa rodilla y manteniendo la otra pierna estirada. Baja la cadera y vuelve al centro. Cambia de lado.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Zancadas+laterales" },
+                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Elevación+lateral+de+pie" },
+                    { name: "Puente de glúteos a una pierna", series: 3, reps: "12 por pierna", desc: "Como el puente de glúteos normal, pero estira una pierna hacia arriba. Levanta la cadera con una sola pierna apoyada. Alterna.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Puente+a+una+pierna" },
+                    { name: "Step Up (escalón/silla)", series: 3, reps: "10 por pierna", desc: "Ponte delante de un escalón o una silla resistente. Sube un pie, luego el otro, y baja de la misma forma, alternando la pierna que empieza. ¡Concéntrate en el glúteo de la pierna que sube al impulsarte!", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Step+Up" }
+                ]
+            },
+            "Jueves": {
+                name: "Descanso Activo (Caminar, estiramientos suaves, bici, yoga... ¡lo que te apetezca!)",
+                type: "active_rest",
+                description: "Busca en YouTube \"yoga suave para principiantes\" o \"estiramientos de yoga para despertar\" (para la mañana) o \"yoga para dormir\" (para la noche). Suelen ser rutinas de 10-15 minutos que se pueden hacer en el suelo de su habitación, usando una toalla o una manta fina si no tiene esterilla. También hay secuencias específicas para \"yoga para abrir caderas\" o \"yoga para dolor lumbar\" que complementan muy bien los ejercicios."
+            },
+            "Viernes": {
+                name: "Rutina 3 (¡Último empujón!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas con salto", series: 3, reps: 12, desc: "Igual que la sentadilla clásica, pero al subir, haz un pequeño salto explosivo y aterriza suavemente para volver a bajar. ¡Te da un extra de intensidad y ayuda a quemar más calorías! Si al principio te cuesta, haz sentadillas normales y luego añade el salto.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Sentadillas+con+salto" },
+                    { name: "Zancadas caminando", series: 3, reps: "12 por pierna", desc: "Da un paso largo hacia adelante y baja como en una zancada normal. En vez de volver al sitio, lleva la pierna de atrás hacia adelante para dar el siguiente paso, como si estuvieras caminando en zancadas.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Zancadas+caminando" },
+                    { name: "Sentadilla isométrica (pared)", series: 3, reps: "30 seg cada una", desc: "Apoya tu espalda en una pared y baja como si te sentaras en una silla invisible, hasta que tus rodillas formen un ángulo de 90 grados. Mantén esa posición. ¡Aguanta ahí todo lo que puedas!", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Sentadilla+isométrica" },
+                    { name: "Skater (salto lateral)", series: 3, reps: "20 (total)", desc: "Salta de lado a lado, aterrizando sobre un solo pie y llevando la otra pierna por detrás, como si patinaras. Mantén el equilibrio y salta al otro lado.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Skater" },
+                    { name: "Elevación de pantorrillas (gemelos)", series: 3, reps: 20, desc: "Ponte de pie, puedes apoyarte en una pared. Levanta los talones del suelo, apoyándote solo en las puntas de los pies, y luego baja lentamente.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Elevación+de+pantorrillas" },
+                    { name: "Patada de glúteo de pie hacia atrás", series: 3, reps: "15 por pierna", desc: "Ponte de pie, puedes apoyarte en una pared. Estira una pierna recta hacia atrás y levántala lo más alto que puedas, apretando el glúteo. Baja lentamente y repite.", img: "https://placehold.co/400x200/bfdbfe/60a5fa?text=Patada+de+glúteo+de+pie" }
+                ]
+            },
+            "Sábado": {
+                name: "Descanso o Actividad Ligera (Yoga suave, bailar, bici... ¡muévete a tu aire!)",
+                type: "active_rest",
+                description: "¡Pon tu música favorita a todo volumen y baila como si nadie te viera! Es un ejercicio súper divertido, te libera, te hace sentir bien y te ayuda a mover el cuerpo. ¡Nadie te ve, así que a soltarse la melena y disfrutar a tope! Puedes buscar tutoriales de baile de estilos que te gusten (hip-hop, danza contemporánea, incluso ballet si te mola) en YouTube, ¡o simplemente improvisar tus propios pasos! 💃<br><br>A veces, una buena caminata rápida por el barrio o por un parque puede hacer maravillas. Es gratis, te despeja la mente, te ayuda a mantenerte activa y a quemar calorías. ¡Ponte unos cascos y tu música favorita! Propongo caminar entre 30 y 60 minutos a un ritmo que le permita hablar pero con un poco de dificultad (para que sea \"paso ligero\" y no solo un paseo relajado). Intenta centrarte en la sensación de tus pasos, en la respiración, en el entorno."
+            },
+            "Domingo": {
+                name: "Descanso Total (¡A recargar pilas!)",
+                type: "rest",
+                description: "¡Día de descanso total! Aprovecha para relajarte, hacer actividades que te gusten y recargar energías para la semana. ¡El descanso es tan importante como el ejercicio!"
+            }
+        };
+
+        const warmUpContent = `
+            <div class="exercise-section">
+                <h3 class="text-xl font-semibold text-green-700 mb-4"><span class="icon">🔥</span> Calentamiento (5-10 minutos)</h3>
+                <p class="text-gray-600 mb-4">Antes de Empezar:</p>
+                <div class="exercise-item">
+                    <div class="exercise-title">Marcha en el sitio</div>
+                    <p class="exercise-description">Levanta las rodillas alternativamente como si marcharas. Esto sube tu ritmo cardíaco suavemente y calienta las piernas.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Círculos de brazos pequeños</div>
+                    <p class="exercise-description">Hacia adelante y hacia atrás (suaves, sin forzar). Esto ayuda a lubricar las articulaciones de los hombros.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Rotaciones de tronco suaves</div>
+                    <p class="exercise-description">Gira el torso suavemente de lado a lado. Ideal para la movilidad de la columna y preparar el core.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramientos dinámicos generales</div>
+                    <p class="exercise-description">Patadas ligeras hacia adelante y hacia los lados, balanceos de pierna. Esto estira los músculos de forma activa y prepara las articulaciones para el movimiento.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Balanceo de pierna lateral</div>
+                    <p class="exercise-description">De pie, puedes apoyarte en una pared. Balancea una pierna hacia un lado y luego cruzando por delante del cuerpo. Repite con la otra pierna. Activa los glúteos medios y flexores de cadera.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Rotaciones de cadera (circulares)</div>
+                    <p class="exercise-description">De pie, o a cuatro patas, haz círculos amplios con la rodilla o la pierna para movilizar la articulación de la cadera. Haz círculos en ambas direcciones.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Caminata con zancada lateral y toque de pie</div>
+                    <p class="exercise-description">Da un paso lateral, baja ligeramente en una sentadilla y toca el pie con la mano opuesta, luego vuelve a subir y repite al otro lado.</p>
+                </div>
+            </div>
+        `;
+
+        const coolDownContent = `
+            <div class="exercise-section">
+                <h3 class="text-xl font-semibold text-green-700 mb-4"><span class="icon">🧊</span> Enfriamiento y Estiramientos (5-10 minutos)</h3>
+                <p class="text-gray-600 mb-4">Después de Terminar:</p>
+                <p class="text-gray-600 mb-4">Esto es para relajar los músculos, mejorar tu flexibilidad y ayudar a que se recuperen. Mantén cada estiramiento durante 20-30 segundos, sin hacer rebotes. ¡Respira hondo y relájate! Es tu momento para desconectar y sentirte bien.</p>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de cuádriceps</div>
+                    <p class="exercise-description">De pie, sujeta un tobillo y tira del talón hacia el culete. Siente el estiramiento en la parte delantera del muslo.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de pecho</div>
+                    <p class="exercise-description">Entrelaza las manos detrás de la espalda y estira los brazos hacia arriba (suavemente, ¡sin forzar!). Esto ayuda a abrir el pecho y mejorar la postura, contrarrestando cualquier tensión.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de tríceps</div>
+                    <p class="exercise-description">Lleva un codo por encima de la cabeza y empújalo suavemente con la otra mano. Estira la parte de atrás del brazo.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la espalda baja</div>
+                    <p class="exercise-description">Túmbate boca arriba, lleva las rodillas al pecho y abrázalas. Esto alivia la tensión en la espalda baja y es súper relajante.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la figura 4 (Piriformis Stretch)</div>
+                    <p class="exercise-description">Tumbada boca arriba, cruza un tobillo sobre la rodilla opuesta. Tira suavemente de la rodilla de abajo hacia tu pecho para sentir el estiramiento profundo en el glúteo de la pierna cruzada. Mantén y cambia de lado.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la paloma (Yoga Pigeon Pose)</div>
+                    <p class="exercise-description">Desde una posición de plancha, lleva una rodilla hacia adelante y colócala cerca de tu muñeca opuesta, con la espinilla cruzada (o lo más cerca posible de ser paralela al borde de la colchoneta). Estira la otra pierna hacia atrás. Inclínate suavemente hacia adelante si puedes. Siente el estiramiento en la cadera y el glúteo. Cambia de lado.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de glúteo tumbado con rodilla al pecho y cruce</div>
+                    <p class="exercise-description">Tumbada boca arriba, lleva una rodilla al pecho. Luego, con la mano opuesta, tira suavemente de esa rodilla cruzándola hacia el lado opuesto del cuerpo, intentando mantener los hombros pegados al suelo. Siente el estiramiento en el glúteo y la parte exterior del muslo. Cambia de lado.</p>
+                </div>
+            </div>
+        `;
+
+        const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]; // Sunday is 0
+
+        function getRoutineForDay(dayIndex) {
+            return routines[dayNames[dayIndex]];
+        }
+
+        function populateModal(dayName, routineData) {
+            const modalRoutineTitle = document.getElementById('modalRoutineTitle');
+            const modalRoutineContent = document.getElementById('modalRoutineContent');
+            
+            modalRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
+            let contentHtml = '';
+
+            if (routineData.type === "routine") {
+                contentHtml += warmUpContent;
+                contentHtml += `
+                    <div class="exercise-section">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-4">Detalle de Ejercicios: ${routineData.name}</h3>
+                        <p class="mb-4 text-gray-600">Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
+                        <div class="overflow-x-auto rounded-xl shadow-md mb-4">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${routineData.exercises.map(ex => `
+                                        <tr>
+                                            <td>${ex.name}</td>
+                                            <td>${ex.series}</td>
+                                            <td>${ex.reps}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="mb-4 text-gray-600">¿Cómo se hace cada ejercicio? (¡Paso a paso para que no te pierdas ni una!)</p>
+                        ${routineData.exercises.map(ex => `
+                            <div class="exercise-item">
+                                <div class="exercise-title">${ex.name}</div>
+                                <p class="exercise-description">${ex.desc}</p>
+                                <img src="${ex.img}" alt="Imagen de persona realizando ${ex.name}" class="image-placeholder">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                contentHtml += coolDownContent;
+            } else {
+                contentHtml += `
+                    <div class="exercise-section">
+                        <h3 class="text-xl font-semibold text-blue-700 mb-4">${routineData.name}</h3>
+                        <p class="exercise-description">${routineData.description}</p>
+                    </div>
+                `;
+            }
+            modalRoutineContent.innerHTML = contentHtml;
+        }
+
+        function openModal() {
+            document.getElementById('routineModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('routineModal').classList.remove('open');
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function renderCalendar() {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const monthYearDisplay = document.getElementById('monthYear');
+            calendarGrid.innerHTML = `
+                <div class="calendar-day-name">Lun</div>
+                <div class="calendar-day-name">Mar</div>
+                <div class="calendar-day-name">Mié</div>
+                <div class="calendar-day-name">Jue</div>
+                <div class="calendar-day-name">Vie</div>
+                <div class="calendar-day-name">Sáb</div>
+                <div class="calendar-day-name">Dom</div>
+            `; // Clear and re-add day names
+
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+
+            // Adjust first day of week to be Monday (0 for Monday, 6 for Sunday)
+            let firstDayOfWeek = firstDayOfMonth.getDay();
+            firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1; // Convert Sunday (0) to 6, others -1
+
+            monthYearDisplay.textContent = `${firstDayOfMonth.toLocaleString('es-ES', { month: 'long' })} ${currentYear}`;
+
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('calendar-day', 'empty');
+                calendarGrid.appendChild(emptyDiv);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const dayOfWeekIndex = date.getDay(); // 0 for Sunday, 1 for Monday...
+                const dayName = dayNames[dayOfWeekIndex];
+                const routine = routines[dayName];
+
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day');
+                dayDiv.dataset.dayName = dayName; // Store day name for click event
+
+                if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                    dayDiv.classList.add('current-day');
+                }
+
+                dayDiv.innerHTML = `
+                    <span class="day-number">${day}</span>
+                    <span class="day-routine">${routine ? routine.name.split('(')[0].trim() : ''}</span>
+                `;
+                calendarGrid.appendChild(dayDiv);
+            }
+
+            // Add event listeners to calendar days
+            document.querySelectorAll('.calendar-day:not(.empty)').forEach(dayDiv => {
+                dayDiv.addEventListener('click', () => {
+                    const dayName = dayDiv.dataset.dayName;
+                    const routineData = routines[dayName];
+                    if (routineData) {
+                        populateModal(dayName, routineData);
+                        openModal();
+                    }
+                });
+            });
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+
+        // Initial render
+        renderCalendar();
+    </script>
+</body>
+</html>
