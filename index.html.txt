@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Ejercicios para Lara</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDF8F5; /* Very light warm off-white */
+            color: #525252; /* Warm dark grey text */
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align to top for better mobile scrolling */
+            align-items: center;
+            padding: 1rem;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+        .container {
+            max-width: 960px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #FEECE2; /* Light peach border */
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 2.5rem; /* Larger heading */
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #E87D67; /* Muted coral heading */
+            font-weight: 800; /* Extra bold */
+            letter-spacing: -0.025em; /* Tighten spacing */
+        }
+        h2 {
+            font-size: 2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: #E87D67; /* Medium coral */
+            font-weight: 700;
+            border-bottom: 2px solid #FEECE2;
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FCA38F; /* Lighter salmon */
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: separate; /* For rounded corners on cells */
+            border-spacing: 0;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        th, td {
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid #FEECE2;
+        }
+        th {
+            background-color: #FEECE2;
+            font-weight: 700;
+            color: #E87D67;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+        }
+        tr:nth-child(even) {
+            background-color: #FFF5F0;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: #FFFBF8;
+            border-radius: 0.5rem;
+            border: 1px solid #FEECE2;
+        }
+        .exercise-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #FEECE2;
+        }
+        .exercise-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .exercise-title {
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+        .exercise-description {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+        .icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        .callout {
+            position: relative; /* Needed for absolute positioning of close button */
+            background-color: #E0F2F1; /* Light mint/aqua */
+            border-left: 5px solid #A7D9D6; /* Medium mint/aqua border */
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            color: #4A8C88; /* Darker mint/aqua text */
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .callout-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .callout-close-btn:hover {
+            color: #1f2937;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 180px; /* Slightly smaller */
+            background-color: #FEECE2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FCA38F;
+            border-radius: 0.5rem;
+            margin-top: 0.75rem;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        /* Calendar styles */
+        .calendar-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem; /* Adjusted margin */
+            border-bottom: 2px solid #FEECE2;
+            padding-bottom: 0.5rem;
+        }
+        .calendar-section-header h2 {
+            margin: 0; /* Reset margin for h2 inside this flex container */
+            border-bottom: none; /* Remove duplicate border */
+            padding-bottom: 0;
+            font-size: 2rem; /* Keep consistent with other h2 */
+            color: #E87D67;
+        }
+        .calendar-toggle-btn {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.4rem 0.8rem; /* Adjusted padding for better look */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-toggle-btn:hover {
+            background-color: #E87D67;
+        }
+
+        .calendar-content-wrapper {
+            max-height: 1000px; /* Arbitrarily large height for expanded state */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .calendar-content-wrapper.collapsed {
+            max-height: 0; /* Collapse state */
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .calendar-nav button {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.3rem 0.7rem; /* Smaller padding */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem; /* Smaller font size */
+            transition: background-color 0.3s ease;
+        }
+        .calendar-nav button:hover {
+            background-color: #E87D67;
+        }
+        .calendar-header {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #E87D67;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .calendar-day-name {
+            font-weight: 600;
+            color: #525252;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .calendar-day {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background-color: #FDF8F5;
+            border: 1px solid #FEECE2;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 70px; /* Ensure consistent height */
+        }
+        .calendar-day:hover {
+            background-color: #FFF5F0;
+            transform: translateY(-2px);
+        }
+        .calendar-day.current-day {
+            background-color: #FCA38F;
+            color: white;
+            font-weight: 700;
+            border-color: #E87D67;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .calendar-day.current-day .day-number,
+        .calendar-day.current-day .day-routine {
+            color: white;
+        }
+        .calendar-day.empty {
+            background-color: transparent;
+            border: none;
+            cursor: default;
+        }
+        .day-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .day-routine {
+            font-size: 0.75rem;
+            color: #4a5568;
+            margin-top: 0.25rem;
+            line-height: 1.2;
+        }
+
+        /* Daily Routine Display */
+        .daily-routine-section {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #FEECE2;
+            margin-top: 1.5rem;
+        }
+        .daily-routine-section h2 {
+            margin-top: 0;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .do-routine-btn {
+            background-color: #A7D9D6; /* Mint/aqua button */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1.5rem;
+            display: inline-block;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .do-routine-btn:hover:not(:disabled) {
+            background-color: #79B8B5; /* Darker mint/aqua on hover */
+            transform: translateY(-2px);
+        }
+        .do-routine-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+        }
+
+        /* Inspiration Feature styles */
+        .inspiration-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .llm-feature-button {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .llm-feature-button:hover:not(:disabled) {
+            background-color: #E87D67;
+            transform: translateY(-2px);
+        }
+        .llm-feature-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+        }
+
+        #inspirationOutput {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #FFF5E0;
+            border-radius: 0.75rem;
+            border: 1px solid #FDD18B;
+            color: #78350f;
+            font-size: 1rem;
+            line-height: 1.5;
+            display: none; /* Hidden by default */
+            text-align: left;
+        }
+        #inspirationOutput p {
+            margin-bottom: 0.5rem;
+        }
+        #inspirationOutput p:last-child {
+            margin-bottom: 0;
+        }
+        #inspirationOutput strong {
+            color: #B45309;
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FCA38F;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Routine Modal Styles */
+        .routine-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .routine-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .routine-modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            max-width: 900px; /* Increased max-width for better desktop view */
+            width: 90%; /* Use percentage for responsiveness */
+            max-height: 95vh; /* Max height to prevent cutting, allow scrolling */
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content and buttons */
+        }
+        .routine-modal-overlay.open .routine-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .routine-modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .routine-modal-close-button:hover {
+            color: #1f2937;
+        }
+
+        .progress-indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        .progress-circle {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: #FEECE2; /* Light peach */
+            border: 2px solid #FCA38F; /* Medium salmon */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .progress-circle.active {
+            background-color: #FCA38F; /* Medium salmon */
+            transform: scale(1.2);
+        }
+        .progress-circle.completed {
+            background-color: #A7D9D6; /* Mint/aqua */
+            border-color: #4A8C88; /* Darker mint/aqua */
+        }
+
+        .routine-step-content-wrapper {
+            flex-grow: 1; /* Allows this wrapper to take available space */
+            overflow-y: auto; /* Enable scrolling specifically for the content */
+            padding-right: 0.5rem; /* Add some padding for scrollbar if present */
+            margin-bottom: 1rem; /* Space before timer/buttons */
+        }
+
+        .routine-step-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            text-align: center;
+            /* min-height removed as wrapper handles sizing */
+        }
+        .routine-step-content h3 {
+            font-size: 2rem;
+            color: #E87D67;
+            margin-bottom: 1rem;
+        }
+        .routine-step-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .routine-exercise-detail {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #FFFBF8;
+            border-radius: 0.75rem;
+            border: 1px solid #FEECE2;
+            width: 100%;
+            max-width: 500px;
+            text-align: left; /* Align text left within the detail box */
+        }
+        .routine-exercise-detail .exercise-title {
+            font-size: 1.5rem;
+            color: #E87D67;
+            margin-bottom: 0.5rem;
+            text-align: center; /* Center title within the detail box */
+        }
+        .routine-exercise-detail .exercise-description {
+            font-size: 1rem;
+            color: #4a5568;
+            text-align: left; /* Keep description left-aligned */
+        }
+        .routine-exercise-detail .exercise-reps {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FCA38F;
+            margin-top: 0.5rem;
+            text-align: center; /* Center reps within the detail box */
+        }
+        .routine-exercise-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timer-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4A8C88; /* Darker mint/aqua */
+            margin-bottom: 1rem;
+        }
+        .timer-buttons button {
+            background-color: #A7D9D6;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        .timer-buttons button:hover:not(:disabled) {
+            background-color: #79B8B5;
+        }
+        .timer-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .routine-navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem; /* Adjusted margin to be closer to content */
+            gap: 1rem;
+            width: 100%; /* Ensure buttons span full width */
+        }
+        .routine-navigation-buttons button {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-grow: 1;
+        }
+        .routine-navigation-buttons button:hover:not(:disabled) {
+            background-color: #E87D67;
+            transform: translateY(-2px);
+        }
+        .routine-navigation-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 0.5rem; /* Reduce overall body padding */
+            }
+            .container {
+                margin: 1rem auto; /* Smaller margins on mobile */
+                padding: 1rem; /* Smaller padding inside container */
+                border-radius: 1rem;
+            }
+            h1 {
+                font-size: 1.75rem; /* Smaller heading for mobile */
+                margin-bottom: 1rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+                margin-bottom: 0.75rem;
+            }
+            th, td {
+                padding: 0.75rem; /* Reduced padding for table cells */
+                font-size: 0.85rem;
+            }
+            .callout {
+                padding: 1rem;
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .image-placeholder {
+                height: 120px; /* Smaller image placeholders */
+                font-size: 0.8rem;
+            }
+            .calendar-section-header h2 {
+                font-size: 1.5rem; /* Smaller h2 in header */
+            }
+            .calendar-toggle-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 1rem;
+            }
+            .calendar-nav {
+                flex-direction: column; /* Stack buttons and month/year vertically */
+                gap: 0.75rem;
+            }
+            .calendar-nav button {
+                width: 100%; /* Full width buttons */
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .calendar-header {
+                font-size: 1.25rem;
+            }
+            .calendar-grid {
+                gap: 0.25rem; /* Smaller gap between calendar days */
+            }
+            .calendar-day {
+                padding: 0.5rem; /* Reduced padding for calendar days */
+                min-height: 55px; /* Slightly smaller height */
+            }
+            .day-number {
+                font-size: 1rem; /* Smaller day number */
+            }
+            .day-routine {
+                font-size: 0.6rem;
+            }
+            .daily-routine-section {
+                padding: 1rem;
+                margin-top: 1rem;
+            }
+            .exercise-section {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+            }
+            .exercise-item {
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
+            .exercise-title {
+                font-size: 1rem;
+            }
+            .exercise-description {
+                font-size: 0.85rem;
+            }
+            .llm-feature-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
+            }
+            #inspirationOutput {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            /* Routine Modal Mobile Adjustments */
+            .routine-modal-content {
+                padding: 1rem;
+                width: 95%;
+            }
+            .progress-indicators {
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .progress-circle {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+            .routine-step-content h3 {
+                font-size: 1.5rem;
+            }
+            .routine-step-content p {
+                font-size: 1rem;
+            }
+            .routine-exercise-detail {
+                padding: 0.8rem;
+            }
+            .routine-exercise-detail .exercise-title {
+                font-size: 1.2rem;
+            }
+            .routine-exercise-detail .exercise-reps {
+                font-size: 1rem;
+            }
+            .timer-display {
+                font-size: 2.5rem;
+            }
+            .timer-buttons button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                margin: 0 0.25rem;
+            }
+            .routine-navigation-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-top: 1.5rem;
+            }
+            .routine-navigation-buttons button {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-blue-50 text-gray-700">
+    <div class="container">
+        <h1>🗓️ Calendario de Ejercicio</h1>
+
+        <div id="introCallout" class="callout">
+            <button class="callout-close-btn" id="closeCalloutBtn">&times;</button>
+            <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
+        </div>
+
+        <div class="calendar-section-header">
+            <h2 class="text-blue-700">Calendario Mensual</h2>
+            <button id="calendarToggleBtn" class="calendar-toggle-btn">&#9776;</button>
+        </div>
+        
+        <div id="calendarContentWrapper" class="calendar-content-wrapper">
+            <div class="calendar-nav">
+                <button id="prevMonth">&lt; Anterior</button>
+                <div id="monthYear" class="calendar-header"></div>
+                <button id="nextMonth">Siguiente &gt;</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-name">Lun</div>
+                <div class="calendar-day-name">Mar</div>
+                <div class="calendar-day-name">Mié</div>
+                <div class="calendar-day-name">Jue</div>
+                <div class="calendar-day-name">Vie</div>
+                <div class="calendar-day-name">Sáb</div>
+                <div class="calendar-day-name">Dom</div>
+            </div>
+        </div>
+
+        <div id="dailyRoutineDisplay" class="daily-routine-section">
+            <h2 id="dailyRoutineTitle" style="color: #E87D67;"></h2>
+            <div id="dailyRoutineContent">
+                <p class="text-gray-600">Selecciona un día del calendario para ver tu rutina.</p>
+            </div>
+            <button id="doRoutineBtn" class="do-routine-btn hidden">Hacer rutina</button>
+        </div>
+
+        <div class="inspiration-container">
+            <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
+            <div id="loadingSpinner" class="loading-spinner"></div>
+            <div id="inspirationOutput"></div>
+        </div>
+    </div>
+
+    <div id="routineExecutionModal" class="routine-modal-overlay">
+        <div class="routine-modal-content">
+            <button class="routine-modal-close-button" id="closeRoutineModal">&times;</button>
+            <h2 id="routineExecutionTitle" style="color: #E87D67; text-align: center; margin-bottom: 1.5rem;"></h2>
+            
+            <div class="progress-indicators">
+                <div class="progress-circle" id="progressWarmup"></div>
+                <div class="progress-circle" id="progressRoutine"></div>
+                <div class="progress-circle" id="progressCooldown"></div>
+            </div>
+
+            <div id="routineStepContentWrapper" class="routine-step-content-wrapper">
+                <div id="routineStepContent" class="routine-step-content">
+                    </div>
+            </div>
+
+            <div class="timer-controls hidden" id="exerciseTimerControls">
+                <div id="timerDisplay" class="timer-display">00:30</div>
+                <div class="timer-buttons">
+                    <button id="startTimerBtn">Iniciar Descanso</button>
+                    <button id="pauseTimerBtn" class="hidden">Pausar</button>
+                    <button id="resetTimerBtn" class="hidden">Reiniciar</button>
+                    <button id="skipTimerBtn">Saltar Descanso</button>
+                </div>
+            </div>
+
+            <div class="routine-navigation-buttons">
+                <button id="prevStepBtn" class="hidden">&lt; Anterior</button>
+                <button id="nextStepBtn">Siguiente &gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for routines
+        const routines = {
+            "Lunes": {
+                name: "Rutina 1 (¡A darle caña!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas clásicas", series: 3, reps: 15, desc: "Ponte de pie con los pies a la altura de tus caderas. Baja el culete como si te fueras a sentar en una silla, manteniendo la espalda recta y el pecho erguido. Asegúrate de que tus rodillas no sobrepasen los dedos de los pies. Sube apretando los glúteos a tope. ¡Este es un básico que trabaja todo el tren inferior!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+clásicas" },
+                    { name: "Puente de glúteos", series: 3, reps: 15, desc: "Túmbate boca arriba con las rodillas dobladas y los pies apoyados cerca de tu culete. Levanta la cadera del suelo apretando los glúteos con todas tus fuerzas, formando una línea recta desde tus hombros hasta tus rodillas. Mantén un segundo arriba y baja despacio. ¡Siente cómo trabaja el culete y la parte de atrás de tus muslos!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+de+glúteos" },
+                    { name: "Zancadas adelante", series: 3, reps: "10 por pierna", desc: "Da un paso largo hacia adelante con una pierna, bajando la cadera hasta que la rodilla de atrás casi toque el suelo (¡pero sin golpearte!). La rodilla de adelante debe estar alineada con el tobillo. Empuja para volver a la posición inicial y repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+adelante" },
+                    { name: "Abducción lateral tumbada", series: 3, reps: "15 por pierna", desc: "Túmbate de lado, apoyando tu cabeza en tu brazo. Mantén las piernas estiradas y levanta la de arriba hacia el techo, sintiendo cómo trabaja el lateral del glúteo y la cadera (el glúteo medio y mínimo). Baja despacio y cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Abducción+lateral+tumbada" },
+                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteo" },
+                    { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Túmbate de lado con las rodillas flexionadas y los pies juntos. Manteniendo los pies juntos, levanta la rodilla de arriba separándola de la de abajo, como si abrieras una almeja. ¡Ojo! No dejes que tu cadera rote hacia atrás. Baja lentamente. Repite del otro lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Almejas" }
+                ]
+            },
+            "Martes": {
+                name: "Core y Flexibilidad (o descanso activo)",
+                type: "active_rest",
+                description: "Si tienes bici, elije rutas por zonas tranquilas, parques o carriles bici donde se sienta segura. Intenta mantener un ritmo constante, no competitivo. Un pedaleo suave y continuado de 30 a 45 minutos es ideal para un día de descanso activo. Si quieres intensificar un poco sin correr, puedes añadir pequeños tramos de subida si encuentras alguna cuesta."
+            },
+            "Miércoles": {
+                name: "Rutina 2 (¡Más!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas sumo", series: 3, reps: 15, desc: "Abre las piernas más que el ancho de tus hombros, con las puntas de los pies un poco hacia fuera (como una bailarina de sumo, ¡de ahí el nombre!). Baja el culete como en una sentadilla normal, apretando bien los glúteos al subir.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+sumo" },
+                    { name: "Hip Thrust (espalda en silla/cama)", series: 3, reps: 15, desc: "Siéntate en el suelo con la parte alta de tu espalda (justo debajo de los omóplatos) apoyada en el borde de una silla o cama (¡que sea súper estable, por favor!). Pies apoyados en el suelo, rodillas flexionadas. Levanta la cadera apretando los glúteos a tope, hasta formar una línea recta con tu cuerpo desde los hombros hasta las rodillas. Baja despacio.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Hip+Thrust" },
+                    { name: "Zancadas laterales", series: 3, reps: "10 por pierna", desc: "Da un paso grande hacia un lado, doblando esa rodilla y manteniendo la otra pierna estirada. Baja la cadera y vuelve al centro. Cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+laterales" },
+                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+lateral+de+pierna+de+pie" },
+                    { name: "Puente de glúteos a una pierna", series: 3, reps: "12 por pierna", desc: "Como el puente de glúteos normal, pero estira una pierna hacia arriba. Levanta la cadera con una sola pierna apoyada. Alterna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+a+una+pierna" },
+                    { name: "Step Up (escalón/silla)", series: 3, reps: "10 por pierna", desc: "Ponte delante de un escalón o una silla resistente. Sube un pie, luego el otro, y baja de la misma forma, alternando la pierna que empieza. ¡Concéntrate en el glúteo de la pierna que sube al impulsarte!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Step+Up" }
+                ]
+            },
+            "Jueves": {
+                name: "Descanso Activo (Caminar, estiramientos suaves, bici, yoga... ¡lo que te apetezca!)",
+                type: "active_rest",
+                description: "Busca en YouTube \"yoga suave para principiantes\" o \"estiramientos de yoga para despertar\" (para la mañana) o \"yoga para dormir\" (para la noche). Suelen ser rutinas de 10-15 minutos que se pueden hacer en el suelo de su habitación, usando una toalla o una manta fina si no tiene esterilla. También hay secuencias específicas para \"yoga para abrir caderas\" o \"yoga para dolor lumbar\" que complementan muy bien los ejercicios."
+            },
+            "Viernes": {
+                name: "Rutina 3 (¡Último empujón!)",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadillas con salto", series: 3, reps: 12, desc: "Igual que la sentadilla clásica, pero al subir, haz un pequeño salto explosivo y aterriza suavemente para volver a bajar. ¡Te da un extra de intensidad y ayuda a quemar más calorías! Si al principio te cuesta, haz sentadillas normales y luego añade el salto.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+con+salto" },
+                    { name: "Zancadas caminando", series: 3, reps: "12 por pierna", desc: "Da un paso largo hacia adelante y baja como en una zancada normal. En vez de volver al sitio, lleva la pierna de atrás hacia adelante para dar el siguiente paso, como si estuvieras caminando en zancadas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+caminando" },
+                    { name: "Sentadilla isométrica (pared)", series: 3, reps: "30 seg cada una", desc: "Apoya tu espalda en una pared y baja como si te sentaras en una silla invisible, hasta que tus rodillas formen un ángulo de 90 grados. Mantén esa posición. ¡Aguanta ahí todo lo que puedas!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+isométrica" },
+                    { name: "Skater (salto lateral)", series: 3, reps: "20 (total)", desc: "Salta de lado a lado, aterrizando sobre un solo pie y llevando la otra pierna por detrás, como si patinaras. Mantén el equilibrio y salta al otro lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Skater" },
+                    { name: "Elevación de pantorrillas (gemelos)", series: 3, reps: 20, desc: "Ponte de pie, puedes apoyarte en una pared. Levanta los talones del suelo, apoyándote solo en las puntas de los pies, y luego baja lentamente.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+de+pantorrillas" },
+                    { name: "Patada de glúteo de pie hacia atrás", series: 3, reps: "15 por pierna", desc: "Ponte de pie, puedes apoyarte en una pared. Estira una pierna recta hacia atrás y levántala lo más alto que puedas, apretando el glúteo. Baja lentamente y repite.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteo+de+pie" }
+                ]
+            },
+            "Sábado": {
+                name: "Descanso o Actividad Ligera (Yoga suave, bailar, bici... ¡muévete a tu aire!)",
+                type: "active_rest",
+                description: "¡Pon tu música favorita a todo volumen y baila como si nadie te viera! Es un ejercicio súper divertido, te libera, te hace sentir bien y te ayuda a mover el cuerpo. ¡Nadie te ve, así que a soltarse la melena y disfrutar a tope! Puedes buscar tutoriales de baile de estilos que te gusten (hip-hop, danza contemporánea, incluso ballet si te mola) en YouTube, ¡o simplemente improvisar tus propios pasos! 💃<br><br>A veces, una buena caminata rápida por el barrio o por un parque puede hacer maravillas. Es gratis, te despeja la mente, te ayuda a mantenerte activa y a quemar calorías. ¡Ponte unos cascos y tu música favorita! Propongo caminar entre 30 y 60 minutos a un ritmo que le permita hablar pero con un poco de dificultad (para que sea \"paso ligero\" y no solo un paseo relajado). Intenta centrarte en la sensación de tus pasos, en la respiración, en el entorno."
+            },
+            "Domingo": {
+                name: "Descanso Total (¡A recargar pilas!)",
+                type: "rest",
+                description: "¡Día de descanso total! Aprovecha para relajarte, hacer actividades que te gusten y recargar energías para la semana. ¡El descanso es tan importante como el ejercicio!"
+            }
+        };
+
+        // Warm-up and Cool-down content are now functions for better reusability
+        const getWarmUpContent = () => `
+            <div class="exercise-section">
+                <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🔥</span> Calentamiento (5-10 minutos)</h3>
+                <p class="text-gray-600 mb-4">Antes de Empezar:</p>
+                <div class="exercise-item">
+                    <div class="exercise-title">Marcha en el sitio</div>
+                    <p class="exercise-description">Levanta las rodillas alternativamente como si marcharas. Esto sube tu ritmo cardíaco suavemente y calienta las piernas.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Círculos de brazos pequeños</div>
+                    <p class="exercise-description">Hacia adelante y hacia atrás (suaves, sin forzar). Esto ayuda a lubricar las articulaciones de los hombros.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Rotaciones de tronco suaves</div>
+                    <p class="exercise-description">Gira el torso suavemente de lado a lado. Ideal para la movilidad de la columna y preparar el core.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramientos dinámicos generales</div>
+                    <p class="exercise-description">Patadas ligeras hacia adelante y hacia los lados, balanceos de pierna. Esto estira los músculos de forma activa y prepara las articulaciones para el movimiento.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Balanceo de pierna lateral</div>
+                    <p class="exercise-description">De pie, puedes apoyarte en una pared. Balancea una pierna hacia un lado y luego cruzando por delante del cuerpo. Repite con la otra pierna. Activa los glúteos medios y flexores de cadera.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Rotaciones de cadera (circulares)</div>
+                    <p class="exercise-description">De pie, o a cuatro patas, haz círculos amplios con la rodilla o la pierna para movilizar la articulación de la cadera. Haz círculos en ambas direcciones.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Caminata con zancada lateral y toque de pie</div>
+                    <p class="exercise-description">Da un paso lateral, baja ligeramente en una sentadilla y toca el pie con la mano opuesta, luego vuelve a subir y repite al otro lado.</p>
+                </div>
+            </div>
+        `;
+
+        const getCoolDownContent = () => `
+            <div class="exercise-section">
+                <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🧊</span> Enfriamiento y Estiramientos (5-10 minutos)</h3>
+                <p class="text-gray-600 mb-4">Después de Terminar:</p>
+                <p class="text-gray-600 mb-4">Esto es para relajar los músculos, mejorar tu flexibilidad y ayudar a que se recuperen. Mantén cada estiramiento durante 20-30 segundos, sin hacer rebotes. ¡Respira hondo y relájate! Es tu momento para desconectar y sentirte bien.</p>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de cuádriceps</div>
+                    <p class="exercise-description">De pie, sujeta un tobillo y tira del talón hacia el culete. Siente el estiramiento en la parte delantera del muslo.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de pecho</div>
+                    <p class="exercise-description">Entrelaza las manos detrás de la espalda y estira los brazos hacia arriba (suavemente, ¡sin forzar!). Esto ayuda a abrir el pecho y mejorar la postura, contrarrestando cualquier tensión.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de tríceps</div>
+                    <p class="exercise-description">Lleva un codo por encima de la cabeza y empújalo suavemente con la otra mano. Estira la parte de atrás del brazo.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la espalda baja</div>
+                    <p class="exercise-description">Túmbate boca arriba, lleva las rodillas al pecho y abrázalas. Esto alivia la tensión en la espalda baja y es súper relajante.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la figura 4 (Piriformis Stretch)</div>
+                    <p class="exercise-description">Tumbada boca arriba, cruza un tobillo sobre la rodilla opuesta. Tira suavemente de la rodilla de abajo hacia tu pecho para sentir el estiramiento profundo en el glúteo de la pierna cruzada. Mantén y cambia de lado.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de la paloma (Yoga Pigeon Pose)</div>
+                    <p class="exercise-description">Desde una posición de plancha, lleva una rodilla hacia adelante y colócala cerca de tu muñeca opuesta, con la espinilla cruzada (o lo más cerca posible de ser paralela al borde de la colchoneta). Estira la otra pierna hacia atrás. Inclínate suavemente hacia adelante si puedes. Siente el estiramiento en la cadera y el glúteo. Cambia de lado.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Estiramiento de glúteo tumbado con rodilla al pecho y cruce</div>
+                    <p class="exercise-description">Tumbada boca arriba, lleva una rodilla al pecho. Luego, con la mano opuesta, tira suavemente de esa rodilla cruzándola hacia el lado opuesto del cuerpo, intentando mantener los hombros pegados al suelo. Siente el estiramiento en el glúteo y la parte exterior del muslo. Cambia de lado.</p>
+                </div>
+            </div>
+        `;
+
+        const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]; // Sunday is 0
+
+        // Global array to store inspirations
+        const inspirations = [
+            {
+                "quote": "El cuerpo logra lo que la mente cree.",
+                "microActivity": "Haz 5 respiraciones profundas, concentrándote en el aire que entra y sale.",
+                "reflectionQuestion": "¿Qué pequeño paso puedo dar hoy para sentirme más fuerte?"
+            },
+            {
+                "quote": "Cada día es una nueva oportunidad para ser mejor.",
+                "microActivity": "Bebe un vaso de agua antes de tu primera taza de café.",
+                "reflectionQuestion": "¿Qué hábito saludable te gustaría empezar o reforzar hoy?"
+            },
+            {
+                "quote": "La disciplina es el puente entre metas y logros.",
+                "microActivity": "Dedica 10 minutos a organizar un pequeño espacio en tu casa.",
+                "reflectionQuestion": "¿Qué te motiva a mantenerte constante en tus objetivos?"
+            },
+            {
+                "quote": "Tu salud es tu mayor riqueza.",
+                "microActivity": "Estírate suavemente durante 5 minutos al despertar.",
+                "reflectionQuestion": "¿Cómo puedes nutrir tu cuerpo y mente hoy?"
+            },
+            {
+                "quote": "Pequeños cambios, grandes resultados.",
+                "microActivity": "Da un paseo corto al aire libre.",
+                "reflectionQuestion": "¿Qué actividad te hace sentir más conectada contigo misma?"
+            },
+            {
+                "quote": "La perseverancia es la clave del éxito.",
+                "microActivity": "Aprende una palabra nueva en otro idioma.",
+                "reflectionQuestion": "¿Qué desafío reciente superaste con perseverancia?"
+            },
+            {
+                "quote": "Eres más fuerte de lo que crees.",
+                "microActivity": "Escribe tres cosas por las que estás agradecida hoy.",
+                "reflectionQuestion": "¿Qué fortalezas descubriste en ti misma esta semana?"
+            }
+        ];
+
+        let currentSelectedRoutine = null; // Stores the routine data for the selected day
+
+        function getRoutineForDay(dayIndex) {
+            return routines[dayNames[dayIndex]];
+        }
+
+        function displayDailyRoutine(dayName, routineData) {
+            const dailyRoutineTitle = document.getElementById('dailyRoutineTitle');
+            const dailyRoutineContent = document.getElementById('dailyRoutineContent');
+            const doRoutineBtn = document.getElementById('doRoutineBtn');
+            
+            dailyRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
+            let contentHtml = '';
+
+            if (routineData.type === "routine") {
+                contentHtml += `
+                    <div class="exercise-section">
+                        <p class="mb-4 text-gray-600">Esta es una rutina de ejercicio. Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
+                        <div class="overflow-x-auto rounded-xl shadow-md mb-4">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ejercicio</th>
+                                        <th>Series</th>
+                                        <th>Repeticiones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${routineData.exercises.map(ex => `
+                                        <tr>
+                                            <td>${ex.name}</td>
+                                            <td>${ex.series}</td>
+                                            <td>${ex.reps}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+                doRoutineBtn.classList.remove('hidden');
+                currentSelectedRoutine = routineData; // Store for routine execution
+            } else {
+                contentHtml += `
+                    <div class="exercise-section">
+                        <h3 class="text-xl font-semibold mb-4" style="color: #E87D67;">${routineData.name}</h3>
+                        <p class="exercise-description">${routineData.description}</p>
+                    </div>
+                `;
+                doRoutineBtn.classList.add('hidden');
+                currentSelectedRoutine = null;
+            }
+            dailyRoutineContent.innerHTML = contentHtml;
+        }
+
+        let currentMonth = new Date().getMonth();
+        let currentYear = new Date().getFullYear();
+
+        function renderCalendar() {
+            const calendarGrid = document.querySelector('.calendar-grid');
+            const monthYearDisplay = document.getElementById('monthYear');
+            calendarGrid.innerHTML = `
+                <div class="calendar-day-name">Lun</div>
+                <div class="calendar-day-name">Mar</div>
+                <div class="calendar-day-name">Mié</div>
+                <div class="calendar-day-name">Jue</div>
+                <div class="calendar-day-name">Vie</div>
+                <div class="calendar-day-name">Sáb</div>
+                <div class="calendar-day-name">Dom</div>
+            `; // Clear and re-add day names
+
+            const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const today = new Date();
+
+            // Adjust first day of week to be Monday (0 for Monday, 6 for Sunday)
+            let firstDayOfWeek = firstDayOfMonth.getDay();
+            firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1; // Convert Sunday (0) to 6, others -1
+
+            monthYearDisplay.textContent = `${firstDayOfMonth.toLocaleString('es-ES', { month: 'long' })} ${currentYear}`;
+
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('calendar-day', 'empty');
+                calendarGrid.appendChild(emptyDiv);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const dayOfWeekIndex = date.getDay(); // 0 for Sunday, 1 for Monday...
+                const dayName = dayNames[dayOfWeekIndex];
+                const routine = routines[dayName];
+
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day');
+                dayDiv.dataset.dayName = dayName; // Store day name for click event
+                dayDiv.dataset.dayIndex = dayOfWeekIndex; // Store day index for direct routine lookup
+
+                if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
+                    dayDiv.classList.add('current-day');
+                }
+
+                dayDiv.innerHTML = `
+                    <span class="day-number">${day}</span>
+                    <span class="day-routine">${routine ? routine.name.split('(')[0].trim() : ''}</span>
+                `;
+                calendarGrid.appendChild(dayDiv);
+            }
+
+            // Add event listeners to calendar days
+            document.querySelectorAll('.calendar-day:not(.empty)').forEach(dayDiv => {
+                dayDiv.addEventListener('click', () => {
+                    // Remove 'current-day' from previously selected day
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('current-day'));
+                    // Add 'current-day' to the newly selected day
+                    dayDiv.classList.add('current-day');
+
+                    const dayName = dayDiv.dataset.dayName;
+                    const routineData = routines[dayName];
+                    if (routineData) {
+                        displayDailyRoutine(dayName, routineData);
+                    }
+                });
+            });
+        }
+
+        document.getElementById('prevMonth').addEventListener('click', () => {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar();
+        });
+
+        document.getElementById('nextMonth').addEventListener('click', () => {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        });
+
+        // Flag to ensure inspiration is generated only once per session
+        let inspirationGenerated = false;
+
+        // Function to display a random inspiration (either from local array or LLM)
+        async function displayRandomInspiration() {
+            const inspirationOutput = document.getElementById('inspirationOutput');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const getInspirationBtn = document.getElementById('getInspirationBtn');
+
+            // Only generate if not already generated
+            if (inspirationGenerated) {
+                return;
+            }
+
+            inspirationOutput.style.display = 'none'; // Hide previous output
+            loadingSpinner.style.display = 'block'; // Show spinner
+            getInspirationBtn.disabled = true; // Disable button immediately
+
+            try {
+                // First, try to get a random inspiration from the local array
+                if (inspirations.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * inspirations.length);
+                    const randomInspiration = inspirations[randomIndex];
+                    inspirationOutput.innerHTML = `
+                        <p><strong>Cita Motivacional:</strong> "${randomInspiration.quote}"</p>
+                        <p><strong>Micro-actividad:</strong> ${randomInspiration.microActivity}</p>
+                        <p><strong>Pregunta para Reflexionar:</strong> ${randomInspiration.reflectionQuestion}</p>
+                    `;
+                    inspirationOutput.style.display = 'block';
+                    inspirationGenerated = true; // Set flag to true
+                } else {
+                    // If local inspirations are empty, fall back to LLM
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: "Genera una cita motivacional corta sobre ejercicio y bienestar, una sugerencia de micro-actividad para días de baja energía (ej. '5 minutos de estiramientos suaves') y una pregunta de reflexión sobre el bienestar personal. Formato JSON." }] });
+                    
+                    const payload = {
+                        contents: chatHistory,
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "OBJECT",
+                                properties: {
+                                    "quote": { "type": "STRING" },
+                                    "microActivity": { "type": "STRING" },
+                                    "reflectionQuestion": { "type": "STRING" }
+                                },
+                                "propertyOrdering": ["quote", "microActivity", "reflectionQuestion"]
+                            }
+                        }
+                    };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const json = result.candidates[0].content.parts[0].text;
+                        const parsedJson = JSON.parse(json);
+
+                        inspirationOutput.innerHTML = `
+                            <p><strong>Cita Motivacional:</strong> "${parsedJson.quote}"</p>
+                            <p><strong>Micro-actividad:</strong> ${parsedJson.microActivity}</p>
+                            <p><strong>Pregunta para Reflexionar:</strong> ${parsedJson.reflectionQuestion}</p>
+                        `;
+                        inspirationOutput.style.display = 'block';
+                        inspirationGenerated = true; // Set flag to true
+                    } else {
+                        inspirationOutput.innerHTML = '<p>Lo siento, no pude generar una inspiración en este momento. Inténtalo de nuevo.</p>';
+                        inspirationOutput.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Error al obtener la inspiración:', error);
+                inspirationOutput.innerHTML = '<p>Hubo un error al cargar la inspiración. Por favor, inténtalo de nuevo más tarde.</p>';
+                inspirationOutput.style.display = 'block';
+            } finally {
+                loadingSpinner.style.display = 'none'; // Hide spinner
+            }
+        }
+
+        // --- Calendar Toggle Logic ---
+        document.getElementById('calendarToggleBtn').addEventListener('click', () => {
+            const calendarContentWrapper = document.getElementById('calendarContentWrapper');
+            calendarContentWrapper.classList.toggle('collapsed');
+        });
+
+        // --- Callout Close Logic ---
+        document.getElementById('closeCalloutBtn').addEventListener('click', () => {
+            document.getElementById('introCallout').style.display = 'none';
+        });
+
+        // --- Routine Execution Logic ---
+        let currentRoutineData = null;
+        let routineSteps = []; // Flattened array of steps (warmup, exercise series, rest, cooldown, finished)
+        let currentStepIndex = 0; // Index for the flattened routineSteps array
+
+        let timerInterval;
+        let timeLeft = 60; // Default 60 seconds for rest
+
+        const routineExecutionModal = document.getElementById('routineExecutionModal');
+        const routineExecutionTitle = document.getElementById('routineExecutionTitle');
+        const routineStepContent = document.getElementById('routineStepContent');
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const closeRoutineModalBtn = document.getElementById('closeRoutineModal');
+        const doRoutineBtn = document.getElementById('doRoutineBtn');
+
+        const progressWarmup = document.getElementById('progressWarmup');
+        const progressRoutine = document.getElementById('progressRoutine');
+        const progressCooldown = document.getElementById('progressCooldown');
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const exerciseTimerControls = document.getElementById('exerciseTimerControls');
+        const startTimerBtn = document.getElementById('startTimerBtn');
+        const pauseTimerBtn = document.getElementById('pauseTimerBtn');
+        const resetTimerBtn = document.getElementById('resetTimerBtn');
+        const skipTimerBtn = document.getElementById('skipTimerBtn');
+
+        function openRoutineModal() {
+            if (!currentSelectedRoutine || currentSelectedRoutine.type !== 'routine') {
+                return;
+            }
+            currentRoutineData = currentSelectedRoutine;
+            currentStepIndex = 0;
+            
+            // Build the flattened routineSteps array
+            routineSteps = [];
+            routineSteps.push({ type: 'warmup' }); // Warm-up
+
+            const totalSeriesCount = currentRoutineData.exercises[0].series; // Assuming all exercises have the same number of series
+
+            for (let seriesIdx = 1; seriesIdx <= totalSeriesCount; seriesIdx++) {
+                routineSteps.push({ type: 'series_start', seriesNum: seriesIdx, totalSeries: totalSeriesCount }); // Start of a new full series
+                currentRoutineData.exercises.forEach((exercise, exerciseIdx) => {
+                    routineSteps.push({
+                        type: 'exercise',
+                        name: exercise.name,
+                        reps: exercise.reps,
+                        desc: exercise.desc,
+                        img: exercise.img,
+                        seriesNum: seriesIdx,
+                        totalSeries: exercise.series, // This is the total series for this specific exercise
+                        exerciseIndex: exerciseIdx
+                    });
+                    // Add 30s rest if not the last exercise in the current series
+                    if (exerciseIdx < currentRoutineData.exercises.length - 1) {
+                        routineSteps.push({ type: 'rest_30s' });
+                    }
+                });
+                // Add 60s rest if not the last overall series
+                if (seriesIdx < totalSeriesCount) {
+                    routineSteps.push({ type: 'rest_60s' });
+                }
+            }
+
+            routineSteps.push({ type: 'cooldown' }); // Cool-down
+            routineSteps.push({ type: 'finished' }); // Finished
+
+            renderRoutineStep();
+            routineExecutionModal.classList.add('open');
+        }
+
+        function closeRoutineModal() {
+            routineExecutionModal.classList.remove('open');
+            stopTimer(); // Ensure timer is stopped when closing
+            resetTimerDisplay(60); // Reset timer to 60 seconds
+        }
+
+        function updateProgressIndicators() {
+            progressWarmup.classList.remove('active', 'completed');
+            progressRoutine.classList.remove('active', 'completed');
+            progressCooldown.classList.remove('active', 'completed');
+
+            const step = routineSteps[currentStepIndex];
+
+            // Determine which main section the current step belongs to for progress circles
+            let currentMainSection = '';
+            if (step.type === 'warmup') {
+                currentMainSection = 'warmup';
+            } else if (step.type === 'exercise' || step.type === 'rest_30s' || step.type === 'series_start' || step.type === 'rest_60s') {
+                currentMainSection = 'routine';
+            } else if (step.type === 'cooldown') {
+                currentMainSection = 'cooldown';
+            } else if (step.type === 'finished') {
+                currentMainSection = 'finished';
+            }
+
+            if (currentMainSection === 'warmup') {
+                progressWarmup.classList.add('active');
+            } else if (currentMainSection === 'routine') {
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('active');
+            } else if (currentMainSection === 'cooldown') {
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('completed');
+                progressCooldown.classList.add('active');
+            } else if (currentMainSection === 'finished') { // Routine finished
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('completed');
+                progressCooldown.classList.add('completed');
+            }
+        }
+
+        function renderRoutineStep() {
+            const step = routineSteps[currentStepIndex];
+            routineExecutionTitle.textContent = currentRoutineData.name;
+            let contentHtml = '';
+            exerciseTimerControls.classList.add('hidden'); // Hide timer by default
+            prevStepBtn.classList.remove('hidden'); // Show prev button by default
+            nextStepBtn.textContent = 'Siguiente >'; // Default next button text
+            nextStepBtn.disabled = false; // Enable next button by default
+
+            if (step.type === 'warmup') {
+                prevStepBtn.classList.add('hidden');
+                nextStepBtn.textContent = 'Siguiente: Rutina';
+                contentHtml = getWarmUpContent();
+            } else if (step.type === 'series_start') {
+                contentHtml = `
+                    <h3 style="color: #E87D67;">¡Comenzando Serie ${step.seriesNum} de ${step.totalSeries}!</h3>
+                    <p>Prepárate para los ejercicios.</p>
+                `;
+                // The next button will lead to the first exercise of this series
+                nextStepBtn.textContent = 'Empezar Ejercicio';
+            }
+            else if (step.type === 'exercise') {
+                contentHtml = `
+                    <div class="routine-exercise-detail">
+                        <div class="exercise-title">${step.name}</div>
+                        <p class="exercise-reps">Serie: ${step.seriesNum} de ${step.totalSeries}</p>
+                        <p class="exercise-reps">Repeticiones: ${step.reps}</p>
+                        <p class="exercise-description">${step.desc}</p>
+                        <img src="${step.img}" alt="Imagen de persona realizando ${step.name}" onerror="this.src='https://placehold.co/400x200/FEECE2/FCA38F?text=Imagen+no+disponible';">
+                    </div>
+                `;
+                // Determine next button text based on what comes next in the flattened steps
+                const nextStepInSequence = routineSteps[currentStepIndex + 1];
+                if (nextStepInSequence) {
+                    if (nextStepInSequence.type === 'rest_30s') {
+                        nextStepBtn.textContent = 'Iniciar Descanso (30s)';
+                    } else if (nextStepInSequence.type === 'rest_60s') {
+                        nextStepBtn.textContent = 'Iniciar Descanso (60s)';
+                    } else if (nextStepInSequence.type === 'cooldown') {
+                        nextStepBtn.textContent = 'Siguiente: Estiramientos';
+                    } else if (nextStepInSequence.type === 'exercise') {
+                        nextStepBtn.textContent = 'Siguiente Ejercicio';
+                    } else if (nextStepInSequence.type === 'finished') {
+                        nextStepBtn.textContent = 'Finalizar Rutina';
+                    }
+                }
+
+            } else if (step.type === 'rest_30s') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Descanso Corto! (30 segundos)</h3>
+                    <p>Prepárate para el siguiente ejercicio.</p>
+                `;
+                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
+                resetTimerDisplay(30); // Set timer to 30 seconds
+                nextStepBtn.disabled = true; // Disable next button during rest
+                nextStepBtn.textContent = 'Continuar';
+            } else if (step.type === 'rest_60s') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Descanso Largo! (1 minuto)</h3>
+                    <p>¡Buen trabajo! Tómate un respiro antes de la siguiente serie.</p>
+                `;
+                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
+                resetTimerDisplay(60); // Set timer to 60 seconds
+                nextStepBtn.disabled = true; // Disable next button during rest
+                nextStepBtn.textContent = 'Continuar';
+            }
+            else if (step.type === 'cooldown') {
+                contentHtml = getCoolDownContent();
+                nextStepBtn.textContent = 'Finalizar Rutina';
+            } else if (step.type === 'finished') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Rutina Completada!</h3>
+                    <p>¡Felicidades, has terminado tu rutina de hoy!</p>
+                    <p>Recuerda la importancia de la constancia y el descanso.</p>
+                `;
+                prevStepBtn.classList.add('hidden');
+                nextStepBtn.textContent = 'Cerrar';
+            }
+
+            routineStepContent.innerHTML = contentHtml;
+            updateProgressIndicators();
+        }
+
+        function nextStep() {
+            stopTimer(); // Stop timer when moving to next step
+            currentStepIndex++;
+            if (currentStepIndex >= routineSteps.length) {
+                closeRoutineModal();
+                return;
+            }
+            renderRoutineStep();
+        }
+
+        function prevStep() {
+            stopTimer(); // Stop timer when moving back
+            currentStepIndex--;
+            if (currentStepIndex < 0) {
+                currentStepIndex = 0; // Stay at the beginning
+            }
+            renderRoutineStep();
+        }
+
+        // --- Timer Functions ---
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return; // Prevent multiple intervals
+            startTimerBtn.classList.add('hidden');
+            pauseTimerBtn.classList.remove('hidden');
+            skipTimerBtn.disabled = true; // Disable skip while running
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = formatTime(timeLeft);
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    timerDisplay.textContent = "¡Tiempo!";
+                    skipTimerBtn.disabled = false; // Enable skip when timer finishes
+                    nextStepBtn.disabled = false; // Enable next step after timer finishes
+                }
+            }, 1000);
+            nextStepBtn.disabled = true; // Disable next step while timer is running
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+            skipTimerBtn.disabled = false; // Enable skip when paused
+        }
+
+        function resetTimerDisplay(duration) { // Takes duration as argument
+            stopTimer();
+            timeLeft = duration;
+            timerDisplay.textContent = formatTime(timeLeft);
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+            resetTimerBtn.classList.add('hidden'); // Keep reset hidden unless explicitly needed
+            skipTimerBtn.disabled = false;
+            // If it's a rest step, the next button should be disabled until timer finishes or is skipped
+            if (routineSteps[currentStepIndex] && (routineSteps[currentStepIndex].type === 'rest_30s' || routineSteps[currentStepIndex].type === 'rest_60s')) {
+                nextStepBtn.disabled = true;
+            } else {
+                nextStepBtn.disabled = false;
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+        }
+
+        // Event Listeners for Routine Modal
+        doRoutineBtn.addEventListener('click', openRoutineModal);
+        closeRoutineModalBtn.addEventListener('click', closeRoutineModal);
+        nextStepBtn.addEventListener('click', nextStep);
+        prevStepBtn.addEventListener('click', prevStep);
+
+        startTimerBtn.addEventListener('click', startTimer);
+        pauseTimerBtn.addEventListener('click', pauseTimer);
+        resetTimerBtn.addEventListener('click', () => {
+            // Determine current rest duration based on step type
+            const currentStep = routineSteps[currentStepIndex];
+            if (currentStep && currentStep.type === 'rest_30s') {
+                resetTimerDisplay(30);
+            } else if (currentStep && currentStep.type === 'rest_60s') {
+                resetTimerDisplay(60);
+            } else {
+                resetTimerDisplay(60); // Default if not a rest step
+            }
+        });
+        skipTimerBtn.addEventListener('click', () => {
+            stopTimer();
+            timerDisplay.textContent = formatTime(0); // Show 00:00
+            nextStepBtn.disabled = false; // Enable next step when skipped
+            skipTimerBtn.disabled = false; // Ensure skip is enabled after use
+        });
+
+
+        // Initial render and display current day's routine on page load
+        window.onload = async () => {
+            renderCalendar();
+            // Automatically display today's routine
+            const today = new Date();
+            const todayDayOfWeekIndex = today.getDay(); // 0 for Sunday, 1 for Monday...
+            const todayDayName = dayNames[todayDayOfWeekIndex];
+            const todayRoutine = routines[todayDayName];
+            if (todayRoutine) {
+                displayDailyRoutine(todayDayName, todayRoutine);
+                // Highlight today's date in the calendar
+                const todayDiv = document.querySelector(`.calendar-day.current-day`);
+                if (todayDiv) {
+                    todayDiv.classList.add('current-day');
+                }
+            }
+            // The inspiration button is now explicitly clicked to generate, not on load.
+            // await displayRandomInspiration(); // Removed this line
+        };
+
+        // Event listener for inspiration button
+        document.getElementById('getInspirationBtn').addEventListener('click', displayRandomInspiration);
+    </script>
+</body>
+</html>
