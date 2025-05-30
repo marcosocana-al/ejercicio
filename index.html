@@ -45,6 +45,30 @@
             align-items: center;
         }
 
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .calendar-toggle-btn {
+            display: none; /* Hidden by default on desktop */
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.4rem 0.8rem; /* Adjusted padding for better look */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-toggle-btn:hover {
+            background-color: #E87D67;
+        }
+
         .main-content {
             flex: 1; /* Takes remaining space */
             padding: 2rem;
@@ -337,7 +361,29 @@
                 border-right: none;
                 border-bottom: 1px solid #FEECE2; /* Add bottom border */
                 border-radius: 1.5rem 1.5rem 0 0; /* Round top corners only */
+                max-height: 500px; /* Sufficiently large to show content initially */
+                transition: max-height 0.5s ease-out;
+                overflow: hidden; /* Hide overflow when collapsing */
             }
+            .sidebar-calendar.collapsed {
+                max-height: 80px; /* Height when collapsed (just header and button) */
+            }
+            .sidebar-header h2 {
+                margin-bottom: 0; /* Remove bottom margin when button is present */
+            }
+            .calendar-toggle-btn {
+                display: block; /* Show on mobile */
+            }
+            .calendar-content {
+                /* This div will be hidden/shown by max-height on parent */
+                opacity: 1;
+                transition: opacity 0.3s ease-out;
+            }
+            .sidebar-calendar.collapsed .calendar-content {
+                opacity: 0;
+                pointer-events: none; /* Disable interactions when hidden */
+            }
+
             .main-content {
                 padding: 1rem;
                 width: 100%;
@@ -429,21 +475,26 @@
 </head>
 <body class="bg-blue-50 text-gray-700">
     <div class="main-layout">
-        <div class="sidebar-calendar">
-            <h2 class="text-xl font-bold text-center mb-4" style="color: #E87D67;">Calendario</h2>
-            <div class="calendar-nav">
-                <button id="prevMonth">&lt; Anterior</button>
-                <div id="monthYear" class="calendar-header"></div>
-                <button id="nextMonth">Siguiente &gt;</button>
+        <div id="sidebarCalendar" class="sidebar-calendar">
+            <div class="sidebar-header">
+                <h2 class="text-xl font-bold mb-4" style="color: #E87D67;">Calendario</h2>
+                <button id="calendarToggleBtn" class="calendar-toggle-btn">&#9776;</button>
             </div>
-            <div class="calendar-grid">
-                <div class="calendar-day-name">Lun</div>
-                <div class="calendar-day-name">Mar</div>
-                <div class="calendar-day-name">Mié</div>
-                <div class="calendar-day-name">Jue</div>
-                <div class="calendar-day-name">Vie</div>
-                <div class="calendar-day-name">Sáb</div>
-                <div class="calendar-day-name">Dom</div>
+            <div class="calendar-content">
+                <div class="calendar-nav">
+                    <button id="prevMonth">&lt; Anterior</button>
+                    <div id="monthYear" class="calendar-header"></div>
+                    <button id="nextMonth">Siguiente &gt;</button>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-day-name">Lun</div>
+                    <div class="calendar-day-name">Mar</div>
+                    <div class="calendar-day-name">Mié</div>
+                    <div class="calendar-day-name">Jue</div>
+                    <div class="calendar-day-name">Vie</div>
+                    <div class="calendar-day-name">Sáb</div>
+                    <div class="calendar-day-name">Dom</div>
+                </div>
             </div>
         </div>
 
@@ -879,6 +930,12 @@
                 loadingSpinner.style.display = 'none'; // Hide spinner
             }
         }
+
+        // Toggle calendar sidebar visibility on mobile
+        document.getElementById('calendarToggleBtn').addEventListener('click', () => {
+            const sidebarCalendar = document.getElementById('sidebarCalendar');
+            sidebarCalendar.classList.toggle('collapsed');
+        });
 
         // Initial render and display current day's routine on page load
         window.onload = async () => {
