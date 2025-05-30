@@ -16,73 +16,29 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Align to top for better mobile scrolling */
             align-items: center;
             padding: 1rem;
-            box-sizing: border-box;
+            box-sizing: border-box; /* Include padding in element's total width and height */
         }
-        .main-layout {
-            display: flex;
-            flex-direction: row; /* Default to side-by-side */
-            max-width: 1200px; /* Increased max-width for side-by-side layout */
+        .container {
+            max-width: 960px;
             width: 100%;
             margin: 2rem auto;
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border: 1px solid #FEECE2;
-            box-sizing: border-box;
-            overflow: hidden; /* Ensures rounded corners are respected */
-        }
-
-        .sidebar-calendar {
-            flex: 0 0 300px; /* Fixed width for calendar sidebar */
-            padding: 1.5rem;
-            background-color: #FFFBF8; /* Lighter peach for sidebar */
-            border-right: 1px solid #FEECE2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-
-        .calendar-toggle-btn {
-            display: none; /* Hidden by default on desktop */
-            background-color: #FCA38F;
-            color: white;
-            padding: 0.4rem 0.8rem; /* Adjusted padding for better look */
-            border-radius: 0.5rem;
-            font-weight: 600;
-            font-size: 1.2rem;
-            cursor: pointer;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-        .calendar-toggle-btn:hover {
-            background-color: #E87D67;
-        }
-
-        .main-content {
-            flex: 1; /* Takes remaining space */
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #FEECE2; /* Light peach border */
+            box-sizing: border-box;
         }
-
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.5rem; /* Larger heading */
             margin-bottom: 2rem;
             text-align: center;
             color: #E87D67; /* Muted coral heading */
-            font-weight: 800;
-            letter-spacing: -0.025em;
+            font-weight: 800; /* Extra bold */
+            letter-spacing: -0.025em; /* Tighten spacing */
         }
         h2 {
             font-size: 2rem;
@@ -101,7 +57,7 @@
         }
         table {
             width: 100%;
-            border-collapse: separate;
+            border-collapse: separate; /* For rounded corners on cells */
             border-spacing: 0;
             margin-bottom: 2rem;
             border-radius: 0.75rem;
@@ -170,7 +126,7 @@
         }
         .image-placeholder {
             width: 100%;
-            height: 180px;
+            height: 180px; /* Slightly smaller */
             background-color: #FEECE2;
             display: flex;
             align-items: center;
@@ -187,13 +143,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%; /* Ensure nav takes full width of sidebar */
             margin-bottom: 1rem;
         }
         .calendar-nav button {
             background-color: #FCA38F;
             color: white;
-            padding: 0.5rem 0.75rem; /* Smaller padding for compact buttons */
+            padding: 0.5rem 1rem;
             border-radius: 0.5rem;
             font-weight: 600;
             transition: background-color 0.3s ease;
@@ -202,26 +157,25 @@
             background-color: #E87D67;
         }
         .calendar-header {
-            font-size: 1.2rem; /* Smaller font for sidebar calendar header */
+            font-size: 1.5rem;
             font-weight: 700;
             color: #E87D67;
         }
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 0.2rem; /* Smaller gap for compact calendar */
-            margin-bottom: 1rem;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
             text-align: center;
-            width: 100%; /* Ensure grid takes full width of sidebar */
         }
         .calendar-day-name {
             font-weight: 600;
             color: #525252;
-            padding: 0.3rem; /* Smaller padding */
-            font-size: 0.75rem; /* Smaller font for day names */
+            padding: 0.5rem;
+            font-size: 0.9rem;
         }
         .calendar-day {
-            padding: 0.4rem; /* Smaller padding for calendar cells */
+            padding: 0.75rem;
             border-radius: 0.5rem;
             background-color: #FDF8F5;
             border: 1px solid #FEECE2;
@@ -231,18 +185,18 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 50px; /* Smaller height for compact calendar */
+            min-height: 70px; /* Ensure consistent height */
         }
         .calendar-day:hover {
             background-color: #FFF5F0;
-            transform: translateY(-1px); /* Smaller hover effect */
+            transform: translateY(-2px);
         }
         .calendar-day.current-day {
             background-color: #FCA38F;
             color: white;
             font-weight: 700;
             border-color: #E87D67;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Smaller shadow */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .calendar-day.current-day .day-number,
         .calendar-day.current-day .day-routine {
@@ -254,39 +208,59 @@
             cursor: default;
         }
         .day-number {
-            font-size: 1rem; /* Smaller day number */
+            font-size: 1.2rem;
             font-weight: 600;
             color: #2d3748;
         }
         .day-routine {
-            font-size: 0.65rem; /* Smaller routine text */
+            font-size: 0.75rem;
             color: #4a5568;
-            margin-top: 0.1rem; /* Reduced margin */
-            line-height: 1.1;
-            text-align: center;
+            margin-top: 0.25rem;
+            line-height: 1.2;
         }
 
         /* Daily Routine Display */
         .daily-routine-section {
-            background-color: #ffffff; /* White background for main content */
+            background-color: #ffffff;
             padding: 1.5rem;
             border-radius: 1rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
             border: 1px solid #FEECE2;
             margin-top: 1.5rem;
-            flex-grow: 1; /* Allows it to take available space */
         }
         .daily-routine-section h2 {
-            margin-top: 0; /* Reset margin for this h2 */
+            margin-top: 0;
             border-bottom: none;
             padding-bottom: 0;
+        }
+        .do-routine-btn {
+            background-color: #A7D9D6; /* Mint/aqua button */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 1.5rem;
+            display: inline-block;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .do-routine-btn:hover:not(:disabled) {
+            background-color: #79B8B5; /* Darker mint/aqua on hover */
+            transform: translateY(-2px);
+        }
+        .do-routine-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
         }
 
         /* Inspiration Feature styles */
         .inspiration-container {
             margin-top: 2rem;
             text-align: center;
-            width: 100%; /* Ensure it spans full width of main-content */
         }
         .llm-feature-button {
             background-color: #FCA38F;
@@ -297,7 +271,10 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         .llm-feature-button:hover:not(:disabled) {
@@ -320,7 +297,7 @@
             color: #78350f;
             font-size: 1rem;
             line-height: 1.5;
-            display: none;
+            display: none; /* Hidden by default */
             text-align: left;
         }
         #inspirationOutput p {
@@ -347,50 +324,218 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Routine Modal Styles */
+        .routine-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .routine-modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .routine-modal-content {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            max-width: 900px; /* Increased max-width for better desktop view */
+            width: 90%; /* Use percentage for responsiveness */
+            max-height: 95vh; /* Max height to prevent cutting, allow scrolling */
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute content and buttons */
+        }
+        .routine-modal-overlay.open .routine-modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .routine-modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .routine-modal-close-button:hover {
+            color: #1f2937;
+        }
+
+        .progress-indicators {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+        .progress-circle {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background-color: #FEECE2; /* Light peach */
+            border: 2px solid #FCA38F; /* Medium salmon */
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .progress-circle.active {
+            background-color: #FCA38F; /* Medium salmon */
+            transform: scale(1.2);
+        }
+        .progress-circle.completed {
+            background-color: #A7D9D6; /* Mint/aqua */
+            border-color: #4A8C88; /* Darker mint/aqua */
+        }
+
+        .routine-step-content-wrapper {
+            flex-grow: 1; /* Allows this wrapper to take available space */
+            overflow-y: auto; /* Enable scrolling specifically for the content */
+            padding-right: 0.5rem; /* Add some padding for scrollbar if present */
+            margin-bottom: 1rem; /* Space before timer/buttons */
+        }
+
+        .routine-step-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content to the top */
+            align-items: center;
+            text-align: center;
+            /* min-height removed as wrapper handles sizing */
+        }
+        .routine-step-content h3 {
+            font-size: 2rem;
+            color: #E87D67;
+            margin-bottom: 1rem;
+        }
+        .routine-step-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .routine-exercise-detail {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #FFFBF8;
+            border-radius: 0.75rem;
+            border: 1px solid #FEECE2;
+            width: 100%;
+            max-width: 500px;
+            text-align: left; /* Align text left within the detail box */
+        }
+        .routine-exercise-detail .exercise-title {
+            font-size: 1.5rem;
+            color: #E87D67;
+            margin-bottom: 0.5rem;
+            text-align: center; /* Center title within the detail box */
+        }
+        .routine-exercise-detail .exercise-description {
+            font-size: 1rem;
+            color: #4a5568;
+            text-align: left; /* Keep description left-aligned */
+        }
+        .routine-exercise-detail .exercise-reps {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #FCA38F;
+            margin-top: 0.5rem;
+            text-align: center; /* Center reps within the detail box */
+        }
+        .routine-exercise-detail img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timer-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        .timer-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #4A8C88; /* Darker mint/aqua */
+            margin-bottom: 1rem;
+        }
+        .timer-buttons button {
+            background-color: #A7D9D6;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        .timer-buttons button:hover:not(:disabled) {
+            background-color: #79B8B5;
+        }
+        .timer-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .routine-navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem; /* Adjusted margin to be closer to content */
+            gap: 1rem;
+            width: 100%; /* Ensure buttons span full width */
+        }
+        .routine-navigation-buttons button {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            flex-grow: 1;
+        }
+        .routine-navigation-buttons button:hover:not(:disabled) {
+            background-color: #E87D67;
+            transform: translateY(-2px);
+        }
+        .routine-navigation-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+            transform: none;
+        }
+
         /* Mobile-specific adjustments */
         @media (max-width: 768px) {
-            .main-layout {
-                flex-direction: column; /* Stack vertically on mobile */
-                margin: 1rem auto;
-                padding: 0; /* Remove padding from main-layout, sections will have it */
+            body {
+                padding: 0.5rem; /* Reduce overall body padding */
             }
-            .sidebar-calendar {
-                flex: none; /* Remove fixed flex basis */
-                width: 100%;
-                padding: 1rem;
-                border-right: none;
-                border-bottom: 1px solid #FEECE2; /* Add bottom border */
-                border-radius: 1.5rem 1.5rem 0 0; /* Round top corners only */
-                max-height: 500px; /* Sufficiently large to show content initially */
-                transition: max-height 0.5s ease-out;
-                overflow: hidden; /* Hide overflow when collapsing */
-            }
-            .sidebar-calendar.collapsed {
-                max-height: 80px; /* Height when collapsed (just header and button) */
-            }
-            .sidebar-header h2 {
-                margin-bottom: 0; /* Remove bottom margin when button is present */
-            }
-            .calendar-toggle-btn {
-                display: block; /* Show on mobile */
-            }
-            .calendar-content {
-                /* This div will be hidden/shown by max-height on parent */
-                opacity: 1;
-                transition: opacity 0.3s ease-out;
-            }
-            .sidebar-calendar.collapsed .calendar-content {
-                opacity: 0;
-                pointer-events: none; /* Disable interactions when hidden */
-            }
-
-            .main-content {
-                padding: 1rem;
-                width: 100%;
-                border-radius: 0 0 1.5rem 1.5rem; /* Round bottom corners only */
+            .container {
+                margin: 1rem auto; /* Smaller margins on mobile */
+                padding: 1rem; /* Smaller padding inside container */
+                border-radius: 1rem;
             }
             h1 {
-                font-size: 1.75rem;
+                font-size: 1.75rem; /* Smaller heading for mobile */
                 margin-bottom: 1rem;
             }
             h2 {
@@ -403,119 +548,187 @@
                 margin-bottom: 0.75rem;
             }
             th, td {
-                padding: 0.6rem;
-                font-size: 0.8rem;
+                padding: 0.75rem; /* Reduced padding for table cells */
+                font-size: 0.85rem;
             }
             .callout {
-                padding: 0.8rem;
-                font-size: 0.9rem;
-                margin-bottom: 1rem;
+                padding: 1rem;
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
             }
             .image-placeholder {
-                height: 100px;
-                font-size: 0.7rem;
-            }
-            .calendar-nav {
-                flex-direction: row; /* Keep buttons side-by-side for small calendar */
-                justify-content: space-between;
-                gap: 0.25rem;
-            }
-            .calendar-nav button {
-                padding: 0.4rem 0.6rem;
-                font-size: 0.75rem;
-            }
-            .calendar-header {
-                font-size: 1rem;
-            }
-            .calendar-grid {
-                gap: 0.1rem;
-            }
-            .calendar-day-name {
-                padding: 0.2rem;
-                font-size: 0.65rem;
-            }
-            .calendar-day {
-                padding: 0.3rem;
-                min-height: 40px;
-            }
-            .day-number {
+                height: 120px; /* Smaller image placeholders */
                 font-size: 0.8rem;
             }
+            .calendar-nav {
+                flex-direction: column; /* Stack buttons and month/year vertically */
+                gap: 0.75rem;
+            }
+            .calendar-nav button {
+                width: 100%; /* Full width buttons */
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            .calendar-header {
+                font-size: 1.25rem;
+            }
+            .calendar-grid {
+                gap: 0.25rem; /* Smaller gap between calendar days */
+            }
+            .calendar-day {
+                padding: 0.5rem; /* Reduced padding for calendar days */
+                min-height: 55px; /* Slightly smaller height */
+            }
+            .day-number {
+                font-size: 1rem; /* Smaller day number */
+            }
             .day-routine {
-                font-size: 0.55rem;
+                font-size: 0.6rem;
             }
             .daily-routine-section {
                 padding: 1rem;
                 margin-top: 1rem;
             }
             .exercise-section {
-                padding: 0.6rem;
-                margin-bottom: 0.8rem;
+                padding: 0.75rem;
+                margin-bottom: 1rem;
             }
             .exercise-item {
-                margin-bottom: 0.6rem;
-                padding-bottom: 0.6rem;
+                margin-bottom: 0.75rem;
+                padding-bottom: 0.75rem;
             }
             .exercise-title {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
             .exercise-description {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
             .llm-feature-button {
-                padding: 0.5rem 1rem;
-                font-size: 0.95rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 1rem;
             }
             #inspirationOutput {
                 padding: 1rem;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
+            }
+            /* Routine Modal Mobile Adjustments */
+            .routine-modal-content {
+                padding: 1rem;
+                width: 95%;
+            }
+            .progress-indicators {
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .progress-circle {
+                width: 1.2rem;
+                height: 1.2rem;
+            }
+            .routine-step-content h3 {
+                font-size: 1.5rem;
+            }
+            .routine-step-content p {
+                font-size: 1rem;
+            }
+            .routine-exercise-detail {
+                padding: 0.8rem;
+            }
+            .routine-exercise-detail .exercise-title {
+                font-size: 1.2rem;
+            }
+            .routine-exercise-detail .exercise-reps {
+                font-size: 1rem;
+            }
+            .timer-display {
+                font-size: 2.5rem;
+            }
+            .timer-buttons button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                margin: 0 0.25rem;
+            }
+            .routine-navigation-buttons {
+                flex-direction: column;
+                gap: 0.75rem;
+                margin-top: 1.5rem;
+            }
+            .routine-navigation-buttons button {
+                padding: 0.6rem 1rem;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body class="bg-blue-50 text-gray-700">
-    <div class="main-layout">
-        <div id="sidebarCalendar" class="sidebar-calendar">
-            <div class="sidebar-header">
-                <h2 class="text-xl font-bold mb-4" style="color: #E87D67;">Calendario</h2>
-                <button id="calendarToggleBtn" class="calendar-toggle-btn">&#9776;</button>
-            </div>
-            <div class="calendar-content">
-                <div class="calendar-nav">
-                    <button id="prevMonth">&lt; Anterior</button>
-                    <div id="monthYear" class="calendar-header"></div>
-                    <button id="nextMonth">Siguiente &gt;</button>
-                </div>
-                <div class="calendar-grid">
-                    <div class="calendar-day-name">Lun</div>
-                    <div class="calendar-day-name">Mar</div>
-                    <div class="calendar-day-name">Mié</div>
-                    <div class="calendar-day-name">Jue</div>
-                    <div class="calendar-day-name">Vie</div>
-                    <div class="calendar-day-name">Sáb</div>
-                    <div class="calendar-day-name">Dom</div>
-                </div>
-            </div>
+    <div class="container">
+        <h1>🗓️ Calendario de Ejercicio</h1>
+
+
+        <div class="callout">
+            <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
         </div>
 
-        <div class="main-content">
-            <h1>🗓️ Tu Plan de Ejercicio Diario</h1>
 
-            <div class="callout">
-                <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
+        <h2 class="text-blue-700">Calendario Mensual</h2>
+        <div class="calendar-nav">
+            <button id="prevMonth">&lt; Anterior</button>
+            <div id="monthYear" class="calendar-header"></div>
+            <button id="nextMonth">Siguiente &gt;</button>
+        </div>
+        <div class="calendar-grid">
+            <div class="calendar-day-name">Lun</div>
+            <div class="calendar-day-name">Mar</div>
+            <div class="calendar-day-name">Mié</div>
+            <div class="calendar-day-name">Jue</div>
+            <div class="calendar-day-name">Vie</div>
+            <div class="calendar-day-name">Sáb</div>
+            <div class="calendar-day-name">Dom</div>
+        </div>
+
+        <div id="dailyRoutineDisplay" class="daily-routine-section">
+            <h2 id="dailyRoutineTitle" style="color: #E87D67;"></h2>
+            <div id="dailyRoutineContent">
+                <p class="text-gray-600">Selecciona un día del calendario para ver tu rutina.</p>
+            </div>
+            <button id="doRoutineBtn" class="do-routine-btn hidden">Hacer rutina</button>
+        </div>
+
+        <div class="inspiration-container">
+            <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
+            <div id="loadingSpinner" class="loading-spinner"></div>
+            <div id="inspirationOutput"></div>
+        </div>
+    </div>
+
+    <div id="routineExecutionModal" class="routine-modal-overlay">
+        <div class="routine-modal-content">
+            <button class="routine-modal-close-button" id="closeRoutineModal">&times;</button>
+            <h2 id="routineExecutionTitle" style="color: #E87D67; text-align: center; margin-bottom: 1.5rem;"></h2>
+            
+            <div class="progress-indicators">
+                <div class="progress-circle" id="progressWarmup"></div>
+                <div class="progress-circle" id="progressRoutine"></div>
+                <div class="progress-circle" id="progressCooldown"></div>
             </div>
 
-            <div id="dailyRoutineDisplay" class="daily-routine-section">
-                <h2 id="dailyRoutineTitle" style="color: #E87D67;"></h2>
-                <div id="dailyRoutineContent">
-                    <p class="text-gray-600">Selecciona un día del calendario para ver tu rutina.</p>
+            <div id="routineStepContentWrapper" class="routine-step-content-wrapper">
+                <div id="routineStepContent" class="routine-step-content">
+                    </div>
+            </div>
+
+            <div class="timer-controls hidden" id="exerciseTimerControls">
+                <div id="timerDisplay" class="timer-display">00:30</div>
+                <div class="timer-buttons">
+                    <button id="startTimerBtn">Iniciar Descanso</button>
+                    <button id="pauseTimerBtn" class="hidden">Pausar</button>
+                    <button id="resetTimerBtn" class="hidden">Reiniciar</button>
+                    <button id="skipTimerBtn">Saltar Descanso</button>
                 </div>
             </div>
 
-            <div class="inspiration-container">
-                <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
-                <div id="loadingSpinner" class="loading-spinner"></div>
-                <div id="inspirationOutput"></div>
+            <div class="routine-navigation-buttons">
+                <button id="prevStepBtn" class="hidden">&lt; Anterior</button>
+                <button id="nextStepBtn">Siguiente &gt;</button>
             </div>
         </div>
     </div>
@@ -581,7 +794,8 @@
             }
         };
 
-        const warmUpContent = `
+        // Warm-up and Cool-down content are now functions for better reusability
+        const getWarmUpContent = () => `
             <div class="exercise-section">
                 <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🔥</span> Calentamiento (5-10 minutos)</h3>
                 <p class="text-gray-600 mb-4">Antes de Empezar:</p>
@@ -616,7 +830,7 @@
             </div>
         `;
 
-        const coolDownContent = `
+        const getCoolDownContent = () => `
             <div class="exercise-section">
                 <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🧊</span> Enfriamiento y Estiramientos (5-10 minutos)</h3>
                 <p class="text-gray-600 mb-4">Después de Terminar:</p>
@@ -693,6 +907,8 @@
             }
         ];
 
+        let currentSelectedRoutine = null; // Stores the routine data for the selected day
+
         function getRoutineForDay(dayIndex) {
             return routines[dayNames[dayIndex]];
         }
@@ -700,16 +916,15 @@
         function displayDailyRoutine(dayName, routineData) {
             const dailyRoutineTitle = document.getElementById('dailyRoutineTitle');
             const dailyRoutineContent = document.getElementById('dailyRoutineContent');
+            const doRoutineBtn = document.getElementById('doRoutineBtn');
             
             dailyRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
             let contentHtml = '';
 
             if (routineData.type === "routine") {
-                contentHtml += warmUpContent;
                 contentHtml += `
                     <div class="exercise-section">
-                        <h3 class="text-xl font-semibold mb-4" style="color: #E87D67;">Detalle de Ejercicios: ${routineData.name}</h3>
-                        <p class="mb-4 text-gray-600">Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
+                        <p class="mb-4 text-gray-600">Esta es una rutina de ejercicio. Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
                         <div class="overflow-x-auto rounded-xl shadow-md mb-4">
                             <table>
                                 <thead>
@@ -730,17 +945,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        <p class="mb-4 text-gray-600">¿Cómo se hace cada ejercicio? (¡Paso a paso para que no te pierdas ni una!)</p>
-                        ${routineData.exercises.map(ex => `
-                            <div class="exercise-item">
-                                <div class="exercise-title">${ex.name}</div>
-                                <p class="exercise-description">${ex.desc}</p>
-                                <img src="${ex.img}" alt="Imagen de persona realizando ${ex.name}" class="image-placeholder">
-                            </div>
-                        `).join('')}
                     </div>
                 `;
-                contentHtml += coolDownContent;
+                doRoutineBtn.classList.remove('hidden');
+                currentSelectedRoutine = routineData; // Store for routine execution
             } else {
                 contentHtml += `
                     <div class="exercise-section">
@@ -748,6 +956,8 @@
                         <p class="exercise-description">${routineData.description}</p>
                     </div>
                 `;
+                doRoutineBtn.classList.add('hidden');
+                currentSelectedRoutine = null;
             }
             dailyRoutineContent.innerHTML = contentHtml;
         }
@@ -931,11 +1141,303 @@
             }
         }
 
-        // Toggle calendar sidebar visibility on mobile
-        document.getElementById('calendarToggleBtn').addEventListener('click', () => {
-            const sidebarCalendar = document.getElementById('sidebarCalendar');
-            sidebarCalendar.classList.toggle('collapsed');
+        // --- Routine Execution Logic ---
+        let currentRoutineData = null;
+        let routineSteps = []; // Flattened array of steps (warmup, exercise series, rest, cooldown, finished)
+        let currentStepIndex = 0; // Index for the flattened routineSteps array
+
+        let timerInterval;
+        let timeLeft = 60; // Default 60 seconds for rest
+
+        const routineExecutionModal = document.getElementById('routineExecutionModal');
+        const routineExecutionTitle = document.getElementById('routineExecutionTitle');
+        const routineStepContent = document.getElementById('routineStepContent');
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const closeRoutineModalBtn = document.getElementById('closeRoutineModal');
+        const doRoutineBtn = document.getElementById('doRoutineBtn');
+
+        const progressWarmup = document.getElementById('progressWarmup');
+        const progressRoutine = document.getElementById('progressRoutine');
+        const progressCooldown = document.getElementById('progressCooldown');
+
+        const timerDisplay = document.getElementById('timerDisplay');
+        const exerciseTimerControls = document.getElementById('exerciseTimerControls');
+        const startTimerBtn = document.getElementById('startTimerBtn');
+        const pauseTimerBtn = document.getElementById('pauseTimerBtn');
+        const resetTimerBtn = document.getElementById('resetTimerBtn');
+        const skipTimerBtn = document.getElementById('skipTimerBtn');
+
+        function openRoutineModal() {
+            if (!currentSelectedRoutine || currentSelectedRoutine.type !== 'routine') {
+                return;
+            }
+            currentRoutineData = currentSelectedRoutine;
+            currentStepIndex = 0;
+            
+            // Build the flattened routineSteps array
+            routineSteps = [];
+            routineSteps.push({ type: 'warmup' }); // Warm-up
+
+            const totalSeriesCount = currentRoutineData.exercises[0].series; // Assuming all exercises have the same number of series
+
+            for (let seriesIdx = 1; seriesIdx <= totalSeriesCount; seriesIdx++) {
+                routineSteps.push({ type: 'series_start', seriesNum: seriesIdx, totalSeries: totalSeriesCount }); // Start of a new full series
+                currentRoutineData.exercises.forEach((exercise, exerciseIdx) => {
+                    routineSteps.push({
+                        type: 'exercise',
+                        name: exercise.name,
+                        reps: exercise.reps,
+                        desc: exercise.desc,
+                        img: exercise.img,
+                        seriesNum: seriesIdx,
+                        totalSeries: exercise.series, // This is the total series for this specific exercise
+                        exerciseIndex: exerciseIdx
+                    });
+                    // Add 30s rest if not the last exercise in the current series
+                    if (exerciseIdx < currentRoutineData.exercises.length - 1) {
+                        routineSteps.push({ type: 'rest_30s' });
+                    }
+                });
+                // Add 60s rest if not the last overall series
+                if (seriesIdx < totalSeriesCount) {
+                    routineSteps.push({ type: 'rest_60s' });
+                }
+            }
+
+            routineSteps.push({ type: 'cooldown' }); // Cool-down
+            routineSteps.push({ type: 'finished' }); // Finished
+
+            renderRoutineStep();
+            routineExecutionModal.classList.add('open');
+        }
+
+        function closeRoutineModal() {
+            routineExecutionModal.classList.remove('open');
+            stopTimer(); // Ensure timer is stopped when closing
+            resetTimerDisplay(60); // Reset timer to 60 seconds
+        }
+
+        function updateProgressIndicators() {
+            progressWarmup.classList.remove('active', 'completed');
+            progressRoutine.classList.remove('active', 'completed');
+            progressCooldown.classList.remove('active', 'completed');
+
+            const step = routineSteps[currentStepIndex];
+
+            // Determine which main section the current step belongs to for progress circles
+            let currentMainSection = '';
+            if (step.type === 'warmup') {
+                currentMainSection = 'warmup';
+            } else if (step.type === 'exercise' || step.type === 'rest_30s' || step.type === 'series_start' || step.type === 'rest_60s') {
+                currentMainSection = 'routine';
+            } else if (step.type === 'cooldown') {
+                currentMainSection = 'cooldown';
+            } else if (step.type === 'finished') {
+                currentMainSection = 'finished';
+            }
+
+            if (currentMainSection === 'warmup') {
+                progressWarmup.classList.add('active');
+            } else if (currentMainSection === 'routine') {
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('active');
+            } else if (currentMainSection === 'cooldown') {
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('completed');
+                progressCooldown.classList.add('active');
+            } else if (currentMainSection === 'finished') { // Routine finished
+                progressWarmup.classList.add('completed');
+                progressRoutine.classList.add('completed');
+                progressCooldown.classList.add('completed');
+            }
+        }
+
+        function renderRoutineStep() {
+            const step = routineSteps[currentStepIndex];
+            routineExecutionTitle.textContent = currentRoutineData.name;
+            let contentHtml = '';
+            exerciseTimerControls.classList.add('hidden'); // Hide timer by default
+            prevStepBtn.classList.remove('hidden'); // Show prev button by default
+            nextStepBtn.textContent = 'Siguiente >'; // Default next button text
+            nextStepBtn.disabled = false; // Enable next button by default
+
+            if (step.type === 'warmup') {
+                prevStepBtn.classList.add('hidden');
+                nextStepBtn.textContent = 'Siguiente: Rutina';
+                contentHtml = getWarmUpContent();
+            } else if (step.type === 'series_start') {
+                contentHtml = `
+                    <h3 style="color: #E87D67;">¡Comenzando Serie ${step.seriesNum} de ${step.totalSeries}!</h3>
+                    <p>Prepárate para los ejercicios.</p>
+                `;
+                // The next button will lead to the first exercise of this series
+                nextStepBtn.textContent = 'Empezar Ejercicio';
+            }
+            else if (step.type === 'exercise') {
+                contentHtml = `
+                    <div class="routine-exercise-detail">
+                        <div class="exercise-title">${step.name}</div>
+                        <p class="exercise-reps">Serie: ${step.seriesNum} de ${step.totalSeries}</p>
+                        <p class="exercise-reps">Repeticiones: ${step.reps}</p>
+                        <p class="exercise-description">${step.desc}</p>
+                        <img src="${step.img}" alt="Imagen de persona realizando ${step.name}" onerror="this.src='https://placehold.co/400x200/FEECE2/FCA38F?text=Imagen+no+disponible';">
+                    </div>
+                `;
+                // Determine next button text based on what comes next in the flattened steps
+                const nextStepInSequence = routineSteps[currentStepIndex + 1];
+                if (nextStepInSequence) {
+                    if (nextStepInSequence.type === 'rest_30s') {
+                        nextStepBtn.textContent = 'Iniciar Descanso (30s)';
+                    } else if (nextStepInSequence.type === 'rest_60s') {
+                        nextStepBtn.textContent = 'Iniciar Descanso (60s)';
+                    } else if (nextStepInSequence.type === 'cooldown') {
+                        nextStepBtn.textContent = 'Siguiente: Estiramientos';
+                    } else if (nextStepInSequence.type === 'exercise') {
+                        nextStepBtn.textContent = 'Siguiente Ejercicio';
+                    } else if (nextStepInSequence.type === 'finished') {
+                        nextStepBtn.textContent = 'Finalizar Rutina';
+                    }
+                }
+
+            } else if (step.type === 'rest_30s') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Descanso Corto! (30 segundos)</h3>
+                    <p>Prepárate para el siguiente ejercicio.</p>
+                `;
+                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
+                resetTimerDisplay(30); // Set timer to 30 seconds
+                nextStepBtn.disabled = true; // Disable next button during rest
+                nextStepBtn.textContent = 'Continuar';
+            } else if (step.type === 'rest_60s') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Descanso Largo! (1 minuto)</h3>
+                    <p>¡Buen trabajo! Tómate un respiro antes de la siguiente serie.</p>
+                `;
+                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
+                resetTimerDisplay(60); // Set timer to 60 seconds
+                nextStepBtn.disabled = true; // Disable next button during rest
+                nextStepBtn.textContent = 'Continuar';
+            }
+            else if (step.type === 'cooldown') {
+                contentHtml = getCoolDownContent();
+                nextStepBtn.textContent = 'Finalizar Rutina';
+            } else if (step.type === 'finished') {
+                contentHtml = `
+                    <h3 style="color: #4A8C88;">¡Rutina Completada!</h3>
+                    <p>¡Felicidades, has terminado tu rutina de hoy!</p>
+                    <p>Recuerda la importancia de la constancia y el descanso.</p>
+                `;
+                prevStepBtn.classList.add('hidden');
+                nextStepBtn.textContent = 'Cerrar';
+            }
+
+            routineStepContent.innerHTML = contentHtml;
+            updateProgressIndicators();
+        }
+
+        function nextStep() {
+            stopTimer(); // Stop timer when moving to next step
+            currentStepIndex++;
+            if (currentStepIndex >= routineSteps.length) {
+                closeRoutineModal();
+                return;
+            }
+            renderRoutineStep();
+        }
+
+        function prevStep() {
+            stopTimer(); // Stop timer when moving back
+            currentStepIndex--;
+            if (currentStepIndex < 0) {
+                currentStepIndex = 0; // Stay at the beginning
+            }
+            renderRoutineStep();
+        }
+
+        // --- Timer Functions ---
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerInterval) return; // Prevent multiple intervals
+            startTimerBtn.classList.add('hidden');
+            pauseTimerBtn.classList.remove('hidden');
+            skipTimerBtn.disabled = true; // Disable skip while running
+
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = formatTime(timeLeft);
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    timerDisplay.textContent = "¡Tiempo!";
+                    skipTimerBtn.disabled = false; // Enable skip when timer finishes
+                    nextStepBtn.disabled = false; // Enable next step after timer finishes
+                }
+            }, 1000);
+            nextStepBtn.disabled = true; // Disable next step while timer is running
+        }
+
+        function pauseTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+            skipTimerBtn.disabled = false; // Enable skip when paused
+        }
+
+        function resetTimerDisplay(duration) { // Takes duration as argument
+            stopTimer();
+            timeLeft = duration;
+            timerDisplay.textContent = formatTime(timeLeft);
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+            resetTimerBtn.classList.add('hidden'); // Keep reset hidden unless explicitly needed
+            skipTimerBtn.disabled = false;
+            // If it's a rest step, the next button should be disabled until timer finishes or is skipped
+            if (routineSteps[currentStepIndex] && (routineSteps[currentStepIndex].type === 'rest_30s' || routineSteps[currentStepIndex].type === 'rest_60s')) {
+                nextStepBtn.disabled = true;
+            } else {
+                nextStepBtn.disabled = false;
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            startTimerBtn.classList.remove('hidden');
+            pauseTimerBtn.classList.add('hidden');
+        }
+
+        // Event Listeners for Routine Modal
+        doRoutineBtn.addEventListener('click', openRoutineModal);
+        closeRoutineModalBtn.addEventListener('click', closeRoutineModal);
+        nextStepBtn.addEventListener('click', nextStep);
+        prevStepBtn.addEventListener('click', prevStep);
+
+        startTimerBtn.addEventListener('click', startTimer);
+        pauseTimerBtn.addEventListener('click', pauseTimer);
+        resetTimerBtn.addEventListener('click', () => {
+            // Determine current rest duration based on step type
+            const currentStep = routineSteps[currentStepIndex];
+            if (currentStep && currentStep.type === 'rest_30s') {
+                resetTimerDisplay(30);
+            } else if (currentStep && currentStep.type === 'rest_60s') {
+                resetTimerDisplay(60);
+            } else {
+                resetTimerDisplay(60); // Default if not a rest step
+            }
         });
+        skipTimerBtn.addEventListener('click', () => {
+            stopTimer();
+            timerDisplay.textContent = formatTime(0); // Show 00:00
+            nextStepBtn.disabled = false; // Enable next step when skipped
+            skipTimerBtn.disabled = false; // Ensure skip is enabled after use
+        });
+
 
         // Initial render and display current day's routine on page load
         window.onload = async () => {
@@ -953,8 +1455,12 @@
                     todayDiv.classList.add('current-day');
                 }
             }
-            await displayRandomInspiration(); // Call the random inspiration function on load
+            // The inspiration button is now explicitly clicked to generate, not on load.
+            // await displayRandomInspiration(); // Removed this line
         };
+
+        // Event listener for inspiration button
+        document.getElementById('getInspirationBtn').addEventListener('click', displayRandomInspiration);
     </script>
 </body>
 </html>
