@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Base styles for larger screens */
+        /* Base styles */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #FDF8F5; /* Very light warm off-white */
@@ -16,29 +16,49 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align to top for better mobile scrolling */
+            justify-content: flex-start;
             align-items: center;
             padding: 1rem;
-            box-sizing: border-box; /* Include padding in element's total width and height */
-        }
-        .container {
-            max-width: 960px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: #ffffff;
-            border-radius: 1.5rem; /* More rounded corners */
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border: 1px solid #FEECE2; /* Light peach border */
             box-sizing: border-box;
         }
+        .main-layout {
+            display: flex;
+            flex-direction: row; /* Default to side-by-side */
+            max-width: 1200px; /* Increased max-width for side-by-side layout */
+            width: 100%;
+            margin: 2rem auto;
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border: 1px solid #FEECE2;
+            box-sizing: border-box;
+            overflow: hidden; /* Ensures rounded corners are respected */
+        }
+
+        .sidebar-calendar {
+            flex: 0 0 300px; /* Fixed width for calendar sidebar */
+            padding: 1.5rem;
+            background-color: #FFFBF8; /* Lighter peach for sidebar */
+            border-right: 1px solid #FEECE2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-content {
+            flex: 1; /* Takes remaining space */
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
         h1 {
-            font-size: 2.5rem; /* Larger heading */
+            font-size: 2.5rem;
             margin-bottom: 2rem;
             text-align: center;
             color: #E87D67; /* Muted coral heading */
-            font-weight: 800; /* Extra bold */
-            letter-spacing: -0.025em; /* Tighten spacing */
+            font-weight: 800;
+            letter-spacing: -0.025em;
         }
         h2 {
             font-size: 2rem;
@@ -46,7 +66,7 @@
             margin-bottom: 1.25rem;
             color: #E87D67; /* Medium coral */
             font-weight: 700;
-            border-bottom: 2px solid #FEECE2; /* Light peach underline */
+            border-bottom: 2px solid #FEECE2;
             padding-bottom: 0.5rem;
         }
         h3 {
@@ -57,7 +77,7 @@
         }
         table {
             width: 100%;
-            border-collapse: separate; /* For rounded corners on cells */
+            border-collapse: separate;
             border-spacing: 0;
             margin-bottom: 2rem;
             border-radius: 0.75rem;
@@ -67,17 +87,17 @@
         th, td {
             padding: 1rem 1.25rem;
             text-align: left;
-            border-bottom: 1px solid #FEECE2; /* Light peach border */
+            border-bottom: 1px solid #FEECE2;
         }
         th {
-            background-color: #FEECE2; /* Light peach */
+            background-color: #FEECE2;
             font-weight: 700;
-            color: #E87D67; /* Darker coral */
+            color: #E87D67;
             text-transform: uppercase;
             font-size: 0.875rem;
         }
         tr:nth-child(even) {
-            background-color: #FFF5F0; /* Very light peach */
+            background-color: #FFF5F0;
         }
         tr:last-child td {
             border-bottom: none;
@@ -86,7 +106,7 @@
         .exercise-section {
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background-color: #FFFBF8; /* Even lighter peach */
+            background-color: #FFFBF8;
             border-radius: 0.5rem;
             border: 1px solid #FEECE2;
         }
@@ -126,12 +146,12 @@
         }
         .image-placeholder {
             width: 100%;
-            height: 180px; /* Slightly smaller */
-            background-color: #FEECE2; /* Light peach placeholder */
+            height: 180px;
+            background-color: #FEECE2;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #FCA38F; /* Medium salmon text */
+            color: #FCA38F;
             border-radius: 0.5rem;
             margin-top: 0.75rem;
             font-style: italic;
@@ -143,60 +163,62 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            width: 100%; /* Ensure nav takes full width of sidebar */
             margin-bottom: 1rem;
         }
         .calendar-nav button {
-            background-color: #FCA38F; /* Medium salmon button */
+            background-color: #FCA38F;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.5rem 0.75rem; /* Smaller padding for compact buttons */
             border-radius: 0.5rem;
             font-weight: 600;
             transition: background-color 0.3s ease;
         }
         .calendar-nav button:hover {
-            background-color: #E87D67; /* Darker coral on hover */
+            background-color: #E87D67;
         }
         .calendar-header {
-            font-size: 1.5rem;
+            font-size: 1.2rem; /* Smaller font for sidebar calendar header */
             font-weight: 700;
-            color: #E87D67; /* Deeper coral */
+            color: #E87D67;
         }
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 0.5rem;
-            margin-bottom: 2rem;
+            gap: 0.2rem; /* Smaller gap for compact calendar */
+            margin-bottom: 1rem;
             text-align: center;
+            width: 100%; /* Ensure grid takes full width of sidebar */
         }
         .calendar-day-name {
             font-weight: 600;
-            color: #525252; /* Warm dark grey */
-            padding: 0.5rem;
-            font-size: 0.9rem; /* Slightly smaller for better fit */
+            color: #525252;
+            padding: 0.3rem; /* Smaller padding */
+            font-size: 0.75rem; /* Smaller font for day names */
         }
         .calendar-day {
-            padding: 0.75rem;
+            padding: 0.4rem; /* Smaller padding for calendar cells */
             border-radius: 0.5rem;
-            background-color: #FDF8F5; /* Very light peach */
-            border: 1px solid #FEECE2; /* Light peach border */
+            background-color: #FDF8F5;
+            border: 1px solid #FEECE2;
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 70px; /* Ensure consistent height */
+            min-height: 50px; /* Smaller height for compact calendar */
         }
         .calendar-day:hover {
-            background-color: #FFF5F0; /* Lighter peach on hover */
-            transform: translateY(-2px);
+            background-color: #FFF5F0;
+            transform: translateY(-1px); /* Smaller hover effect */
         }
         .calendar-day.current-day {
-            background-color: #FCA38F; /* Highlight current day with medium salmon */
+            background-color: #FCA38F;
             color: white;
             font-weight: 700;
-            border-color: #E87D67; /* Deeper coral border */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-color: #E87D67;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Smaller shadow */
         }
         .calendar-day.current-day .day-number,
         .calendar-day.current-day .day-routine {
@@ -208,77 +230,42 @@
             cursor: default;
         }
         .day-number {
-            font-size: 1.2rem;
+            font-size: 1rem; /* Smaller day number */
             font-weight: 600;
-            color: #2d3748; /* Darker grey for numbers */
+            color: #2d3748;
         }
         .day-routine {
-            font-size: 0.75rem;
-            color: #4a5568; /* Darker grey for routine text */
-            margin-top: 0.25rem;
-            line-height: 1.2;
+            font-size: 0.65rem; /* Smaller routine text */
+            color: #4a5568;
+            margin-top: 0.1rem; /* Reduced margin */
+            line-height: 1.1;
+            text-align: center;
         }
 
-        /* Modal styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+        /* Daily Routine Display */
+        .daily-routine-section {
+            background-color: #ffffff; /* White background for main content */
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            border: 1px solid #FEECE2;
+            margin-top: 1.5rem;
+            flex-grow: 1; /* Allows it to take available space */
         }
-        .modal-overlay.open {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background-color: #ffffff;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            max-width: 800px;
-            width: 90%;
-            max-height: 90vh; /* Limit height to enable scrolling */
-            overflow-y: auto; /* Enable vertical scrolling */
-            position: relative;
-            transform: translateY(20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        .modal-overlay.open .modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        .modal-close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #6b7280;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-        .modal-close-button:hover {
-            color: #1f2937;
+        .daily-routine-section h2 {
+            margin-top: 0; /* Reset margin for this h2 */
+            border-bottom: none;
+            padding-bottom: 0;
         }
 
         /* Inspiration Feature styles */
         .inspiration-container {
             margin-top: 2rem;
             text-align: center;
+            width: 100%; /* Ensure it spans full width of main-content */
         }
         .llm-feature-button {
-            background-color: #FCA38F; /* Medium salmon */
+            background-color: #FCA38F;
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -286,31 +273,31 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block; /* Changed to inline-block */
+            display: inline-block;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        .llm-feature-button:hover:not(:disabled) { /* Hover only if not disabled */
-            background-color: #E87D67; /* Darker coral on hover */
+        .llm-feature-button:hover:not(:disabled) {
+            background-color: #E87D67;
             transform: translateY(-2px);
         }
         .llm-feature-button:disabled {
-            background-color: #cccccc; /* Grey out when disabled */
+            background-color: #cccccc;
             cursor: not-allowed;
             opacity: 0.7;
-            transform: none; /* No transform when disabled */
+            transform: none;
         }
 
         #inspirationOutput {
             margin-top: 1.5rem;
             padding: 1.5rem;
-            background-color: #FFF5E0; /* Light cream/orange */
+            background-color: #FFF5E0;
             border-radius: 0.75rem;
-            border: 1px solid #FDD18B; /* Light orange border */
-            color: #78350f; /* Darker brown text */
+            border: 1px solid #FDD18B;
+            color: #78350f;
             font-size: 1rem;
             line-height: 1.5;
-            display: none; /* Hidden by default */
-            text-align: left; /* Align text left within the box */
+            display: none;
+            text-align: left;
         }
         #inspirationOutput p {
             margin-bottom: 0.5rem;
@@ -319,16 +306,16 @@
             margin-bottom: 0;
         }
         #inspirationOutput strong {
-            color: #B45309; /* Even darker brown */
+            color: #B45309;
         }
         .loading-spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #FCA38F; /* Salmon spinner */
+            border-top: 4px solid #FCA38F;
             border-radius: 50%;
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
-            margin: 1rem auto; /* Center spinner */
+            margin: 1rem auto;
             display: none;
         }
         @keyframes spin {
@@ -338,16 +325,26 @@
 
         /* Mobile-specific adjustments */
         @media (max-width: 768px) {
-            body {
-                padding: 0.5rem; /* Reduce overall body padding */
+            .main-layout {
+                flex-direction: column; /* Stack vertically on mobile */
+                margin: 1rem auto;
+                padding: 0; /* Remove padding from main-layout, sections will have it */
             }
-            .container {
-                margin: 0.5rem auto; /* Smaller margins on mobile */
-                padding: 1rem; /* Smaller padding inside container */
-                border-radius: 1rem;
+            .sidebar-calendar {
+                flex: none; /* Remove fixed flex basis */
+                width: 100%;
+                padding: 1rem;
+                border-right: none;
+                border-bottom: 1px solid #FEECE2; /* Add bottom border */
+                border-radius: 1.5rem 1.5rem 0 0; /* Round top corners only */
+            }
+            .main-content {
+                padding: 1rem;
+                width: 100%;
+                border-radius: 0 0 1.5rem 1.5rem; /* Round bottom corners only */
             }
             h1 {
-                font-size: 1.75rem; /* Smaller heading for mobile */
+                font-size: 1.75rem;
                 margin-bottom: 1rem;
             }
             h2 {
@@ -360,8 +357,8 @@
                 margin-bottom: 0.75rem;
             }
             th, td {
-                padding: 0.6rem; /* Reduced padding for table cells */
-                font-size: 0.8rem; /* Smaller font for tables */
+                padding: 0.6rem;
+                font-size: 0.8rem;
             }
             .callout {
                 padding: 0.8rem;
@@ -369,38 +366,41 @@
                 margin-bottom: 1rem;
             }
             .image-placeholder {
-                height: 100px; /* Smaller image placeholders */
+                height: 100px;
                 font-size: 0.7rem;
             }
             .calendar-nav {
-                flex-direction: column; /* Stack buttons and month/year vertically */
-                gap: 0.5rem;
+                flex-direction: row; /* Keep buttons side-by-side for small calendar */
+                justify-content: space-between;
+                gap: 0.25rem;
             }
             .calendar-nav button {
-                width: 100%; /* Full width buttons */
-                padding: 0.5rem 0.75rem;
-                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+                font-size: 0.75rem;
             }
             .calendar-header {
-                font-size: 1.1rem;
+                font-size: 1rem;
             }
             .calendar-grid {
-                gap: 0.2rem; /* Smaller gap between calendar days */
+                gap: 0.1rem;
+            }
+            .calendar-day-name {
+                padding: 0.2rem;
+                font-size: 0.65rem;
             }
             .calendar-day {
-                padding: 0.4rem; /* Reduced padding for calendar days */
-                min-height: 50px; /* Slightly smaller height */
+                padding: 0.3rem;
+                min-height: 40px;
             }
             .day-number {
-                font-size: 0.9rem; /* Smaller day number */
+                font-size: 0.8rem;
             }
             .day-routine {
-                font-size: 0.6rem; /* Smaller routine text */
+                font-size: 0.55rem;
             }
-            .modal-content {
-                padding: 1rem; /* Reduced padding for modal content */
-                width: 95%; /* Wider modal on small screens */
-                max-height: 95vh; /* Max height for modal */
+            .daily-routine-section {
+                padding: 1rem;
+                margin-top: 1rem;
             }
             .exercise-section {
                 padding: 0.6rem;
@@ -428,42 +428,44 @@
     </style>
 </head>
 <body class="bg-blue-50 text-gray-700">
-    <div class="container">
-        <h1>🗓️ Calendario de Ejercicio</h1>
-
-        <div class="callout">
-            <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
+    <div class="main-layout">
+        <div class="sidebar-calendar">
+            <h2 class="text-xl font-bold text-center mb-4" style="color: #E87D67;">Calendario</h2>
+            <div class="calendar-nav">
+                <button id="prevMonth">&lt; Anterior</button>
+                <div id="monthYear" class="calendar-header"></div>
+                <button id="nextMonth">Siguiente &gt;</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-name">Lun</div>
+                <div class="calendar-day-name">Mar</div>
+                <div class="calendar-day-name">Mié</div>
+                <div class="calendar-day-name">Jue</div>
+                <div class="calendar-day-name">Vie</div>
+                <div class="calendar-day-name">Sáb</div>
+                <div class="calendar-day-name">Dom</div>
+            </div>
         </div>
 
-        <h2 class="text-blue-700">Calendario Mensual</h2>
-        <div class="calendar-nav">
-            <button id="prevMonth">&lt; Anterior</button>
-            <div id="monthYear" class="calendar-header"></div>
-            <button id="nextMonth">Siguiente &gt;</button>
-        </div>
-        <div class="calendar-grid">
-            <div class="calendar-day-name">Lun</div>
-            <div class="calendar-day-name">Mar</div>
-            <div class="calendar-day-name">Mié</div>
-            <div class="calendar-day-name">Jue</div>
-            <div class="calendar-day-name">Vie</div>
-            <div class="calendar-day-name">Sáb</div>
-            <div class="calendar-day-name">Dom</div>
+        <div class="main-content">
+            <h1>🗓️ Tu Plan de Ejercicio Diario</h1>
+
+            <div class="callout">
+                <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
             </div>
 
-        <div class="inspiration-container">
-            <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
-            <div id="loadingSpinner" class="loading-spinner"></div>
-            <div id="inspirationOutput"></div>
-        </div>
-    </div>
-
-    <div id="routineModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close-button" id="closeModal">&times;</button>
-            <h2 id="modalRoutineTitle" class="text-blue-700"></h2>
-            <div id="modalRoutineContent">
+            <div id="dailyRoutineDisplay" class="daily-routine-section">
+                <h2 id="dailyRoutineTitle" style="color: #E87D67;"></h2>
+                <div id="dailyRoutineContent">
+                    <p class="text-gray-600">Selecciona un día del calendario para ver tu rutina.</p>
                 </div>
+            </div>
+
+            <div class="inspiration-container">
+                <button id="getInspirationBtn" class="llm-feature-button">✨ Inspiración del Día ✨</button>
+                <div id="loadingSpinner" class="loading-spinner"></div>
+                <div id="inspirationOutput"></div>
+            </div>
         </div>
     </div>
 
@@ -530,7 +532,7 @@
 
         const warmUpContent = `
             <div class="exercise-section">
-                <h3 class="text-xl font-semibold text-green-700 mb-4"><span class="icon">🔥</span> Calentamiento (5-10 minutos)</h3>
+                <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🔥</span> Calentamiento (5-10 minutos)</h3>
                 <p class="text-gray-600 mb-4">Antes de Empezar:</p>
                 <div class="exercise-item">
                     <div class="exercise-title">Marcha en el sitio</div>
@@ -565,7 +567,7 @@
 
         const coolDownContent = `
             <div class="exercise-section">
-                <h3 class="text-xl font-semibold text-green-700 mb-4"><span class="icon">🧊</span> Enfriamiento y Estiramientos (5-10 minutos)</h3>
+                <h3 class="text-xl font-semibold mb-4" style="color: #4A8C88;"><span class="icon">🧊</span> Enfriamiento y Estiramientos (5-10 minutos)</h3>
                 <p class="text-gray-600 mb-4">Después de Terminar:</p>
                 <p class="text-gray-600 mb-4">Esto es para relajar los músculos, mejorar tu flexibilidad y ayudar a que se recuperen. Mantén cada estiramiento durante 20-30 segundos, sin hacer rebotes. ¡Respira hondo y relájate! Es tu momento para desconectar y sentirte bien.</p>
                 <div class="exercise-item">
@@ -601,7 +603,7 @@
 
         const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]; // Sunday is 0
 
-        // Global array to store inspirations - NOW EMBEDDED DIRECTLY
+        // Global array to store inspirations
         const inspirations = [
             {
                 "quote": "El cuerpo logra lo que la mente cree.",
@@ -640,23 +642,22 @@
             }
         ];
 
-
         function getRoutineForDay(dayIndex) {
             return routines[dayNames[dayIndex]];
         }
 
-        function populateModal(dayName, routineData) {
-            const modalRoutineTitle = document.getElementById('modalRoutineTitle');
-            const modalRoutineContent = document.getElementById('modalRoutineContent');
+        function displayDailyRoutine(dayName, routineData) {
+            const dailyRoutineTitle = document.getElementById('dailyRoutineTitle');
+            const dailyRoutineContent = document.getElementById('dailyRoutineContent');
             
-            modalRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
+            dailyRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
             let contentHtml = '';
 
             if (routineData.type === "routine") {
                 contentHtml += warmUpContent;
                 contentHtml += `
                     <div class="exercise-section">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-4">Detalle de Ejercicios: ${routineData.name}</h3>
+                        <h3 class="text-xl font-semibold mb-4" style="color: #E87D67;">Detalle de Ejercicios: ${routineData.name}</h3>
                         <p class="mb-4 text-gray-600">Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
                         <div class="overflow-x-auto rounded-xl shadow-md mb-4">
                             <table>
@@ -692,23 +693,13 @@
             } else {
                 contentHtml += `
                     <div class="exercise-section">
-                        <h3 class="text-xl font-semibold text-blue-700 mb-4">${routineData.name}</h3>
+                        <h3 class="text-xl font-semibold mb-4" style="color: #E87D67;">${routineData.name}</h3>
                         <p class="exercise-description">${routineData.description}</p>
                     </div>
                 `;
             }
-            modalRoutineContent.innerHTML = contentHtml;
+            dailyRoutineContent.innerHTML = contentHtml;
         }
-
-        function openModal() {
-            document.getElementById('routineModal').classList.add('open');
-        }
-
-        function closeModal() {
-            document.getElementById('routineModal').classList.remove('open');
-        }
-
-        document.getElementById('closeModal').addEventListener('click', closeModal);
 
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
@@ -753,6 +744,7 @@
                 const dayDiv = document.createElement('div');
                 dayDiv.classList.add('calendar-day');
                 dayDiv.dataset.dayName = dayName; // Store day name for click event
+                dayDiv.dataset.dayIndex = dayOfWeekIndex; // Store day index for direct routine lookup
 
                 if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
                     dayDiv.classList.add('current-day');
@@ -768,11 +760,15 @@
             // Add event listeners to calendar days
             document.querySelectorAll('.calendar-day:not(.empty)').forEach(dayDiv => {
                 dayDiv.addEventListener('click', () => {
+                    // Remove 'current-day' from previously selected day
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('current-day'));
+                    // Add 'current-day' to the newly selected day
+                    dayDiv.classList.add('current-day');
+
                     const dayName = dayDiv.dataset.dayName;
                     const routineData = routines[dayName];
                     if (routineData) {
-                        populateModal(dayName, routineData);
-                        openModal();
+                        displayDailyRoutine(dayName, routineData);
                     }
                 });
             });
@@ -846,7 +842,7 @@
                             }
                         }
                     };
-                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                    const apiKey = "";
                     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
                     
                     const response = await fetch(apiUrl, {
@@ -884,13 +880,22 @@
             }
         }
 
-        // The Inspiration button click handler
-        // The event listener is now added conditionally in window.onload
-        // document.getElementById('getInspirationBtn').addEventListener('click', displayRandomInspiration); // Removed this line
-
-        // Initial render and display random inspiration on page load
+        // Initial render and display current day's routine on page load
         window.onload = async () => {
             renderCalendar();
+            // Automatically display today's routine
+            const today = new Date();
+            const todayDayOfWeekIndex = today.getDay(); // 0 for Sunday, 1 for Monday...
+            const todayDayName = dayNames[todayDayOfWeekIndex];
+            const todayRoutine = routines[todayDayName];
+            if (todayRoutine) {
+                displayDailyRoutine(todayDayName, todayRoutine);
+                // Highlight today's date in the calendar
+                const todayDiv = document.querySelector(`.calendar-day.current-day`);
+                if (todayDiv) {
+                    todayDiv.classList.add('current-day');
+                }
+            }
             await displayRandomInspiration(); // Call the random inspiration function on load
         };
     </script>
