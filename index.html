@@ -764,7 +764,14 @@
             try {
                 const response = await fetch('inspirations.json');
                 if (!response.ok) {
-                    throw new Error(`Estado HTTP: ${response.status}`);
+                    // Check for specific HTTP errors
+                    let errorMessage = `Estado HTTP: ${response.status}`;
+                    if (response.status === 404) {
+                        errorMessage += ' (Archivo no encontrado)';
+                    } else if (response.status === 500) {
+                        errorMessage += ' (Error del servidor)';
+                    }
+                    throw new Error(errorMessage);
                 }
                 inspirations = await response.json();
                 if (!Array.isArray(inspirations) || inspirations.length === 0) {
@@ -775,7 +782,7 @@
                 displayTodaysInspiration();
             } catch (error) {
                 console.error('Error al cargar o parsear las inspiraciones:', error);
-                inspirationOutput.innerHTML = `<p style="color:red;">Error: No se pudieron cargar las inspiraciones. Asegúrate de que el archivo <strong>'inspirations.json'</strong> esté en la misma carpeta y su contenido sea válido. (${error.message})</p>`;
+                inspirationOutput.innerHTML = `<p style="color:red;">Error al cargar las inspiraciones: Asegúrate de que el archivo <strong>'inspirations.json'</strong> esté en la misma carpeta y su contenido sea válido. (${error.message})</p>`;
                 inspirationOutput.style.display = 'block';
             } finally {
                 loadingSpinner.style.display = 'none'; // Hide spinner
@@ -811,7 +818,7 @@
             inspirationOutput.style.display = 'block';
         }
 
-        // Modified Inspiration button click handler (now displays a random one from loaded data)
+        // The Inspiration button click handler now displays a random one from the loaded data
         document.getElementById('getInspirationBtn').addEventListener('click', () => {
             const inspirationOutput = document.getElementById('inspirationOutput');
             const loadingSpinner = document.getElementById('loadingSpinner');
