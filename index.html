@@ -10,7 +10,7 @@
         /* Base styles for larger screens */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #fdf2f8; /* Very light rose/off-white */
+            background-color: #FDF8F5; /* Very light warm off-white */
             color: #525252; /* Warm dark grey text */
             line-height: 1.6;
             min-height: 100vh;
@@ -29,14 +29,14 @@
             background-color: #ffffff;
             border-radius: 1.5rem; /* More rounded corners */
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border: 1px solid #fbcfe8; /* Light pink border */
+            border: 1px solid #FEECE2; /* Light peach border */
             box-sizing: border-box;
         }
         h1 {
             font-size: 2.5rem; /* Larger heading */
             margin-bottom: 2rem;
             text-align: center;
-            color: #be185d; /* Deeper rose heading */
+            color: #E87D67; /* Muted coral heading */
             font-weight: 800; /* Extra bold */
             letter-spacing: -0.025em; /* Tighten spacing */
         }
@@ -44,15 +44,15 @@
             font-size: 2rem;
             margin-top: 2.5rem;
             margin-bottom: 1.25rem;
-            color: #db2777; /* Medium rose */
+            color: #E87D67; /* Medium coral */
             font-weight: 700;
-            border-bottom: 2px solid #fbcfe8; /* Light pink underline */
+            border-bottom: 2px solid #FEECE2; /* Light peach underline */
             padding-bottom: 0.5rem;
         }
         h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #ec4899; /* Lighter rose */
+            color: #FCA38F; /* Lighter salmon */
             margin-bottom: 1rem;
         }
         table {
@@ -67,17 +67,17 @@
         th, td {
             padding: 1rem 1.25rem;
             text-align: left;
-            border-bottom: 1px solid #fbcfe8; /* Light pink border */
+            border-bottom: 1px solid #FEECE2; /* Light peach border */
         }
         th {
-            background-color: #fbcfe8; /* Light pink */
+            background-color: #FEECE2; /* Light peach */
             font-weight: 700;
-            color: #831843; /* Darker rose */
+            color: #E87D67; /* Darker coral */
             text-transform: uppercase;
             font-size: 0.875rem;
         }
         tr:nth-child(even) {
-            background-color: #fce7f6; /* Very light pink */
+            background-color: #FFF5F0; /* Very light peach */
         }
         tr:last-child td {
             border-bottom: none;
@@ -86,14 +86,14 @@
         .exercise-section {
             margin-bottom: 1.5rem;
             padding: 1rem;
-            background-color: #fff0f5; /* Even lighter pink */
+            background-color: #FFFBF8; /* Even lighter peach */
             border-radius: 0.5rem;
-            border: 1px solid #fbcfe8;
+            border: 1px solid #FEECE2;
         }
         .exercise-item {
             margin-bottom: 1rem;
             padding-bottom: 1rem;
-            border-bottom: 1px dashed #fbcfe8;
+            border-bottom: 1px dashed #FEECE2;
         }
         .exercise-item:last-child {
             border-bottom: none;
@@ -115,23 +115,23 @@
             font-size: 1.2rem;
         }
         .callout {
-            background-color: #fce7f6; /* Light pink */
-            border-left: 5px solid #db2777; /* Medium rose border */
+            background-color: #E0F2F1; /* Light mint/aqua */
+            border-left: 5px solid #A7D9D6; /* Medium mint/aqua border */
             padding: 1.25rem;
             margin-bottom: 2rem;
             border-radius: 0.75rem;
-            color: #831843; /* Darker rose text */
+            color: #4A8C88; /* Darker mint/aqua text */
             font-size: 1.1rem;
             font-weight: 500;
         }
         .image-placeholder {
             width: 100%;
             height: 180px; /* Slightly smaller */
-            background-color: #fbcfe8; /* Light pink placeholder */
+            background-color: #FEECE2; /* Light peach placeholder */
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ec4899; /* Lighter rose text */
+            color: #FCA38F; /* Medium salmon text */
             border-radius: 0.5rem;
             margin-top: 0.75rem;
             font-style: italic;
@@ -146,7 +146,7 @@
             margin-bottom: 1rem;
         }
         .calendar-nav button {
-            background-color: #ec4899; /* Lighter rose button */
+            background-color: #FCA38F; /* Medium salmon button */
             color: white;
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
@@ -154,12 +154,12 @@
             transition: background-color 0.3s ease;
         }
         .calendar-nav button:hover {
-            background-color: #db2777; /* Darker rose on hover */
+            background-color: #E87D67; /* Darker coral on hover */
         }
         .calendar-header {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #be185d; /* Deeper rose */
+            color: #E87D67; /* Deeper coral */
         }
         .calendar-grid {
             display: grid;
@@ -177,8 +177,8 @@
         .calendar-day {
             padding: 0.75rem;
             border-radius: 0.5rem;
-            background-color: #fef2f8; /* Very light rose */
-            border: 1px solid #fbcfe8; /* Light pink border */
+            background-color: #FDF8F5; /* Very light peach */
+            border: 1px solid #FEECE2; /* Light peach border */
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.2s ease;
             display: flex;
@@ -188,14 +188,14 @@
             min-height: 70px; /* Ensure consistent height */
         }
         .calendar-day:hover {
-            background-color: #fce7f6; /* Lighter pink on hover */
+            background-color: #FFF5F0; /* Lighter peach on hover */
             transform: translateY(-2px);
         }
         .calendar-day.current-day {
-            background-color: #ec4899; /* Highlight current day with lighter rose */
+            background-color: #FCA38F; /* Highlight current day with medium salmon */
             color: white;
             font-weight: 700;
-            border-color: #be185d; /* Deeper rose border */
+            border-color: #E87D67; /* Deeper coral border */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .calendar-day.current-day .day-number,
@@ -278,7 +278,7 @@
             text-align: center;
         }
         .llm-feature-button {
-            background-color: #f43f5e; /* Stronger rose */
+            background-color: #FCA38F; /* Medium salmon */
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -290,7 +290,7 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
         .llm-feature-button:hover:not(:disabled) { /* Hover only if not disabled */
-            background-color: #be185d; /* Deeper rose on hover */
+            background-color: #E87D67; /* Darker coral on hover */
             transform: translateY(-2px);
         }
         .llm-feature-button:disabled {
@@ -303,9 +303,9 @@
         #inspirationOutput {
             margin-top: 1.5rem;
             padding: 1.5rem;
-            background-color: #fff7ed; /* Very light orange/peach */
+            background-color: #FFF5E0; /* Light cream/orange */
             border-radius: 0.75rem;
-            border: 1px solid #fed7aa; /* Light orange border */
+            border: 1px solid #FDD18B; /* Light orange border */
             color: #78350f; /* Darker brown text */
             font-size: 1rem;
             line-height: 1.5;
@@ -319,11 +319,11 @@
             margin-bottom: 0;
         }
         #inspirationOutput strong {
-            color: #b45309; /* Even darker brown */
+            color: #B45309; /* Even darker brown */
         }
         .loading-spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #ec4899; /* Rose spinner */
+            border-top: 4px solid #FCA38F; /* Salmon spinner */
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -474,12 +474,12 @@
                 name: "Rutina 1 (¡A darle caña!)",
                 type: "routine",
                 exercises: [
-                    { name: "Sentadillas clásicas", series: 3, reps: 15, desc: "Ponte de pie con los pies a la altura de tus caderas. Baja el culete como si te fueras a sentar en una silla, manteniendo la espalda recta y el pecho erguido. Asegúrate de que tus rodillas no sobrepasen los dedos de los pies. Sube apretando los glúteos a tope. ¡Este es un básico que trabaja todo el tren inferior!", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Sentadillas+clásicas" },
-                    { name: "Puente de glúteos", series: 3, reps: 15, desc: "Túmbate boca arriba con las rodillas dobladas y los pies apoyados cerca de tu culete. Levanta la cadera del suelo apretando los glúteos con todas tus fuerzas, formando una línea recta desde tus hombros hasta tus rodillas. Mantén un segundo arriba y baja despacio. ¡Siente cómo trabaja el culete y la parte de atrás de tus muslos!", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Puente+de+glúteos" },
-                    { name: "Zancadas adelante", series: 3, reps: "10 por pierna", desc: "Da un paso largo hacia adelante con una pierna, bajando la cadera hasta que la rodilla de atrás casi toque el suelo (¡pero sin golpearte!). La rodilla de adelante debe estar alineada con el tobillo. Empuja para volver a la posición inicial y repite con la otra pierna.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Zancadas+adelante" },
-                    { name: "Abducción lateral tumbada", series: 3, reps: "15 por pierna", desc: "Túmbate de lado, apoyando tu cabeza en tu brazo. Mantén las piernas estiradas y levanta la de arriba hacia el techo, sintiendo cómo trabaja el lateral del glúteo y la cadera (el glúteo medio y mínimo). Baja despacio y cambia de lado.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Abducción+lateral+tumbada" },
-                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Patada+de+glúteo" },
-                    { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Túmbate de lado con las rodillas flexionadas y los pies juntos. Manteniendo los pies juntos, levanta la rodilla de arriba separándola de la de abajo, como si abrieras una almeja. ¡Ojo! No dejes que tu cadera rote hacia atrás. Baja lentamente. Repite del otro lado.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Almejas" }
+                    { name: "Sentadillas clásicas", series: 3, reps: 15, desc: "Ponte de pie con los pies a la altura de tus caderas. Baja el culete como si te fueras a sentar en una silla, manteniendo la espalda recta y el pecho erguido. Asegúrate de que tus rodillas no sobrepasen los dedos de los pies. Sube apretando los glúteos a tope. ¡Este es un básico que trabaja todo el tren inferior!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+clásicas" },
+                    { name: "Puente de glúteos", series: 3, reps: 15, desc: "Túmbate boca arriba con las rodillas dobladas y los pies apoyados cerca de tu culete. Levanta la cadera del suelo apretando los glúteos con todas tus fuerzas, formando una línea recta desde tus hombros hasta tus rodillas. Mantén un segundo arriba y baja despacio. ¡Siente cómo trabaja el culete y la parte de atrás de tus muslos!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+de+glúteos" },
+                    { name: "Zancadas adelante", series: 3, reps: "10 por pierna", desc: "Da un paso largo hacia adelante con una pierna, bajando la cadera hasta que la rodilla de atrás casi toque el suelo (¡pero sin golpearte!). La rodilla de adelante debe estar alineada con el tobillo. Empuja para volver a la posición inicial y repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+adelante" },
+                    { name: "Abducción lateral tumbada", series: 3, reps: "15 por pierna", desc: "Túmbate de lado, apoyando tu cabeza en tu brazo. Mantén las piernas estiradas y levanta la de arriba hacia el techo, sintiendo cómo trabaja el lateral del glúteo y la cadera (el glúteo medio y mínimo). Baja despacio y cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Abducción+lateral+tumbada" },
+                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteos" },
+                    { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Túmbate de lado con las rodillas flexionadas y los pies juntos. Manteniendo los pies juntos, levanta la rodilla de arriba separándola de la de abajo, como si abrieras una almeja. ¡Ojo! No dejes que tu cadera rote hacia atrás. Baja lentamente. Repite del otro lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Almejas" }
                 ]
             },
             "Martes": {
@@ -491,12 +491,12 @@
                 name: "Rutina 2 (¡Más!)",
                 type: "routine",
                 exercises: [
-                    { name: "Sentadillas sumo", series: 3, reps: 15, desc: "Abre las piernas más que el ancho de tus hombros, con las puntas de los pies un poco hacia fuera (como una bailarina de sumo, ¡de ahí el nombre!). Baja el culete como en una sentadilla normal, apretando bien los glúteos al subir.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Sentadillas+sumo" },
-                    { name: "Hip Thrust (espalda en silla/cama)", series: 3, reps: 15, desc: "Siéntate en el suelo con la parte alta de tu espalda (justo debajo de los omóplatos) apoyada en el borde de una silla o cama (¡que sea súper estable, por favor!). Pies apoyados en el suelo, rodillas flexionadas. Levanta la cadera apretando los glúteos a tope, hasta formar una línea recta con tu cuerpo desde los hombros hasta las rodillas. Baja despacio.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Hip+Thrust" },
-                    { name: "Zancadas laterales", series: 3, reps: "10 por pierna", desc: "Da un paso grande hacia un lado, doblando esa rodilla y manteniendo la otra pierna estirada. Baja la cadera y vuelve al centro. Cambia de lado.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Zancadas+latrales" },
-                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Elevación+lateral+de+pie" },
-                    { name: "Puente de glúteos a una pierna", series: 3, reps: "12 por pierna", desc: "Como el puente de glúteos normal, pero estira una pierna hacia arriba. Levanta la cadera con una sola pierna apoyada. Alterna.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Puente+a+una+pierna" },
-                    { name: "Step Up (escalón/silla)", series: 3, reps: "10 por pierna", desc: "Ponte delante de un escalón o una silla resistente. Sube un pie, luego el otro, y baja de la misma forma, alternando la pierna que empieza. ¡Concéntrate en el glúteo de la pierna que sube al impulsarte!", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Step+Up" }
+                    { name: "Sentadillas sumo", series: 3, reps: 15, desc: "Abre las piernas más que el ancho de tus hombros, con las puntas de los pies un poco hacia fuera (como una bailarina de sumo, ¡de ahí el nombre!). Baja el culete como en una sentadilla normal, apretando bien los glúteos al subir.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+sumo" },
+                    { name: "Hip Thrust (espalda en silla/cama)", series: 3, reps: 15, desc: "Siéntate en el suelo con la parte alta de tu espalda (justo debajo de los omóplatos) apoyada en el borde de una silla o cama (¡que sea súper estable, por favor!). Pies apoyados en el suelo, rodillas flexionadas. Levanta la cadera apretando los glúteos a tope, hasta formar una línea recta con tu cuerpo desde los hombros hasta las rodillas. Baja despacio.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Hip+Thrust" },
+                    { name: "Zancadas laterales", series: 3, reps: "10 por pierna", desc: "Da un paso grande hacia un lado, doblando esa rodilla y manteniendo la otra pierna estirada. Baja la cadera y vuelve al centro. Cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+laterales" },
+                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+lateral+de+pie" },
+                    { name: "Puente de glúteos a una pierna", series: 3, reps: "12 por pierna", desc: "Como el puente de glúteos normal, pero estira una pierna hacia arriba. Levanta la cadera con una sola pierna apoyada. Alterna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+a+una+pierna" },
+                    { name: "Step Up (escalón/silla)", series: 3, reps: "10 por pierna", desc: "Ponte delante de un escalón o una silla resistente. Sube un pie, luego el otro, y baja de la misma forma, alternando la pierna que empieza. ¡Concéntrate en el glúteo de la pierna que sube al impulsarte!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Step+Up" }
                 ]
             },
             "Jueves": {
@@ -508,12 +508,12 @@
                 name: "Rutina 3 (¡Último empujón!)",
                 type: "routine",
                 exercises: [
-                    { name: "Sentadillas con salto", series: 3, reps: 12, desc: "Igual que la sentadilla clásica, pero al subir, haz un pequeño salto explosivo y aterriza suavemente para volver a bajar. ¡Te da un extra de intensidad y ayuda a quemar más calorías! Si al principio te cuesta, haz sentadillas normales y luego añade el salto.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Sentadillas+con+salto" },
-                    { name: "Zancadas caminando", series: 3, reps: "12 por pierna", desc: "Da un paso largo hacia adelante y baja como en una zancada normal. En vez de volver al sitio, lleva la pierna de atrás hacia adelante para dar el siguiente paso, como si estuvieras caminando en zancadas.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Zancadas+caminando" },
-                    { name: "Sentadilla isométrica (pared)", series: 3, reps: "30 seg cada una", desc: "Apoya tu espalda en una pared y baja como si te sentaras en una silla invisible, hasta que tus rodillas formen un ángulo de 90 grados. Mantén esa posición. ¡Aguanta ahí todo lo que puedas!", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Sentadilla+isométrica" },
-                    { name: "Skater (salto lateral)", series: 3, reps: "20 (total)", desc: "Salta de lado a lado, aterrizando sobre un solo pie y llevando la otra pierna por detrás, como si patinaras. Mantén el equilibrio y salta al otro lado.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Skater" },
-                    { name: "Elevación de pantorrillas (gemelos)", series: 3, reps: 20, desc: "Ponte de pie, puedes apoyarte en una pared. Levanta los talones del suelo, apoyándote solo en las puntas de los pies, y luego baja lentamente.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Elevación+de+pantorrillas" },
-                    { name: "Patada de glúteo de pie hacia atrás", series: 3, reps: "15 por pierna", desc: "Ponte de pie, puedes apoyarte en una pared. Estira una pierna recta hacia atrás y levántala lo más alto que puedas, apretando el glúteo. Baja lentamente y repite.", img: "https://placehold.co/400x200/fbcfe8/ec4899?text=Patada+de+glúteo+de+pie" }
+                    { name: "Sentadillas con salto", series: 3, reps: 12, desc: "Igual que la sentadilla clásica, pero al subir, haz un pequeño salto explosivo y aterriza suavemente para volver a bajar. ¡Te da un extra de intensidad y ayuda a quemar más calorías! Si al principio te cuesta, haz sentadillas normales y luego añade el salto.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+con+salto" },
+                    { name: "Zancadas caminando", series: 3, reps: "12 por pierna", desc: "Da un paso largo hacia adelante y baja como en una zancada normal. En vez de volver al sitio, lleva la pierna de atrás hacia adelante para dar el siguiente paso, como si estuvieras caminando en zancadas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+caminando" },
+                    { name: "Sentadilla isométrica (pared)", series: 3, reps: "30 seg cada una", desc: "Apoya tu espalda en una pared y baja como si te sentaras en una silla invisible, hasta que tus rodillas formen un ángulo de 90 grados. Mantén esa posición. ¡Aguanta ahí todo lo que puedas!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+isométrica" },
+                    { name: "Skater (salto lateral)", series: 3, reps: "20 (total)", desc: "Salta de lado a lado, aterrizando sobre un solo pie y llevando la otra pierna por detrás, como si patinaras. Mantén el equilibrio y salta al otro lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Skater" },
+                    { name: "Elevación de pantorrillas (gemelos)", series: 3, reps: 20, desc: "Ponte de pie, puedes apoyarte en una pared. Levanta los talones del suelo, apoyándote solo en las puntas de los pies, y luego baja lentamente.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+de+pantorrillas" },
+                    { name: "Patada de glúteo de pie hacia atrás", series: 3, reps: "15 por pierna", desc: "Ponte de pie, puedes apoyarte en una pared. Estira una pierna recta hacia atrás y levántala lo más alto que puedas, apretando el glúteo. Baja lentamente y repite.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteo+de+pie" }
                 ]
             },
             "Sábado": {
