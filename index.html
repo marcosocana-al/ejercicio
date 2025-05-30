@@ -595,8 +595,45 @@
 
         const dayNames = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]; // Sunday is 0
 
-        // Global array to store inspirations
-        let inspirations = [];
+        // Global array to store inspirations - NOW EMBEDDED DIRECTLY
+        const inspirations = [
+            {
+                "quote": "El cuerpo logra lo que la mente cree.",
+                "microActivity": "Haz 5 respiraciones profundas, concentrándote en el aire que entra y sale.",
+                "reflectionQuestion": "¿Qué pequeño paso puedo dar hoy para sentirme más fuerte?"
+            },
+            {
+                "quote": "Cada día es una nueva oportunidad para ser mejor.",
+                "microActivity": "Bebe un vaso de agua antes de tu primera taza de café.",
+                "reflectionQuestion": "¿Qué hábito saludable te gustaría empezar o reforzar hoy?"
+            },
+            {
+                "quote": "La disciplina es el puente entre metas y logros.",
+                "microActivity": "Dedica 10 minutos a organizar un pequeño espacio en tu casa.",
+                "reflectionQuestion": "¿Qué te motiva a mantenerte constante en tus objetivos?"
+            },
+            {
+                "quote": "Tu salud es tu mayor riqueza.",
+                "microActivity": "Estírate suavemente durante 5 minutos al despertar.",
+                "reflectionQuestion": "¿Cómo puedes nutrir tu cuerpo y mente hoy?"
+            },
+            {
+                "quote": "Pequeños cambios, grandes resultados.",
+                "microActivity": "Da un paseo corto al aire libre.",
+                "reflectionQuestion": "¿Qué actividad te hace sentir más conectada contigo misma?"
+            },
+            {
+                "quote": "La perseverancia es la clave del éxito.",
+                "microActivity": "Aprende una palabra nueva en otro idioma.",
+                "reflectionQuestion": "¿Qué desafío reciente superaste con perseverancia?"
+            },
+            {
+                "quote": "Eres más fuerte de lo que crees.",
+                "microActivity": "Escribe tres cosas por las que estás agradecida hoy.",
+                "reflectionQuestion": "¿Qué fortalezas descubriste en ti misma esta semana?"
+            }
+        ];
+
 
         function getRoutineForDay(dayIndex) {
             return routines[dayNames[dayIndex]];
@@ -754,48 +791,13 @@
         });
 
         /**
-         * Loads inspirations from the JSON file.
-         */
-        async function loadInspirationsData() {
-            const inspirationOutput = document.getElementById('inspirationOutput');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            loadingSpinner.style.display = 'block'; // Show spinner while loading
-
-            try {
-                const response = await fetch('inspirations.json');
-                if (!response.ok) {
-                    // Check for specific HTTP errors
-                    let errorMessage = `Estado HTTP: ${response.status}`;
-                    if (response.status === 404) {
-                        errorMessage += ' (Archivo no encontrado)';
-                    } else if (response.status === 500) {
-                        errorMessage += ' (Error del servidor)';
-                    }
-                    throw new Error(errorMessage);
-                }
-                inspirations = await response.json();
-                if (!Array.isArray(inspirations) || inspirations.length === 0) {
-                    throw new Error('El archivo JSON no contiene un array válido o está vacío.');
-                }
-                console.log('Inspiraciones cargadas:', inspirations.length);
-                // Display today's inspiration immediately after loading
-                displayTodaysInspiration();
-            } catch (error) {
-                console.error('Error al cargar o parsear las inspiraciones:', error);
-                inspirationOutput.innerHTML = `<p style="color:red;">Error al cargar las inspiraciones: Asegúrate de que el archivo <strong>'inspirations.json'</strong> esté en la misma carpeta y su contenido sea válido. (${error.message})</p>`;
-                inspirationOutput.style.display = 'block';
-            } finally {
-                loadingSpinner.style.display = 'none'; // Hide spinner
-            }
-        }
-
-        /**
          * Displays today's inspiration based on the day of the year.
          */
         function displayTodaysInspiration() {
             const inspirationOutput = document.getElementById('inspirationOutput');
+            // Check if inspirations array is empty (shouldn't happen with embedded data, but good for robustness)
             if (inspirations.length === 0) {
-                inspirationOutput.innerHTML = '<p>No hay inspiraciones disponibles para mostrar.</p>';
+                inspirationOutput.innerHTML = '<p style="color:red;">No hay inspiraciones disponibles para mostrar (datos no cargados).</p>';
                 inspirationOutput.style.display = 'block';
                 return;
             }
@@ -825,8 +827,9 @@
             inspirationOutput.style.display = 'none'; // Hide previous output
             loadingSpinner.style.display = 'block'; // Show spinner briefly
 
+            // Check if inspirations array is empty (shouldn't happen with embedded data, but good for robustness)
             if (inspirations.length === 0) {
-                inspirationOutput.innerHTML = '<p style="color:red;">No hay inspiraciones cargadas. Por favor, asegúrate de que el archivo inspirations.json esté disponible y recarga la página.</p>';
+                inspirationOutput.innerHTML = '<p style="color:red;">No hay inspiraciones cargadas. Los datos no están disponibles.</p>';
                 inspirationOutput.style.display = 'block';
                 loadingSpinner.style.display = 'none';
                 return;
@@ -845,9 +848,10 @@
             loadingSpinner.style.display = 'none';
         });
 
-        // Initial render and load inspirations
-        window.onload = async () => {
-            await loadInspirationsData(); // Load inspirations first
+        // Initial render and display inspiration
+        window.onload = () => {
+            // No need for async fetch, data is directly available
+            displayTodaysInspiration(); // Display today's inspiration
             renderCalendar(); // Then render the calendar
         };
     </script>
