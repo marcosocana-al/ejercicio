@@ -139,6 +139,45 @@
         }
 
         /* Calendar styles */
+        .calendar-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem; /* Adjusted margin */
+            border-bottom: 2px solid #FEECE2;
+            padding-bottom: 0.5rem;
+        }
+        .calendar-section-header h2 {
+            margin: 0; /* Reset margin for h2 inside this flex container */
+            border-bottom: none; /* Remove duplicate border */
+            padding-bottom: 0;
+            font-size: 2rem; /* Keep consistent with other h2 */
+            color: #E87D67;
+        }
+        .calendar-toggle-btn {
+            background-color: #FCA38F;
+            color: white;
+            padding: 0.4rem 0.8rem; /* Adjusted padding for better look */
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .calendar-toggle-btn:hover {
+            background-color: #E87D67;
+        }
+
+        .calendar-content-wrapper {
+            max-height: 1000px; /* Arbitrarily large height for expanded state */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .calendar-content-wrapper.collapsed {
+            max-height: 0; /* Collapse state */
+        }
+
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -560,6 +599,13 @@
                 height: 120px; /* Smaller image placeholders */
                 font-size: 0.8rem;
             }
+            .calendar-section-header h2 {
+                font-size: 1.5rem; /* Smaller h2 in header */
+            }
+            .calendar-toggle-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 1rem;
+            }
             .calendar-nav {
                 flex-direction: column; /* Stack buttons and month/year vertically */
                 gap: 0.75rem;
@@ -668,21 +714,26 @@
             <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
         </div>
 
-
-        <h2 class="text-blue-700">Calendario Mensual</h2>
-        <div class="calendar-nav">
-            <button id="prevMonth">&lt; Anterior</button>
-            <div id="monthYear" class="calendar-header"></div>
-            <button id="nextMonth">Siguiente &gt;</button>
+        <div class="calendar-section-header">
+            <h2 class="text-blue-700">Calendario Mensual</h2>
+            <button id="calendarToggleBtn" class="calendar-toggle-btn">&#9776;</button>
         </div>
-        <div class="calendar-grid">
-            <div class="calendar-day-name">Lun</div>
-            <div class="calendar-day-name">Mar</div>
-            <div class="calendar-day-name">Mié</div>
-            <div class="calendar-day-name">Jue</div>
-            <div class="calendar-day-name">Vie</div>
-            <div class="calendar-day-name">Sáb</div>
-            <div class="calendar-day-name">Dom</div>
+        
+        <div id="calendarContentWrapper" class="calendar-content-wrapper">
+            <div class="calendar-nav">
+                <button id="prevMonth">&lt; Anterior</button>
+                <div id="monthYear" class="calendar-header"></div>
+                <button id="nextMonth">Siguiente &gt;</button>
+            </div>
+            <div class="calendar-grid">
+                <div class="calendar-day-name">Lun</div>
+                <div class="calendar-day-name">Mar</div>
+                <div class="calendar-day-name">Mié</div>
+                <div class="calendar-day-name">Jue</div>
+                <div class="calendar-day-name">Vie</div>
+                <div class="calendar-day-name">Sáb</div>
+                <div class="calendar-day-name">Dom</div>
+            </div>
         </div>
 
         <div id="dailyRoutineDisplay" class="daily-routine-section">
@@ -1140,6 +1191,13 @@
                 loadingSpinner.style.display = 'none'; // Hide spinner
             }
         }
+
+        // --- Calendar Toggle Logic ---
+        document.getElementById('calendarToggleBtn').addEventListener('click', () => {
+            const calendarContentWrapper = document.getElementById('calendarContentWrapper');
+            calendarContentWrapper.classList.toggle('collapsed');
+        });
+
 
         // --- Routine Execution Logic ---
         let currentRoutineData = null;
