@@ -115,6 +115,7 @@
             font-size: 1.2rem;
         }
         .callout {
+            position: relative; /* Needed for absolute positioning of close button */
             background-color: #E0F2F1; /* Light mint/aqua */
             border-left: 5px solid #A7D9D6; /* Medium mint/aqua border */
             padding: 1.25rem;
@@ -123,6 +124,20 @@
             color: #4A8C88; /* Darker mint/aqua text */
             font-size: 1.1rem;
             font-weight: 500;
+        }
+        .callout-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .callout-close-btn:hover {
+            color: #1f2937;
         }
         .image-placeholder {
             width: 100%;
@@ -187,9 +202,10 @@
         .calendar-nav button {
             background-color: #FCA38F;
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.3rem 0.7rem; /* Smaller padding */
             border-radius: 0.5rem;
             font-weight: 600;
+            font-size: 0.9rem; /* Smaller font size */
             transition: background-color 0.3s ease;
         }
         .calendar-nav button:hover {
@@ -709,8 +725,8 @@
     <div class="container">
         <h1>🗓️ Calendario de Ejercicio</h1>
 
-
-        <div class="callout">
+        <div id="introCallout" class="callout">
+            <button class="callout-close-btn" id="closeCalloutBtn">&times;</button>
             <p>¡Este calendario está diseñado para ti! Cada ejercicio te ayudará a sentirte más fuerte y conectar con tu cuerpo, así como quemar energía para dormir mejor. Recuerda escuchar siempre a tu cuerpo y disfrutar del proceso. ¡Vamos a darle caña!</p>
         </div>
 
@@ -795,7 +811,7 @@
                     { name: "Puente de glúteos", series: 3, reps: 15, desc: "Túmbate boca arriba con las rodillas dobladas y los pies apoyados cerca de tu culete. Levanta la cadera del suelo apretando los glúteos con todas tus fuerzas, formando una línea recta desde tus hombros hasta tus rodillas. Mantén un segundo arriba y baja despacio. ¡Siente cómo trabaja el culete y la parte de atrás de tus muslos!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+de+glúteos" },
                     { name: "Zancadas adelante", series: 3, reps: "10 por pierna", desc: "Da un paso largo hacia adelante con una pierna, bajando la cadera hasta que la rodilla de atrás casi toque el suelo (¡pero sin golpearte!). La rodilla de adelante debe estar alineada con el tobillo. Empuja para volver a la posición inicial y repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+adelante" },
                     { name: "Abducción lateral tumbada", series: 3, reps: "15 por pierna", desc: "Túmbate de lado, apoyando tu cabeza en tu brazo. Mantén las piernas estiradas y levanta la de arriba hacia el techo, sintiendo cómo trabaja el lateral del glúteo y la cadera (el glúteo medio y mínimo). Baja despacio y cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Abducción+lateral+tumbada" },
-                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteos" },
+                    { name: "Patada de glúteo (Donkey Kicks)", series: 3, reps: "15 por pierna", desc: "Ponte a cuatro patas (manos bajo los hombros, rodillas bajo las caderas). Manteniendo la rodilla doblada a 90 grados, levanta una pierna hacia atrás y arriba, como si quisieras \"patear el techo\" con la planta del pie. Aprieta el glúteo a tope en la parte superior y baja lentamente. Repite con la otra pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteo" },
                     { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Túmbate de lado con las rodillas flexionadas y los pies juntos. Manteniendo los pies juntos, levanta la rodilla de arriba separándola de la de abajo, como si abrieras una almeja. ¡Ojo! No dejes que tu cadera rote hacia atrás. Baja lentamente. Repite del otro lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Almejas" }
                 ]
             },
@@ -811,7 +827,7 @@
                     { name: "Sentadillas sumo", series: 3, reps: 15, desc: "Abre las piernas más que el ancho de tus hombros, con las puntas de los pies un poco hacia fuera (como una bailarina de sumo, ¡de ahí el nombre!). Baja el culete como en una sentadilla normal, apretando bien los glúteos al subir.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas+sumo" },
                     { name: "Hip Thrust (espalda en silla/cama)", series: 3, reps: 15, desc: "Siéntate en el suelo con la parte alta de tu espalda (justo debajo de los omóplatos) apoyada en el borde de una silla o cama (¡que sea súper estable, por favor!). Pies apoyados en el suelo, rodillas flexionadas. Levanta la cadera apretando los glúteos a tope, hasta formar una línea recta con tu cuerpo desde los hombros hasta las rodillas. Baja despacio.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Hip+Thrust" },
                     { name: "Zancadas laterales", series: 3, reps: "10 por pierna", desc: "Da un paso grande hacia un lado, doblando esa rodilla y manteniendo la otra pierna estirada. Baja la cadera y vuelve al centro. Cambia de lado.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+laterales" },
-                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+lateral+de+pie" },
+                    { name: "Elevación lateral de pierna de pie", series: 3, reps: "12 por pierna", desc: "De pie, puedes apoyarte en una pared o silla para mantener el equilibrio. Levanta una pierna recta hacia el lado, sin inclinar el cuerpo. Siente cómo trabaja el lateral de tu glúteo. Baja despacio y cambia de pierna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+lateral+de+pierna+de+pie" },
                     { name: "Puente de glúteos a una pierna", series: 3, reps: "12 por pierna", desc: "Como el puente de glúteos normal, pero estira una pierna hacia arriba. Levanta la cadera con una sola pierna apoyada. Alterna.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+a+una+pierna" },
                     { name: "Step Up (escalón/silla)", series: 3, reps: "10 por pierna", desc: "Ponte delante de un escalón o una silla resistente. Sube un pie, luego el otro, y baja de la misma forma, alternando la pierna que empieza. ¡Concéntrate en el glúteo de la pierna que sube al impulsarte!", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Step+Up" }
                 ]
@@ -1198,6 +1214,10 @@
             calendarContentWrapper.classList.toggle('collapsed');
         });
 
+        // --- Callout Close Logic ---
+        document.getElementById('closeCalloutBtn').addEventListener('click', () => {
+            document.getElementById('introCallout').style.display = 'none';
+        });
 
         // --- Routine Execution Logic ---
         let currentRoutineData = null;
