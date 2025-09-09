@@ -801,8 +801,19 @@
     </div>
 
     <script>
-        // Data for routines
-        const routines = {
+        // --- DATA FOR ROUTINES ---
+
+        // Helper function to get the week number
+        function getWeekNumber(d) {
+            d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+            d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+            var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+            return weekNo;
+        }
+
+        // --- SEMANA ORIGINAL (SEMANA 0) ---
+        const routinesWeek0 = {
             "Lunes": {
                 name: "Rutina 1 (¡A darle caña!)",
                 type: "routine",
@@ -860,6 +871,171 @@
                 description: "¡Día de descanso total! Aprovecha para relajarte, hacer actividades que te gusten y recargar energías para la semana. ¡El descanso es tan importante como el ejercicio!"
             }
         };
+
+        // --- SEMANA DE PREPARACIÓN A (SEMANA 1) ---
+        const routinesWeek1 = {
+            "Lunes": {
+                name: "Fuerza y Potencia para Subidas",
+                type: "routine",
+                exercises: [
+                    { name: "Elevación de cadera", series: 4, reps: "12-15", desc: "Fortalecimiento de glúteos para tener potencia en las cuestas del Camino. Es clave para no sobrecargar las rodillas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+de+cadera" },
+                    { name: "Sentadilla abierta", series: 3, reps: "12", desc: "Fortalece el interior de los muslos para darte más estabilidad en terrenos irregulares.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+abierta" },
+                    { name: "Peso muerto rumano", series: 3, reps: "15", desc: "Fortalece la parte trasera de las piernas (isquios), vital para aguantar largas caminatas sin molestias.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Peso+Muerto" },
+                    { name: "Patada de glúteo en 4 apoyos", series: 3, reps: "20 por pierna", desc: "Activa y fortalece el glúteo, el motor principal que necesitarás en cada etapa del Camino.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+glúteo" }
+                ]
+            },
+            "Martes": {
+                name: "Cardio Ligero y Core",
+                type: "active_rest",
+                description: "Hoy toca una sesión de 45-60 minutos de bici a ritmo suave y constante. Además, haremos unos ejercicios de core (plancha, vacuum abdominal, bird-dog) para fortalecer la zona central del cuerpo. Un core fuerte es fundamental para llevar la mochila cómodamente durante horas."
+            },
+            "Miércoles": {
+                name: "Estabilidad de Cadera y Rodilla",
+                type: "routine",
+                exercises: [
+                    { name: "Elevación lateral de pierna", series: 4, reps: "20 por lado", desc: "Ejercicio clave para fortalecer los músculos que estabilizan la cadera, previniendo dolores de rodilla en el Camino.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+lateral" },
+                    { name: "Hidrantes", series: 3, reps: "15 por lado", desc: "Mejora la movilidad y fuerza de la cadera, esencial para un paso firme y seguro en cualquier tipo de sendero.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Hidrantes" },
+                    { name: "Caminata lateral", series: 3, reps: "20 pasos por lado", desc: "Activa los estabilizadores de la cadera, preparándote para no perder el equilibrio en tramos complicados.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Caminata+lateral" },
+                    { name: "Almejas (Clamshells)", series: 3, reps: "20 por lado", desc: "Fortalece el glúteo medio, un músculo fundamental para la estabilidad al caminar durante horas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Almejas" }
+                ]
+            },
+            "Jueves": {
+                name: "Yoga para Recuperar Piernas",
+                type: "yoga_detailed", // Custom type for detailed yoga routine
+                description: "Una sesión completa para estirar y recuperar los músculos de las piernas y caderas."
+            },
+            "Viernes": {
+                name: "Circuito de Resistencia General",
+                type: "routine",
+                exercises: [
+                    { name: "Puente de Glúteos", series: 3, reps: "20", desc: "Refuerza toda la cadena posterior para un impulso fuerte en cada paso.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+de+Glúteos" },
+                    { name: "Sentadillas sin peso", series: 3, reps: "15", desc: "El ejercicio base para asegurar que tus piernas tienen la resistencia necesaria para una larga etapa.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadillas" },
+                    { name: "Abducción de Cadera de pie", series: 3, reps: "15 por lado", desc: "Trabajo de estabilidad para aguantar kilómetros sin que las rodillas sufran.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Abducción+de+pie" },
+                    { name: "Patada de Glúteo de pie", series: 3, reps: "15 por lado", desc: "Asegura que tienes potencia en el glúteo para las subidas más exigentes.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Patada+de+pie" }
+                ]
+            },
+            "Sábado": {
+                name: "Movimiento Libre y Placentero",
+                type: "active_rest",
+                description: "¡Día libre! Sal a dar un paseo largo en bici, ponte tu música favorita y baila, o simplemente sal a caminar por un parque. La idea es moverse de una forma que disfrutes, sin presión."
+            },
+            "Domingo": {
+                name: "Descanso Total",
+                type: "rest",
+                description: "Descanso total. El cuerpo necesita recuperarse para asimilar el entrenamiento y estar listo para la siguiente semana de preparación."
+            }
+        };
+
+        // --- SEMANA DE PREPARACIÓN B (SEMANA 2) ---
+        const routinesWeek2 = {
+            "Lunes": {
+                name: "Fuerza Unilateral y Control",
+                type: "routine",
+                exercises: [
+                    { name: "Puente de Glúteos a una pierna", series: 4, reps: "12-15 por pierna", desc: "Aumenta la dificultad y trabaja el equilibrio, algo que necesitarás constantemente en el Camino.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Puente+a+1+pierna" },
+                    { name: "Sentadilla Búlgara", series: 3, reps: "12 por pierna", desc: "Un ejercicio increíble para fortalecer cada pierna por separado, corrigiendo desequilibrios y previniendo lesiones.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+Búlgara" },
+                    { name: "Zancadas Inversas", series: 3, reps: "12 por pierna", desc: "Mejora el control y la estabilidad, protegiendo tus rodillas en las bajadas pronunciadas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancadas+Inversas" },
+                    { name: "Bombas de Rana (Frog Pumps)", series: 3, reps: "Hasta el fallo", desc: "Aísla y activa los glúteos para asegurar que tienes la máxima potencia al caminar.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Bombas+de+Rana" }
+                ]
+            },
+            "Martes": {
+                name: "Cardio Ligero y Core",
+                type: "active_rest",
+                description: "Hoy toca una sesión de 45-60 minutos de bici a ritmo suave y constante. Además, haremos unos ejercicios de core (plancha, vacuum abdominal, bird-dog) para fortalecer la zona central del cuerpo. Un core fuerte es fundamental para llevar la mochila cómodamente durante horas."
+            },
+            "Miércoles": {
+                name: "Movilidad y Fuerza en Ángulos",
+                type: "routine",
+                exercises: [
+                    { name: "Zancada Cruzada", series: 3, reps: "12 por lado", desc: "Trabaja los glúteos desde otro ángulo, preparando el cuerpo para los movimientos inesperados del terreno.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Zancada+Cruzada" },
+                    { name: "Elevación lateral con pulso", series: 3, reps: "20 reps + 10 pulsos", desc: "Añade un extra de intensidad al trabajo de estabilidad de cadera, para una resistencia a prueba de bombas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+con+pulso" },
+                    { name: "Círculos de pierna tumbada", series: 3, reps: "15 por dirección", desc: "Mejora la movilidad de la articulación de la cadera, para un movimiento más fluido y menos riesgo de lesión.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Círculos+de+pierna" },
+                    { name: "Sentadilla con paso lateral", series: 3, reps: "12 por lado", desc: "Fortalece los abductores y te prepara para los pasos laterales que darás en los senderos más estrechos.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+lateral" }
+                ]
+            },
+            "Jueves": {
+                name: "Descanso Activo (Yoga o Estiramientos)",
+                type: "active_rest",
+                description: "Hoy es un día para recuperarse activamente. Busca en YouTube una sesión de 'Yoga para senderistas' o 'Estiramientos para después de caminar'. Céntrate en relajar las piernas, la espalda y las caderas."
+            },
+            "Viernes": {
+                name: "Circuito de Activación de Glúteos",
+                type: "routine",
+                exercises: [
+                    { name: "Sentadilla Sumo sin peso", series: 3, reps: "20", desc: "Refuerza la base para un paso estable y potente.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Sentadilla+Sumo" },
+                    { name: "Elevación de cadera en suelo", series: 3, reps: "15", desc: "Activación directa del glúteo para asegurar la potencia en cada paso.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Elevación+cadera" },
+                    { name: "Hidrantes", series: 3, reps: "15 por lado", desc: "Movilidad y activación de los músculos estabilizadores de la cadera.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Hidrantes" },
+                    { name: "Almejas (Clamshells)", series: 3, reps: "15 por lado", desc: "Fortalecimiento específico del glúteo medio para proteger tus rodillas durante largas caminatas.", img: "https://placehold.co/400x200/FEECE2/FCA38F?text=Almejas" }
+                ]
+            },
+            "Sábado": {
+                name: "Movimiento Libre y Placentero",
+                type: "active_rest",
+                description: "¡Día libre! Sal a dar un paseo largo en bici, ponte tu música favorita y baila, o simplemente sal a caminar por un parque. La idea es moverse de una forma que disfrutes, sin presión."
+            },
+            "Domingo": {
+                name: "Descanso Total",
+                type: "rest",
+                description: "Descanso total. El cuerpo necesita recuperarse para asimilar el entrenamiento y estar listo para la siguiente semana de preparación."
+            }
+        };
+
+        const allRoutines = [routinesWeek0, routinesWeek1, routinesWeek2];
+
+        // --- YOGA ROUTINE CONTENT ---
+        const getYogaContent = () => `
+            <div class="exercise-section">
+                <h3 class="text-xl font-semibold mb-2" style="color: #4A8C88;"><span class="icon">🧘</span> Tu Rutina de Yoga para Postura</h3>
+                <p class="text-sm text-gray-500 mb-4">Duración: 30-40 minutos</p>
+                
+                <h4 class="font-semibold text-gray-700 mt-4 mb-2">1. Centramiento y Calentamiento (5 minutos)</h4>
+                <div class="exercise-item">
+                    <div class="exercise-title">Postura Fácil con Respiración</div>
+                    <p class="exercise-description">Siéntate con las piernas cruzadas y la espalda recta. Cierra los ojos. Inhala en 4 segundos, exhala en 6. Repite 5-10 veces para calmar la mente.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Gato-Vaca</div>
+                    <p class="exercise-description">En cuatro apoyos, inhala para arquear la espalda (Vaca) y exhala para redondearla (Gato). Haz 10 repeticiones para despertar la columna.</p>
+                </div>
+                
+                <h4 class="font-semibold text-gray-700 mt-6 mb-2">2. Secuencia Principal de Apertura (20-25 minutos)</h4>
+                <p class="text-sm text-gray-500 mb-4">Mantén cada postura durante 5-8 respiraciones profundas.</p>
+                <div class="exercise-item">
+                    <div class="exercise-title">Postura de la Diosa</div>
+                    <p class="exercise-description">De pie, separa las piernas con los pies hacia afuera. Flexiona las rodillas. Siente la apertura en la pelvis.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Guerrero II</div>
+                    <p class="exercise-description">Desde Diosa, gira un pie 90 grados. Extiende los brazos en cruz y mira sobre la mano delantera. Siente la apertura de cadera. Repite en ambos lados.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Postura del Triángulo</div>
+                    <p class="exercise-description">Desde Guerrero II, estira la pierna delantera e inclina el torso hacia un lado, alargando ambos costados del cuerpo. Repite en ambos lados.</p>
+                </div>
+                 <div class="exercise-item">
+                    <div class="exercise-title">Postura de la Paloma</div>
+                    <p class="exercise-description">Desde cuatro apoyos, desliza una rodilla hacia adelante. Estira la otra pierna hacia atrás. Es el mejor estiramiento para el glúteo. Repite en ambos lados.</p>
+                </div>
+                <div class="exercise-item">
+                    <div class="exercise-title">Postura de la Mariposa</div>
+                    <p class="exercise-description">Siéntate y junta las plantas de los pies, dejando que las rodillas caigan a los lados. Relaja la cara interna de los muslos.</p>
+                </div>
+
+                <h4 class="font-semibold text-gray-700 mt-6 mb-2">3. Enfriamiento y Relajación Final (5-10 minutos)</h4>
+                 <div class="exercise-item">
+                    <div class="exercise-title">Torsión Espinal Tumbada</div>
+                    <p class="exercise-description">Túmbate y deja caer las rodillas juntas hacia un lado, girando la cabeza al contrario. Relaja la espalda baja.</p>
+                </div>
+                 <div class="exercise-item">
+                    <div class="exercise-title">Postura del Bebé Feliz</div>
+                    <p class="exercise-description">Tumbada, agarra tus pies y lleva las rodillas hacia las axilas. Masajea la zona lumbar.</p>
+                </div>
+                 <div class="exercise-item">
+                    <div class="exercise-title">Relajación Final (Savasana)</div>
+                    <p class="exercise-description">Túmbate boca arriba y relájate por completo durante al menos 5 minutos. Deja que tu cuerpo asimile la práctica.</p>
+                </div>
+            </div>
+        `;
 
         // Warm-up and Cool-down content are now functions for better reusability
         const getWarmUpContent = () => `
@@ -973,26 +1149,26 @@
                 "reflectionQuestion": "¿Qué fortalezas descubriste en ti misma esta semana?"
             },
             {
-    "quote": "El cuerpo logra lo que la mente cree.",
-    "microActivity": "Haz 5 respiraciones profundas, concentrándote en el aire que entra y sale.",
-    "reflectionQuestion": "¿Qué pequeño paso puedo dar hoy para sentirme más fuerte?"
-  },
-  {
-    "quote": "Cada paso cuenta, por pequeño que sea.",
-    "microActivity": "Estira suavemente tus muñecas y tobillos durante 1 minuto.",
-    "reflectionQuestion": "¿Cómo puedo integrar más movimiento en mi rutina diaria sin que me suponga un esfuerzo extra?"
-  },
-  {
-    "quote": "Tu bienestar es una inversión, no un gasto.",
-    "microActivity": "Bebe un vaso de agua conscientemente, saboreando cada sorbo.",
-    "reflectionQuestion": "¿Qué significa 'bienestar' para mí hoy?"
-  },
-  {
-    "quote": "La constancia es la clave del progreso.",
-    "microActivity": "Camina por la casa durante 3 minutos mientras escuchas tu canción favorita.",
-    "reflectionQuestion": "¿Qué hábito saludable me gustaría establecer esta semana?"
-  },
-  {
+                "quote": "El cuerpo logra lo que la mente cree.",
+                "microActivity": "Haz 5 respiraciones profundas, concentrándote en el aire que entra y sale.",
+                "reflectionQuestion": "¿Qué pequeño paso puedo dar hoy para sentirme más fuerte?"
+            },
+            {
+                "quote": "Cada paso cuenta, por pequeño que sea.",
+                "microActivity": "Estira suavemente tus muñecas y tobillos durante 1 minuto.",
+                "reflectionQuestion": "¿Cómo puedo integrar más movimiento en mi rutina diaria sin que me suponga un esfuerzo extra?"
+            },
+            {
+                "quote": "Tu bienestar es una inversión, no un gasto.",
+                "microActivity": "Bebe un vaso de agua conscientemente, saboreando cada sorbo.",
+                "reflectionQuestion": "¿Qué significa 'bienestar' para mí hoy?"
+            },
+            {
+                "quote": "La constancia es la clave del progreso.",
+                "microActivity": "Camina por la casa durante 3 minutos mientras escuchas tu canción favorita.",
+                "reflectionQuestion": "¿Qué hábito saludable me gustaría establecer esta semana?"
+            },
+              {
     "quote": "Empieza donde estás, usa lo que tienes, haz lo que puedas.",
     "microActivity": "Haz 10 sentadillas con peso corporal mientras esperas el café.",
     "reflectionQuestion": "¿Qué excusa me estoy poniendo hoy para no cuidarme, y cómo puedo superarla?"
@@ -5996,22 +6172,35 @@
 
         let currentSelectedRoutine = null; // Stores the routine data for the selected day
 
-        function getRoutineForDay(dayIndex) {
-            return routines[dayNames[dayIndex]];
+        function getRoutineForDate(date) {
+            const weekNumber = getWeekNumber(date);
+            const routineIndex = weekNumber % 3; // Will result in 0, 1, or 2
+            const dayName = dayNames[date.getDay()];
+            return allRoutines[routineIndex][dayName];
         }
 
-        function displayDailyRoutine(dayName, routineData) {
+        function displayDailyRoutine(date) {
             const dailyRoutineTitle = document.getElementById('dailyRoutineTitle');
             const dailyRoutineContent = document.getElementById('dailyRoutineContent');
             const doRoutineBtn = document.getElementById('doRoutineBtn');
+            const dayName = dayNames[date.getDay()];
+            const routineData = getRoutineForDate(date);
             
+            if (!routineData) {
+                dailyRoutineTitle.textContent = `${dayName} - Sin rutina asignada`;
+                dailyRoutineContent.innerHTML = '<p>No hay rutina para este día.</p>';
+                doRoutineBtn.classList.add('hidden');
+                currentSelectedRoutine = null;
+                return;
+            }
+
             dailyRoutineTitle.textContent = `${dayName} - ${routineData.name}`;
             let contentHtml = '';
 
             if (routineData.type === "routine") {
                 contentHtml += `
                     <div class="exercise-section">
-                        <p class="mb-4 text-gray-600">Esta es una rutina de ejercicio. Haz 3 series de las repeticiones indicadas para cada ejercicio. Descansa 30-60 segundos entre ejercicios. ¡Y siempre aprieta bien el músculo en cada repetición! ¡Siente cómo trabaja ese músculo! La clave es la conexión mente-músculo, pensar en el músculo que estás trabajando. Si un ejercicio te cuesta mucho al principio, haz menos repeticiones y ve aumentando poco a poco. ¡Sin prisas!</p>
+                        <p class="mb-4 text-gray-600">Esta es una rutina de fuerza. Haz las series y repeticiones indicadas. Descansa 30-60 segundos entre ejercicios. La clave es la conexión mente-músculo, ¡piensa en el músculo que estás trabajando!</p>
                         <div class="overflow-x-auto rounded-xl shadow-md mb-4">
                             <table>
                                 <thead>
@@ -6036,6 +6225,10 @@
                 `;
                 doRoutineBtn.classList.remove('hidden');
                 currentSelectedRoutine = routineData; // Store for routine execution
+            } else if (routineData.type === "yoga_detailed") {
+                contentHtml = getYogaContent();
+                doRoutineBtn.classList.add('hidden');
+                currentSelectedRoutine = null;
             } else {
                 contentHtml += `
                     <div class="exercise-section">
@@ -6069,30 +6262,24 @@
             const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
             const today = new Date();
 
-            // Adjust first day of week to be Monday (0 for Monday, 6 for Sunday)
             let firstDayOfWeek = firstDayOfMonth.getDay();
-            firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1; // Convert Sunday (0) to 6, others -1
+            firstDayOfWeek = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
 
             monthYearDisplay.textContent = `${firstDayOfMonth.toLocaleString('es-ES', { month: 'long' })} ${currentYear}`;
 
-            // Add empty cells for days before the first day of the month
             for (let i = 0; i < firstDayOfWeek; i++) {
                 const emptyDiv = document.createElement('div');
                 emptyDiv.classList.add('calendar-day', 'empty');
                 calendarGrid.appendChild(emptyDiv);
             }
 
-            // Add days of the month
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(currentYear, currentMonth, day);
-                const dayOfWeekIndex = date.getDay(); // 0 for Sunday, 1 for Monday...
-                const dayName = dayNames[dayOfWeekIndex];
-                const routine = routines[dayName];
+                const routine = getRoutineForDate(date);
 
                 const dayDiv = document.createElement('div');
                 dayDiv.classList.add('calendar-day');
-                dayDiv.dataset.dayName = dayName; // Store day name for click event
-                dayDiv.dataset.dayIndex = dayOfWeekIndex; // Store day index for direct routine lookup
+                dayDiv.dataset.date = date.toISOString();
 
                 if (date.getDate() === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) {
                     dayDiv.classList.add('current-day');
@@ -6105,19 +6292,12 @@
                 calendarGrid.appendChild(dayDiv);
             }
 
-            // Add event listeners to calendar days
             document.querySelectorAll('.calendar-day:not(.empty)').forEach(dayDiv => {
                 dayDiv.addEventListener('click', () => {
-                    // Remove 'current-day' from previously selected day
                     document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('current-day'));
-                    // Add 'current-day' to the newly selected day
                     dayDiv.classList.add('current-day');
-
-                    const dayName = dayDiv.dataset.dayName;
-                    const routineData = routines[dayName];
-                    if (routineData) {
-                        displayDailyRoutine(dayName, routineData);
-                    }
+                    const selectedDate = new Date(dayDiv.dataset.date);
+                    displayDailyRoutine(selectedDate);
                 });
             });
         }
@@ -6143,23 +6323,20 @@
         // Flag to ensure inspiration is generated only once per session
         let inspirationGenerated = false;
 
-        // Function to display a random inspiration (either from local array or LLM)
         async function displayRandomInspiration() {
             const inspirationOutput = document.getElementById('inspirationOutput');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const getInspirationBtn = document.getElementById('getInspirationBtn');
 
-            // Only generate if not already generated
             if (inspirationGenerated) {
                 return;
             }
 
-            inspirationOutput.style.display = 'none'; // Hide previous output
-            loadingSpinner.style.display = 'block'; // Show spinner
-            getInspirationBtn.disabled = true; // Disable button immediately
+            inspirationOutput.style.display = 'none';
+            loadingSpinner.style.display = 'block';
+            getInspirationBtn.disabled = true;
 
             try {
-                // First, try to get a random inspiration from the local array
                 if (inspirations.length > 0) {
                     const randomIndex = Math.floor(Math.random() * inspirations.length);
                     const randomInspiration = inspirations[randomIndex];
@@ -6169,62 +6346,17 @@
                         <p><strong>Pregunta para Reflexionar:</strong> ${randomInspiration.reflectionQuestion}</p>
                     `;
                     inspirationOutput.style.display = 'block';
-                    inspirationGenerated = true; // Set flag to true
+                    inspirationGenerated = true;
                 } else {
-                    // If local inspirations are empty, fall back to LLM
-                    let chatHistory = [];
-                    chatHistory.push({ role: "user", parts: [{ text: "Genera una cita motivacional corta sobre ejercicio y bienestar, una sugerencia de micro-actividad para días de baja energía (ej. '5 minutos de estiramientos suaves') y una pregunta de reflexión sobre el bienestar personal. Formato JSON." }] });
-                    
-                    const payload = {
-                        contents: chatHistory,
-                        generationConfig: {
-                            responseMimeType: "application/json",
-                            responseSchema: {
-                                type: "OBJECT",
-                                properties: {
-                                    "quote": { "type": "STRING" },
-                                    "microActivity": { "type": "STRING" },
-                                    "reflectionQuestion": { "type": "STRING" }
-                                },
-                                "propertyOrdering": ["quote", "microActivity", "reflectionQuestion"]
-                            }
-                        }
-                    };
-                    const apiKey = "";
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-                    
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const json = result.candidates[0].content.parts[0].text;
-                        const parsedJson = JSON.parse(json);
-
-                        inspirationOutput.innerHTML = `
-                            <p><strong>Cita Motivacional:</strong> "${parsedJson.quote}"</p>
-                            <p><strong>Micro-actividad:</strong> ${parsedJson.microActivity}</p>
-                            <p><strong>Pregunta para Reflexionar:</strong> ${parsedJson.reflectionQuestion}</p>
-                        `;
-                        inspirationOutput.style.display = 'block';
-                        inspirationGenerated = true; // Set flag to true
-                    } else {
-                        inspirationOutput.innerHTML = '<p>Lo siento, no pude generar una inspiración en este momento. Inténtalo de nuevo.</p>';
-                        inspirationOutput.style.display = 'block';
-                    }
+                    inspirationOutput.innerHTML = '<p>No hay inspiraciones disponibles.</p>';
+                    inspirationOutput.style.display = 'block';
                 }
             } catch (error) {
                 console.error('Error al obtener la inspiración:', error);
-                inspirationOutput.innerHTML = '<p>Hubo un error al cargar la inspiración. Por favor, inténtalo de nuevo más tarde.</p>';
+                inspirationOutput.innerHTML = '<p>Hubo un error al cargar la inspiración.</p>';
                 inspirationOutput.style.display = 'block';
             } finally {
-                loadingSpinner.style.display = 'none'; // Hide spinner
+                loadingSpinner.style.display = 'none';
             }
         }
 
@@ -6241,11 +6373,11 @@
 
         // --- Routine Execution Logic ---
         let currentRoutineData = null;
-        let routineSteps = []; // Flattened array of steps (warmup, exercise series, rest, cooldown, finished)
-        let currentStepIndex = 0; // Index for the flattened routineSteps array
+        let routineSteps = [];
+        let currentStepIndex = 0;
 
         let timerInterval;
-        let timeLeft = 60; // Default 60 seconds for rest
+        let timeLeft = 60;
 
         const routineExecutionModal = document.getElementById('routineExecutionModal');
         const routineExecutionTitle = document.getElementById('routineExecutionTitle');
@@ -6273,14 +6405,13 @@
             currentRoutineData = currentSelectedRoutine;
             currentStepIndex = 0;
             
-            // Build the flattened routineSteps array
             routineSteps = [];
-            routineSteps.push({ type: 'warmup' }); // Warm-up
+            routineSteps.push({ type: 'warmup' });
 
-            const totalSeriesCount = currentRoutineData.exercises[0].series; // Assuming all exercises have the same number of series
+            const totalSeriesCount = currentRoutineData.exercises[0].series;
 
             for (let seriesIdx = 1; seriesIdx <= totalSeriesCount; seriesIdx++) {
-                routineSteps.push({ type: 'series_start', seriesNum: seriesIdx, totalSeries: totalSeriesCount }); // Start of a new full series
+                routineSteps.push({ type: 'series_start', seriesNum: seriesIdx, totalSeries: totalSeriesCount });
                 currentRoutineData.exercises.forEach((exercise, exerciseIdx) => {
                     routineSteps.push({
                         type: 'exercise',
@@ -6289,22 +6420,20 @@
                         desc: exercise.desc,
                         img: exercise.img,
                         seriesNum: seriesIdx,
-                        totalSeries: exercise.series, // This is the total series for this specific exercise
+                        totalSeries: exercise.series,
                         exerciseIndex: exerciseIdx
                     });
-                    // Add 30s rest if not the last exercise in the current series
                     if (exerciseIdx < currentRoutineData.exercises.length - 1) {
                         routineSteps.push({ type: 'rest_30s' });
                     }
                 });
-                // Add 60s rest if not the last overall series
                 if (seriesIdx < totalSeriesCount) {
                     routineSteps.push({ type: 'rest_60s' });
                 }
             }
 
-            routineSteps.push({ type: 'cooldown' }); // Cool-down
-            routineSteps.push({ type: 'finished' }); // Finished
+            routineSteps.push({ type: 'cooldown' });
+            routineSteps.push({ type: 'finished' });
 
             renderRoutineStep();
             routineExecutionModal.classList.add('open');
@@ -6312,8 +6441,8 @@
 
         function closeRoutineModal() {
             routineExecutionModal.classList.remove('open');
-            stopTimer(); // Ensure timer is stopped when closing
-            resetTimerDisplay(60); // Reset timer to 60 seconds
+            stopTimer();
+            resetTimerDisplay(60);
         }
 
         function updateProgressIndicators() {
@@ -6322,12 +6451,10 @@
             progressCooldown.classList.remove('active', 'completed');
 
             const step = routineSteps[currentStepIndex];
-
-            // Determine which main section the current step belongs to for progress circles
             let currentMainSection = '';
             if (step.type === 'warmup') {
                 currentMainSection = 'warmup';
-            } else if (step.type === 'exercise' || step.type === 'rest_30s' || step.type === 'series_start' || step.type === 'rest_60s') {
+            } else if (['exercise', 'rest_30s', 'series_start', 'rest_60s'].includes(step.type)) {
                 currentMainSection = 'routine';
             } else if (step.type === 'cooldown') {
                 currentMainSection = 'cooldown';
@@ -6335,16 +6462,15 @@
                 currentMainSection = 'finished';
             }
 
-            if (currentMainSection === 'warmup') {
-                progressWarmup.classList.add('active');
-            } else if (currentMainSection === 'routine') {
+            if (currentMainSection === 'warmup') progressWarmup.classList.add('active');
+            else if (currentMainSection === 'routine') {
                 progressWarmup.classList.add('completed');
                 progressRoutine.classList.add('active');
             } else if (currentMainSection === 'cooldown') {
                 progressWarmup.classList.add('completed');
                 progressRoutine.classList.add('completed');
                 progressCooldown.classList.add('active');
-            } else if (currentMainSection === 'finished') { // Routine finished
+            } else if (currentMainSection === 'finished') {
                 progressWarmup.classList.add('completed');
                 progressRoutine.classList.add('completed');
                 progressCooldown.classList.add('completed');
@@ -6355,24 +6481,19 @@
             const step = routineSteps[currentStepIndex];
             routineExecutionTitle.textContent = currentRoutineData.name;
             let contentHtml = '';
-            exerciseTimerControls.classList.add('hidden'); // Hide timer by default
-            prevStepBtn.classList.remove('hidden'); // Show prev button by default
-            nextStepBtn.textContent = 'Siguiente >'; // Default next button text
-            nextStepBtn.disabled = false; // Enable next button by default
+            exerciseTimerControls.classList.add('hidden');
+            prevStepBtn.classList.remove('hidden');
+            nextStepBtn.textContent = 'Siguiente >';
+            nextStepBtn.disabled = false;
 
             if (step.type === 'warmup') {
                 prevStepBtn.classList.add('hidden');
                 nextStepBtn.textContent = 'Siguiente: Rutina';
                 contentHtml = getWarmUpContent();
             } else if (step.type === 'series_start') {
-                contentHtml = `
-                    <h3 style="color: #E87D67;">¡Comenzando Serie ${step.seriesNum} de ${step.totalSeries}!</h3>
-                    <p>Prepárate para los ejercicios.</p>
-                `;
-                // The next button will lead to the first exercise of this series
+                contentHtml = `<h3 style="color: #E87D67;">¡Comenzando Serie ${step.seriesNum} de ${step.totalSeries}!</h3><p>Prepárate para los ejercicios.</p>`;
                 nextStepBtn.textContent = 'Empezar Ejercicio';
-            }
-            else if (step.type === 'exercise') {
+            } else if (step.type === 'exercise') {
                 contentHtml = `
                     <div class="routine-exercise-detail">
                         <div class="exercise-title">${step.name}</div>
@@ -6380,52 +6501,32 @@
                         <p class="exercise-reps">Repeticiones: ${step.reps}</p>
                         <p class="exercise-description">${step.desc}</p>
                         <img src="${step.img}" alt="Imagen de persona realizando ${step.name}" onerror="this.src='https://placehold.co/400x200/FEECE2/FCA38F?text=Imagen+no+disponible';">
-                    </div>
-                `;
-                // Determine next button text based on what comes next in the flattened steps
+                    </div>`;
                 const nextStepInSequence = routineSteps[currentStepIndex + 1];
                 if (nextStepInSequence) {
-                    if (nextStepInSequence.type === 'rest_30s') {
-                        nextStepBtn.textContent = 'Iniciar Descanso (30s)';
-                    } else if (nextStepInSequence.type === 'rest_60s') {
-                        nextStepBtn.textContent = 'Iniciar Descanso (60s)';
-                    } else if (nextStepInSequence.type === 'cooldown') {
-                        nextStepBtn.textContent = 'Siguiente: Estiramientos';
-                    } else if (nextStepInSequence.type === 'exercise') {
-                        nextStepBtn.textContent = 'Siguiente Ejercicio';
-                    } else if (nextStepInSequence.type === 'finished') {
-                        nextStepBtn.textContent = 'Finalizar Rutina';
-                    }
+                    if (nextStepInSequence.type === 'rest_30s') nextStepBtn.textContent = 'Iniciar Descanso (30s)';
+                    else if (nextStepInSequence.type === 'rest_60s') nextStepBtn.textContent = 'Iniciar Descanso (60s)';
+                    else if (nextStepInSequence.type === 'cooldown') nextStepBtn.textContent = 'Siguiente: Estiramientos';
+                    else if (nextStepInSequence.type === 'exercise') nextStepBtn.textContent = 'Siguiente Ejercicio';
+                    else if (nextStepInSequence.type === 'finished') nextStepBtn.textContent = 'Finalizar Rutina';
                 }
-
             } else if (step.type === 'rest_30s') {
-                contentHtml = `
-                    <h3 style="color: #4A8C88;">¡Descanso Corto! (30 segundos)</h3>
-                    <p>Prepárate para el siguiente ejercicio.</p>
-                `;
-                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
-                resetTimerDisplay(30); // Set timer to 30 seconds
-                nextStepBtn.disabled = true; // Disable next button during rest
+                contentHtml = `<h3 style="color: #4A8C88;">¡Descanso Corto! (30 segundos)</h3><p>Prepárate para el siguiente ejercicio.</p>`;
+                exerciseTimerControls.classList.remove('hidden');
+                resetTimerDisplay(30);
+                nextStepBtn.disabled = true;
                 nextStepBtn.textContent = 'Continuar';
             } else if (step.type === 'rest_60s') {
-                contentHtml = `
-                    <h3 style="color: #4A8C88;">¡Descanso Largo! (1 minuto)</h3>
-                    <p>¡Buen trabajo! Tómate un respiro antes de la siguiente serie.</p>
-                `;
-                exerciseTimerControls.classList.remove('hidden'); // Show timer for rest
-                resetTimerDisplay(60); // Set timer to 60 seconds
-                nextStepBtn.disabled = true; // Disable next button during rest
+                contentHtml = `<h3 style="color: #4A8C88;">¡Descanso Largo! (1 minuto)</h3><p>¡Buen trabajo! Tómate un respiro antes de la siguiente serie.</p>`;
+                exerciseTimerControls.classList.remove('hidden');
+                resetTimerDisplay(60);
+                nextStepBtn.disabled = true;
                 nextStepBtn.textContent = 'Continuar';
-            }
-            else if (step.type === 'cooldown') {
+            } else if (step.type === 'cooldown') {
                 contentHtml = getCoolDownContent();
                 nextStepBtn.textContent = 'Finalizar Rutina';
             } else if (step.type === 'finished') {
-                contentHtml = `
-                    <h3 style="color: #4A8C88;">¡Rutina Completada!</h3>
-                    <p>¡Felicidades, has terminado tu rutina de hoy!</p>
-                    <p>Recuerda la importancia de la constancia y el descanso.</p>
-                `;
+                contentHtml = `<h3 style="color: #4A8C88;">¡Rutina Completada!</h3><p>¡Felicidades, has terminado tu rutina de hoy!</p><p>Recuerda la importancia de la constancia y el descanso.</p>`;
                 prevStepBtn.classList.add('hidden');
                 nextStepBtn.textContent = 'Cerrar';
             }
@@ -6435,7 +6536,7 @@
         }
 
         function nextStep() {
-            stopTimer(); // Stop timer when moving to next step
+            stopTimer();
             currentStepIndex++;
             if (currentStepIndex >= routineSteps.length) {
                 closeRoutineModal();
@@ -6445,11 +6546,9 @@
         }
 
         function prevStep() {
-            stopTimer(); // Stop timer when moving back
+            stopTimer();
             currentStepIndex--;
-            if (currentStepIndex < 0) {
-                currentStepIndex = 0; // Stay at the beginning
-            }
+            if (currentStepIndex < 0) currentStepIndex = 0;
             renderRoutineStep();
         }
 
@@ -6461,10 +6560,10 @@
         }
 
         function startTimer() {
-            if (timerInterval) return; // Prevent multiple intervals
+            if (timerInterval) return;
             startTimerBtn.classList.add('hidden');
             pauseTimerBtn.classList.remove('hidden');
-            skipTimerBtn.disabled = true; // Disable skip while running
+            skipTimerBtn.disabled = true;
 
             timerInterval = setInterval(() => {
                 timeLeft--;
@@ -6472,11 +6571,11 @@
                 if (timeLeft <= 0) {
                     stopTimer();
                     timerDisplay.textContent = "¡Tiempo!";
-                    skipTimerBtn.disabled = false; // Enable skip when timer finishes
-                    nextStepBtn.disabled = false; // Enable next step after timer finishes
+                    skipTimerBtn.disabled = false;
+                    nextStepBtn.disabled = false;
                 }
             }, 1000);
-            nextStepBtn.disabled = true; // Disable next step while timer is running
+            nextStepBtn.disabled = true;
         }
 
         function pauseTimer() {
@@ -6484,19 +6583,18 @@
             timerInterval = null;
             startTimerBtn.classList.remove('hidden');
             pauseTimerBtn.classList.add('hidden');
-            skipTimerBtn.disabled = false; // Enable skip when paused
+            skipTimerBtn.disabled = false;
         }
 
-        function resetTimerDisplay(duration) { // Takes duration as argument
+        function resetTimerDisplay(duration) {
             stopTimer();
             timeLeft = duration;
             timerDisplay.textContent = formatTime(timeLeft);
             startTimerBtn.classList.remove('hidden');
             pauseTimerBtn.classList.add('hidden');
-            resetTimerBtn.classList.add('hidden'); // Keep reset hidden unless explicitly needed
+            resetTimerBtn.classList.add('hidden');
             skipTimerBtn.disabled = false;
-            // If it's a rest step, the next button should be disabled until timer finishes or is skipped
-            if (routineSteps[currentStepIndex] && (routineSteps[currentStepIndex].type === 'rest_30s' || routineSteps[currentStepIndex].type === 'rest_60s')) {
+            if (routineSteps[currentStepIndex] && (routineSteps[currentStepIndex].type.includes('rest'))) {
                 nextStepBtn.disabled = true;
             } else {
                 nextStepBtn.disabled = false;
@@ -6519,45 +6617,25 @@
         startTimerBtn.addEventListener('click', startTimer);
         pauseTimerBtn.addEventListener('click', pauseTimer);
         resetTimerBtn.addEventListener('click', () => {
-            // Determine current rest duration based on step type
             const currentStep = routineSteps[currentStepIndex];
-            if (currentStep && currentStep.type === 'rest_30s') {
-                resetTimerDisplay(30);
-            } else if (currentStep && currentStep.type === 'rest_60s') {
-                resetTimerDisplay(60);
-            } else {
-                resetTimerDisplay(60); // Default if not a rest step
-            }
+            if (currentStep && currentStep.type === 'rest_30s') resetTimerDisplay(30);
+            else if (currentStep && currentStep.type === 'rest_60s') resetTimerDisplay(60);
+            else resetTimerDisplay(60);
         });
         skipTimerBtn.addEventListener('click', () => {
             stopTimer();
-            timerDisplay.textContent = formatTime(0); // Show 00:00
-            nextStepBtn.disabled = false; // Enable next step when skipped
-            skipTimerBtn.disabled = false; // Ensure skip is enabled after use
+            timerDisplay.textContent = formatTime(0);
+            nextStepBtn.disabled = false;
+            skipTimerBtn.disabled = false;
         });
 
-
-        // Initial render and display current day's routine on page load
+        // Initial load
         window.onload = async () => {
             renderCalendar();
-            // Automatically display today's routine
             const today = new Date();
-            const todayDayOfWeekIndex = today.getDay(); // 0 for Sunday, 1 for Monday...
-            const todayDayName = dayNames[todayDayOfWeekIndex];
-            const todayRoutine = routines[todayDayName];
-            if (todayRoutine) {
-                displayDailyRoutine(todayDayName, todayRoutine);
-                // Highlight today's date in the calendar
-                const todayDiv = document.querySelector(`.calendar-day.current-day`);
-                if (todayDiv) {
-                    todayDiv.classList.add('current-day');
-                }
-            }
-            // The inspiration button is now explicitly clicked to generate, not on load.
-            // await displayRandomInspiration(); // Removed this line
+            displayDailyRoutine(today);
         };
 
-        // Event listener for inspiration button
         document.getElementById('getInspirationBtn').addEventListener('click', displayRandomInspiration);
     </script>
 </body>
